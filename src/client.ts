@@ -1,12 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 /// <reference path="./protos/datariver.d.ts" />
+const grpc = require("grpc");
 
-import {datariverProto, grpc} from './protos/protos'
+import {datariverProto} from './protos/protos'
 
 const DatariverService = datariverProto.datariver.DataRiver;
-
-export const Listing = datariverProto.datariver.Listing;
-export const Geo = datariverProto.datariver.Geo;
 
 export enum Environment{
     TEST = 1,
@@ -37,14 +35,13 @@ export class Client {
 
         this.datariverService = new DatariverService(this.address, combinedCreds);
     }
-
+    // TODO deal with server errors.
     public getListing = (listingId: string, callback: any) => {
         return this.datariverService.getListing(listingId, callback);
     };
     public deleteListing = (listingId: string, callback: any) => {
         return this.datariverService.deleteListing(listingId, callback);
     };
-    // TODO: Change the listing to actually be the correct type instead of any.
     public putListing = (listing: datariver.Listing, callback: any) => {
         return this.datariverService.putListing(listing, callback);
     };

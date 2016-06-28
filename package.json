@@ -2,7 +2,7 @@
   "name": "vendasta-sdk",
   "version": "0.1.0",
   "description": "Vendasta SDK",
-  "main": "index.js",
+  "main": "src/index.js",
   "author": "Vendasta",
   "license": "ISC",
   "devDependencies": {
