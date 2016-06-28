@@ -1,11 +1,8 @@
 "use strict";
 /// <reference path="../typings/index.d.ts" />
-var grpc = require("grpc");
-var datariverProto = grpc.load({
-    root: __dirname,
-    file: "datariver.proto"
-});
-var DatariverService = datariverProto.datariver.DataRiver;
+var protos_1 = require('./protos/protos');
+var DatariverService = protos_1.datariverProto.datariver.DataRiver;
+exports.Listing = protos_1.datariverProto.datariver.Listing;
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
     Environment[Environment["PRODUCTION"] = 2] = "PRODUCTION";
@@ -16,7 +13,7 @@ var Client = (function () {
         var _this = this;
         this.environment = environment;
         this.token = token;
-        this.metaData = new grpc.Metadata();
+        this.metaData = new protos_1.grpc.Metadata();
         this.getListing = function (listingId, callback) {
             return _this.datariverService.getListing(listingId, callback);
         };
@@ -34,11 +31,11 @@ var Client = (function () {
             this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
-        var creds = grpc.credentials.createSsl();
-        var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
+        var creds = protos_1.grpc.credentials.createSsl();
+        var callCreds = protos_1.grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
             callback(null, _this.metaData);
         });
-        var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+        var combinedCreds = protos_1.grpc.credentials.combineChannelCredentials(creds, callCreds);
         this.datariverService = new DatariverService(this.address, combinedCreds);
     }
     return Client;
