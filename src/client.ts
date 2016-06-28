@@ -2,7 +2,7 @@
 const grpc = require("grpc");
 
 const datariverProto = grpc.load({
-    root: __dirname,
+    root: `${__dirname}/protos`,
     file: "datariver.proto"
 });
 

@@ -1,0 +1,230 @@
+{
+    "package": "datariver",
+    "messages": [
+        {
+            "name": "Geo",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "double",
+                    "name": "latitude",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "double",
+                    "name": "longitude",
+                    "id": 2
+                }
+            ]
+        },
+        {
+            "name": "Listing",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "vendasta_id",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "external_id",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "url",
+                    "id": 4
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "company_name",
+                    "id": 5
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "address",
+                    "id": 6
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "city",
+                    "id": 7
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "state",
+                    "id": 8
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "country",
+                    "id": 9
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "zip_code",
+                    "id": 10
+                },
+                {
+                    "rule": "optional",
+                    "type": "Geo",
+                    "name": "location",
+                    "id": 11
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "phone",
+                    "id": 12
+                },
+                {
+                    "rule": "repeated",
+                    "type": "string",
+                    "name": "additional_phone_numbers",
+                    "id": 13
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "website",
+                    "id": 14
+                },
+                {
+                    "rule": "optional",
+                    "type": "int32",
+                    "name": "number_of_reviews",
+                    "id": 15
+                },
+                {
+                    "rule": "optional",
+                    "type": "float",
+                    "name": "average_review_rating",
+                    "id": 16
+                },
+                {
+                    "rule": "repeated",
+                    "type": "string",
+                    "name": "business_categories",
+                    "id": 17
+                }
+            ]
+        },
+        {
+            "name": "ListingResponse",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "vendasta_id",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "external_id",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "type": "StatusCodes",
+                    "name": "status",
+                    "id": 3
+                },
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "error",
+                    "id": 4
+                },
+                {
+                    "rule": "optional",
+                    "type": "Listing",
+                    "name": "listing",
+                    "id": 5
+                }
+            ],
+            "enums": [
+                {
+                    "name": "StatusCodes",
+                    "values": [
+                        {
+                            "name": "UNUSED",
+                            "id": 0
+                        },
+                        {
+                            "name": "SUCCESS",
+                            "id": 1
+                        },
+                        {
+                            "name": "ERROR",
+                            "id": 2
+                        },
+                        {
+                            "name": "REJECTED",
+                            "id": 3
+                        },
+                        {
+                            "name": "NOT_FOUND",
+                            "id": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "GetListingRequest",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "vendasta_id",
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "name": "DeleteListingRequest",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "type": "string",
+                    "name": "vendasta_id",
+                    "id": 1
+                }
+            ]
+        }
+    ],
+    "services": [
+        {
+            "name": "DataRiver",
+            "options": {},
+            "rpc": {
+                "PutListing": {
+                    "request": "Listing",
+                    "response": "ListingResponse",
+                    "options": {}
+                },
+                "GetListing": {
+                    "request": "GetListingRequest",
+                    "response": "ListingResponse",
+                    "options": {}
+                },
+                "DeleteListing": {
+                    "request": "DeleteListingRequest",
+                    "response": "ListingResponse",
+                    "options": {}
+                }
+            }
+        }
+    ]
+}

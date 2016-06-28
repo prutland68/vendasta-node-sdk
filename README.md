@@ -26,3 +26,8 @@ To regenerate the documentation, run:
 ./build.sh jsdoc -c jsdoc_conf.json
 ```
 By default, the build script will run `tsc -w` (you must be running the docker for mac or docker for windows application for watch mode to work).
+
+To regenerate the proto objects files, run:
+```
+./build.sh bash build_proto_def.sh
+```

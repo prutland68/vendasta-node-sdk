@@ -7,6 +7,7 @@
   "license": "ISC",
   "devDependencies": {
     "jsdoc": "^3.4.0",
+    "proto2typescript": "^2.2.0",
     "typescript": "^1.8.10",
     "typings": "^1.3.0"
   },
