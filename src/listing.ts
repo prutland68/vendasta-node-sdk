@@ -1,6 +1,12 @@
 /// <reference path="./protos/datariver.d.ts" />
 import {Client, Listing} from './client';
 
+
+class GeoLocation {
+    // Unrealistic values represent defaults (not set).
+    public latitude: number = 1000;
+    public longitude: number = 1000;
+}
 class ListingModel {
     private client: Client;
     private vendastaId: string = "";
@@ -12,7 +18,7 @@ class ListingModel {
     public averageReviewRating: number = -1;  // -1 means not set.
     public city: string = "";
     public country: string = "";
-    public location: Geolocation = new Geolocation();
+    public location: GeoLocation = new GeoLocation();
     public numberOfReviews: number = -1;    // -1 means not set.
     public phone: string = "";
     public state: string = "";
@@ -34,13 +40,13 @@ class ListingModel {
     public static getListingById(vendastaId: string, client: Client, callback) {
         let listing: datariver.Listing = client.getListing(vendastaId, callback);
         let vListing: ListingModel = new ListingModel(client);
-        vListing = vListing.fromListingMessage(listing, callback);
+        vListing = vListing.fromListingMessage(listing);
         return vListing;
     }
     public delete(callback) {
         this.client.deleteListing(this.vendastaId, callback);
     }
-    private toListingMessage(callback): datariver.Listing {
+    private toListingMessage(): datariver.Listing {
         let grpcListing: datariver.Listing = new Listing();
         grpcListing.vendasta_id = this.vendastaId;
         grpcListing.external_id = this.externalId;
@@ -63,28 +69,27 @@ class ListingModel {
         return grpcListing;
     }
 
-    private fromListingMessage(listing:datariver.Listing, callback):ListingModel {
-        this.vendastaId = listing.VendastaId;
-        this.externalId = listing.ExternalId;
-        this.CompanyName = listing.CompanyName;
-        this.Address = listing.Address;
-        this.Phone = listing.Phone;
-        this.AdditionalPhoneNumbers.AddRange(listing.AdditionalPhoneNumbers);
-        this.BusinessCategories.AddRange(listing.BusinessCategories);
-        this.AverageReviewRating = listing.AverageReviewRating;
-        this.City = listing.City;
-        this.Country = listing.Country;
-        if (listing.Location != null) {
-            this.Location = new GeoLocation();
-            this.Location.Latitude = listing.Location.Latitude;
-            this.Location.Longitude = listing.Location.Longitude;
+    private fromListingMessage(listing:datariver.Listing) {
+        this.vendastaId = listing.vendasta_id;
+        this.externalId = listing.external_id;
+        this.companyName = listing.company_name;
+        this.address = listing.address;
+        this.phone = listing.phone;
+        this.additionalPhoneNumbers = listing.additional_phone_numbers.slice();
+        this.businessCategories = listing.business_categories.slice();
+        this.averageReviewRating = listing.average_review_rating;
+        this.city = listing.city;
+        this.country = listing.country;
+        if (listing.location != null) {
+            this.location = new GeoLocation();
+            this.location.latitude = listing.location.latitude;
+            this.location.longitude = listing.location.longitude;
         }
-
-        this.State = listing.State;
-        this.Url = listing.Url;
-        this.Website = listing.Website;
-        this.ZipCode = listing.ZipCode;
-        this.NumberOfReviews = listing.NumberOfReviews;
+        this.state = listing.state;
+        this.url = listing.url;
+        this.website = listing.website;
+        this.zipCode = listing.zip_code;
+        this.numberOfReviews = listing.number_of_reviews;
     }
 
 }
