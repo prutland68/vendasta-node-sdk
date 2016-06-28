@@ -1,9 +1,14 @@
-# Node.js Vendasta SDK
+# Node Vendasta SDK
 
 ## Installation ##
+
 ```
-npm install vendasta-sdk
+npm install --save vendasta-sdk
 ```
+
+## Useage ##
+
+*TODO*
 
 ## Development ##
 *You must clone the repository to use these features*
