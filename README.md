@@ -1,4 +1,4 @@
-# Node Vendasta SDK
+# Vendasta Node SDK
 
 ## Installation ##
 
@@ -8,7 +8,9 @@ npm install --save vendasta-sdk
 
 ## Useage ##
 
-*TODO*
+Until the documentation is complete, see the example folder on the repository.
+
+The authentication mechanism is likely to change. You can use the static OAuth token from the example to hit the test environment for now. Production is not yet available.
 
 ## Development ##
 *You must clone the repository to use these features*
