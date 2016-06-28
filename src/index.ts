@@ -1,2 +1,2 @@
-import {VendastaSDK} from "./sdk";
-export default VendastaSDK;
+import {Client} from "./client";
+export default Client;

@@ -8,11 +8,23 @@ const datariverProto = grpc.load({
 
 const DatariverService = datariverProto.datariver.DataRiver;
 
+export enum Environment{
+    TEST = 1,
+    PRODUCTION = 2
+}
+
 export class Client {
     private metaData = new grpc.Metadata();
     private datariverService: any;
+    private address: string;
 
-    constructor(private address: string, private token: string) {
+    constructor(private environment: Environment, private token: string) {
+        if (environment == Environment.PRODUCTION) {
+            throw new Error("Production not available yet.");
+        }
+        else {
+            this.address = "directory-sandbox.vendasta.com:23000";  // assume test
+        }
         this.metaData.add('token', token);
         const creds = grpc.credentials.createSsl();
 
@@ -27,6 +39,13 @@ export class Client {
     }
 
     public getListing = (listingId: string, callback: any) => {
-        this.datariverService.getListing(listingId, callback);
+        return this.datariverService.getListing(listingId, callback);
+    };
+    public deleteListing = (listingId: string, callback: any) => {
+        return this.datariverService.deleteListing(listingId, callback);
+    };
+    // TODO: Change the listing to actually be the correct type instead of any.
+    public putListing = (listing: any, callback: any) => {
+        return this.datariverService.putListing(listing, callback);
     };
 }
