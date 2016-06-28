@@ -1,6 +1,5 @@
-import { Client, Environment, Listing } from "./client";
-import { ListingModel } from "./listing";
+import { Client, Environment } from "./client";
 export { Client };
 export { Environment };
-export { Listing };
-export { ListingModel };
+export declare const Listing: datariver.Listing;
+export declare const Geo: datariver.Geo;

@@ -1,5 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
-import {Client, Environment, Listing, ListingModel} from "../src/index"
+import {Client, Environment, Listing} from "../src/index"
 const client = new Client(Environment.TEST, '8d535a7c8301cd87957013b7210f4c03');
 
 // Create a listing object to put.
