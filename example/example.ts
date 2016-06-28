@@ -15,7 +15,7 @@ var listingId = null;
 function putListingCallback(error: any, response: any) {
     console.log("**** Put listing output: ****");
     printErrorAndResponse(error, response);
-    listingId = response['vendasta_id'];
+    listingId = response['listing_id'];
     // Get the listing we just added
     client.getListing(listingId, getListingCallback)
 }

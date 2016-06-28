@@ -12,7 +12,7 @@ message Geo {
 
 // based on RawListing VObject
 message Listing {
-	string vendasta_id = 1;
+	string listing_id = 1;
 	string external_id = 2;
 	string url = 4; // canonical URL
 
@@ -35,7 +35,7 @@ message Listing {
 }
 
 message ListingResponse {
-	string vendasta_id = 1;
+	string listing_id = 1;
 	string external_id = 2;
 	enum StatusCodes {
 	    UNUSED = 0;
@@ -50,11 +50,11 @@ message ListingResponse {
 }
 
 message GetListingRequest {
-	string vendasta_id = 1;
+	string listing_id = 1;
 }
 
 message DeleteListingRequest {
-	string vendasta_id = 1;
+	string listing_id = 1;
 }
 
 service DataRiver {
