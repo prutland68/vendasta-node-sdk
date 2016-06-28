@@ -6,7 +6,7 @@
 npm install --save vendasta-sdk
 ```
 
-## Useage ##
+## Usage ##
 
 Until the documentation is complete, see the example folder on the repository.
 
