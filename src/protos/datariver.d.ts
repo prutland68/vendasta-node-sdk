@@ -23,11 +23,7 @@ declare module datariver {
 
 	export interface Geo extends ProtoBufModel {
 		latitude?: number;
-		getLatitude() : number;
-		setLatitude(latitude : number): void;
 		longitude?: number;
-		getLongitude() : number;
-		setLongitude(longitude : number): void;
 		
 	}
 	
@@ -44,54 +40,22 @@ declare module datariver {
 declare module datariver {
 
 	export interface Listing extends ProtoBufModel {
-		vendasta_id?: string;
-		getVendastaId() : string;
-		setVendastaId(vendastaId : string): void;
+		listing_id?: string;
 		external_id?: string;
-		getExternalId() : string;
-		setExternalId(externalId : string): void;
 		url?: string;
-		getUrl() : string;
-		setUrl(url : string): void;
 		company_name?: string;
-		getCompanyName() : string;
-		setCompanyName(companyName : string): void;
 		address?: string;
-		getAddress() : string;
-		setAddress(address : string): void;
 		city?: string;
-		getCity() : string;
-		setCity(city : string): void;
 		state?: string;
-		getState() : string;
-		setState(state : string): void;
 		country?: string;
-		getCountry() : string;
-		setCountry(country : string): void;
 		zip_code?: string;
-		getZipCode() : string;
-		setZipCode(zipCode : string): void;
 		location?: Geo;
-		getLocation() : Geo;
-		setLocation(location : Geo): void;
 		phone?: string;
-		getPhone() : string;
-		setPhone(phone : string): void;
 		additional_phone_numbers: string[];
-		getAdditionalPhoneNumbers() : string[];
-		setAdditionalPhoneNumbers(additionalPhoneNumbers : string[]): void;
 		website?: string;
-		getWebsite() : string;
-		setWebsite(website : string): void;
 		number_of_reviews?: number;
-		getNumberOfReviews() : number;
-		setNumberOfReviews(numberOfReviews : number): void;
 		average_review_rating?: number;
-		getAverageReviewRating() : number;
-		setAverageReviewRating(averageReviewRating : number): void;
 		business_categories: string[];
-		getBusinessCategories() : string[];
-		setBusinessCategories(businessCategories : string[]): void;
 		
 	}
 	
@@ -108,21 +72,11 @@ declare module datariver {
 declare module datariver {
 
 	export interface ListingResponse extends ProtoBufModel {
-		vendasta_id?: string;
-		getVendastaId() : string;
-		setVendastaId(vendastaId : string): void;
+		listing_id?: string;
 		external_id?: string;
-		getExternalId() : string;
-		setExternalId(externalId : string): void;
 		status?: ListingResponse.StatusCodes;
-		getStatus() : ListingResponse.StatusCodes;
-		setStatus(status : ListingResponse.StatusCodes): void;
 		error?: string;
-		getError() : string;
-		setError(error : string): void;
 		listing?: Listing;
-		getListing() : Listing;
-		setListing(listing : Listing): void;
 		
 	}
 	
@@ -151,9 +105,7 @@ declare module datariver.ListingResponse {
 declare module datariver {
 
 	export interface GetListingRequest extends ProtoBufModel {
-		vendasta_id?: string;
-		getVendastaId() : string;
-		setVendastaId(vendastaId : string): void;
+		listing_id?: string;
 		
 	}
 	
@@ -170,9 +122,7 @@ declare module datariver {
 declare module datariver {
 
 	export interface DeleteListingRequest extends ProtoBufModel {
-		vendasta_id?: string;
-		getVendastaId() : string;
-		setVendastaId(vendastaId : string): void;
+		listing_id?: string;
 		
 	}
 	
