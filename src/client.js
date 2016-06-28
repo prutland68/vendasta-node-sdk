@@ -15,15 +15,29 @@ var Client = (function () {
         this.environment = environment;
         this.token = token;
         this.metaData = new grpc.Metadata();
-        // TODO deal with server errors.
         this.getListing = function (listingId, callback) {
-            return _this.datariverService.getListing(listingId, callback);
+            return _this.datariverService.getListing(listingId, function (error, listingResponse) {
+                if (!error) {
+                    error = listingResponse.error;
+                }
+                callback(error, listingResponse.listing);
+            });
         };
         this.deleteListing = function (listingId, callback) {
-            return _this.datariverService.deleteListing(listingId, callback);
+            return _this.datariverService.deleteListing(listingId, function (error, listingResponse) {
+                if (!error) {
+                    error = listingResponse.error;
+                }
+                callback(error, listingResponse.listing);
+            });
         };
         this.putListing = function (listing, callback) {
-            return _this.datariverService.putListing(listing, callback);
+            return _this.datariverService.putListing(listing, function (error, listingResponse) {
+                if (!error) {
+                    error = listingResponse.error;
+                }
+                callback(error, listingResponse.listing);
+            });
         };
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");

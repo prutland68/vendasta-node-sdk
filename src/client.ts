@@ -35,14 +35,28 @@ export class Client {
 
         this.datariverService = new DatariverService(this.address, combinedCreds);
     }
-    // TODO deal with server errors.
     public getListing = (listingId: string, callback: any) => {
-        return this.datariverService.getListing(listingId, callback);
+        return this.datariverService.getListing(listingId, (error: string, listingResponse: datariver.ListingResponse) => {
+            if (!error) {
+                error = listingResponse.error;
+            }
+            callback(error, listingResponse.listing);
+        });
     };
     public deleteListing = (listingId: string, callback: any) => {
-        return this.datariverService.deleteListing(listingId, callback);
+        return this.datariverService.deleteListing(listingId, (error: string, listingResponse: datariver.ListingResponse)=> {
+            if (!error) {
+                error = listingResponse.error;
+            }
+            callback(error, listingResponse.listing);
+        });
     };
     public putListing = (listing: datariver.Listing, callback: any) => {
-        return this.datariverService.putListing(listing, callback);
+        return this.datariverService.putListing(listing, (error: string, listingResponse: datariver.ListingResponse) => {
+            if (!error) {
+                error = listingResponse.error;
+            }
+            callback(error, listingResponse.listing);
+        });
     };
 }
