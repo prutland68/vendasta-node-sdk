@@ -6,6 +6,7 @@ var datariverProto = grpc.load({
     file: "datariver.proto"
 });
 var DatariverService = datariverProto.datariver.DataRiver;
+exports.Listing = datariverProto.datariver.Listing;
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
     Environment[Environment["PRODUCTION"] = 2] = "PRODUCTION";

@@ -8,6 +8,8 @@ const datariverProto = grpc.load({
 
 const DatariverService = datariverProto.datariver.DataRiver;
 
+export const Listing = datariverProto.datariver.Listing;
+
 export enum Environment{
     TEST = 1,
     PRODUCTION = 2

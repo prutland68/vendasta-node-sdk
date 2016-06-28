@@ -1,3 +1,4 @@
-import { Client, Environment } from "./client";
+import { Client, Environment, Listing } from "./client";
 export { Client };
 export { Environment };
+export { Listing };

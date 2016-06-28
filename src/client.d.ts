@@ -1,4 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
+export declare const Listing: any;
 export declare enum Environment {
     TEST = 1,
     PRODUCTION = 2,
