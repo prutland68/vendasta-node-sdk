@@ -1,0 +1,10 @@
+docs
+example
+typings
+*.sh
+Dockerfile
+.dockerignore
+**/*.json
+**/*.ts
+**/*.proto
+**/*.js.map
