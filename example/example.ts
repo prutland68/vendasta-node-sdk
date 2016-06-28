@@ -13,6 +13,7 @@ var listingId = null;
 
 
 function putListingCallback(error: any, response: any) {
+    console.log("**** Put listing output: ****");
     printErrorAndResponse(error, response);
     listingId = response['vendasta_id'];
     // Get the listing we just added
@@ -20,20 +21,22 @@ function putListingCallback(error: any, response: any) {
 }
 
 function getListingCallback(error: any, response: any) {
+    console.log("**** Get listing output: ****");
     printErrorAndResponse(error, response);
     // Remove the listing we added
     client.deleteListing(listingId, deleteListingCallback);
 }
 
 function deleteListingCallback(error: any, response: any) {
+    console.log("**** Delete listing output: ****");
     printErrorAndResponse(error, response);
     // To show that the delete went through.
     client.getListing(listingId, finalCallback);
 }
 
 function finalCallback(error: any, response: any) {
+    console.log("**** Final get listing output: ****");
     printErrorAndResponse(error, response);
-    // node exit, as needed.
 }
 
 function printErrorAndResponse(error: any, response: any) {
