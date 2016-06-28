@@ -1,12 +1,12 @@
 /// <reference path="./protos/datariver.d.ts" />
-import {Client, Listing} from './client';
-
+import {Client, Listing, Geo} from './client';
 
 class GeoLocation {
     // Unrealistic values represent defaults (not set).
     public latitude: number = 1000;
     public longitude: number = 1000;
 }
+
 class ListingModel {
     private client: Client;
     private vendastaId: string = "";
@@ -34,7 +34,7 @@ class ListingModel {
         return this.vendastaId;
     }
     public save(callback) {
-        var listing = this.toListingMessage(null);
+        var listing = this.toListingMessage();
         this.client.putListing(listing, callback)
     }
     public static getListingById(vendastaId: string, client: Client, callback) {
@@ -53,14 +53,14 @@ class ListingModel {
         grpcListing.company_name = this.companyName;
         grpcListing.address = this.address;
         grpcListing.phone = this.phone;
-       // TODO fix this grpcListing.additional_phone_numbers.Add(this.additionalPhoneNumbers.GetRange(0, this.additionalPhoneNumbers.Count));
-        // TODO fix this grpcListing.business_categories.Add(this.businessCategories);
+        grpcListing.additional_phone_numbers = this.additionalPhoneNumbers;
+        grpcListing.business_categories = this.businessCategories;
         grpcListing.average_review_rating = this.averageReviewRating;
         grpcListing.city = this.city;
         grpcListing.country = this.country;
-        // TODO fix this grpcListing.location = new Geo();
-        // TODO fix this grpcListing.location.latitude = this.location.latitude;
-        // TODO fix this grpcListing.location.longitude = this.location.longitude;
+        grpcListing.location = new Geo();
+        grpcListing.location.latitude = this.location.latitude;
+        grpcListing.location.longitude = this.location.longitude;
         grpcListing.state = this.state;
         grpcListing.url = this.url;
         grpcListing.website = this.website;
