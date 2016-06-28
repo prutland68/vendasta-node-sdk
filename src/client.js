@@ -4,6 +4,7 @@
 var protos_1 = require('./protos/protos');
 var DatariverService = protos_1.datariverProto.datariver.DataRiver;
 exports.Listing = protos_1.datariverProto.datariver.Listing;
+exports.Geo = protos_1.datariverProto.datariver.Geo;
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
     Environment[Environment["PRODUCTION"] = 2] = "PRODUCTION";

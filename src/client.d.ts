@@ -1,6 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 /// <reference path="protos/datariver.d.ts" />
 export declare const Listing: any;
+export declare const Geo: any;
 export declare enum Environment {
     TEST = 1,
     PRODUCTION = 2,
