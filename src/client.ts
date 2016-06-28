@@ -6,6 +6,7 @@ import {datariverProto, grpc} from './protos/protos'
 const DatariverService = datariverProto.datariver.DataRiver;
 
 export const Listing = datariverProto.datariver.Listing;
+export const Geo = datariverProto.datariver.Geo;
 
 export enum Environment{
     TEST = 1,
