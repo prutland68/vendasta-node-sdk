@@ -1,0 +1,19 @@
+{
+  "name": "vendasta-sdk",
+  "version": "0.1.0",
+  "description": "Vendasta SDK",
+  "main": "index.js",
+  "author": "Vendasta",
+  "license": "ISC",
+  "devDependencies": {
+    "jsdoc": "^3.4.0",
+    "ts2jsdoc": "^0.1.2",
+    "typedoc": "^0.4.4",
+    "typescript": "^1.8.10",
+    "typings": "^1.3.0"
+  },
+  "dependencies": {
+    "grpc": "^0.14.1",
+    "protobufjs": "^5.0.1"
+  }
+}
