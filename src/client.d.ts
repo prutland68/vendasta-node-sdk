@@ -1,4 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
+/// <reference path="protos/datariver.d.ts" />
 export declare const Listing: any;
 export declare enum Environment {
     TEST = 1,
@@ -13,5 +14,5 @@ export declare class Client {
     constructor(environment: Environment, token: string);
     getListing: (listingId: string, callback: any) => any;
     deleteListing: (listingId: string, callback: any) => any;
-    putListing: (listing: any, callback: any) => any;
+    putListing: (listing: datariver.Listing, callback: any) => any;
 }
