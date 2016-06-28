@@ -1,2 +1,3 @@
-import { Client } from "./client";
-export default Client;
+import { Client, Environment } from "./client";
+export { Client };
+export { Environment };

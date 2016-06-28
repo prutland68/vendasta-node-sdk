@@ -1,5 +1,5 @@
 "use strict";
 var client_1 = require("./client");
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = client_1.Client;
+exports.Client = client_1.Client;
+exports.Environment = client_1.Environment;
 //# sourceMappingURL=index.js.map
