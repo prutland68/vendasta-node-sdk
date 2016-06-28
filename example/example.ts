@@ -11,7 +11,7 @@ listing.url = "http://www.vendasta.com"; // Required
 
 client.putListing(listing, callback);
 
-var listingId = listing.vendasta_id;
+var listingId = '8a5e61f655dd8a37a6a50572b805f9afeb3250d09eb896cc1ddaab910bb1d974';
 // Get the listing we just added
 client.getListing(listingId, callback);
 

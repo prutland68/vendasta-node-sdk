@@ -1,10 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
-const grpc = require("grpc");
-
-const datariverProto = grpc.load({
-    root: __dirname,
-    file: "datariver.proto"
-});
+import {datariverProto, grpc} from './protos/protos'
 
 const DatariverService = datariverProto.datariver.DataRiver;
 
