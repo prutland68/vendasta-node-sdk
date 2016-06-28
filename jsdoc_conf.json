@@ -4,22 +4,15 @@
   },
   "source": {
     "include": [
-        "src"
-    ],
-    "exclude": [
-        "node_modules"
-    ],
-    "includePattern": "(\\.d)?\\.ts$"
+      "src"
+    ]
   },
   "opts": {
     "package": "package.json",
     "readme": "README.md",
-    "destination": "./docs/",
-    "template": "node_modules/ts2jsdoc/template"
+    "destination": "./docs/"
   },
-  "plugins": [
-      "node_modules/ts2jsdoc/plugin.js"
-  ],
+  "plugins": [],
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false,

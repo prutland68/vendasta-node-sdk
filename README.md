@@ -5,8 +5,6 @@
 npm install vendasta-sdk
 ```
 
-## 
-
 ## Development ##
 
 A docker container and a build script is provided to run any Node/NPM related commands without needing to have Node installed on your computer.
@@ -27,4 +25,4 @@ To regenerate the documentation, run:
 ```
 ./build.sh jsdoc -c jsdoc_conf.json
 ```
-By default, the build script will run `tsc -w`.
+By default, the build script will run `tsc -w` (you must be running the docker for mac or docker for windows application for watch mode to work).
