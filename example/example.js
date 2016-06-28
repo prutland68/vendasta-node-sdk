@@ -10,24 +10,27 @@ listing.url = "http://www.vendasta.com"; // Required
 client.putListing(listing, putListingCallback);
 var listingId = null;
 function putListingCallback(error, response) {
+    console.log("**** Put listing output: ****");
     printErrorAndResponse(error, response);
     listingId = response['vendasta_id'];
     // Get the listing we just added
     client.getListing(listingId, getListingCallback);
 }
 function getListingCallback(error, response) {
+    console.log("**** Get listing output: ****");
     printErrorAndResponse(error, response);
     // Remove the listing we added
     client.deleteListing(listingId, deleteListingCallback);
 }
 function deleteListingCallback(error, response) {
+    console.log("**** Delete listing output: ****");
     printErrorAndResponse(error, response);
     // To show that the delete went through.
     client.getListing(listingId, finalCallback);
 }
 function finalCallback(error, response) {
+    console.log("**** Final get listing output: ****");
     printErrorAndResponse(error, response);
-    // node exit, as needed.
 }
 function printErrorAndResponse(error, response) {
     console.log(error);
