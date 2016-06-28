@@ -1,4 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
+/// <reference path="./protos/datariver.d.ts" />
+
 import {datariverProto, grpc} from './protos/protos'
 
 const DatariverService = datariverProto.datariver.DataRiver;
@@ -42,7 +44,7 @@ export class Client {
         return this.datariverService.deleteListing(listingId, callback);
     };
     // TODO: Change the listing to actually be the correct type instead of any.
-    public putListing = (listing: any, callback: any) => {
+    public putListing = (listing: datariver.Listing, callback: any) => {
         return this.datariverService.putListing(listing, callback);
     };
 }

@@ -1,5 +1,6 @@
-"use strict";
 /// <reference path="../typings/index.d.ts" />
+/// <reference path="./protos/datariver.d.ts" />
+"use strict";
 var protos_1 = require('./protos/protos');
 var DatariverService = protos_1.datariverProto.datariver.DataRiver;
 exports.Listing = protos_1.datariverProto.datariver.Listing;
