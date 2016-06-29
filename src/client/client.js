@@ -10,8 +10,9 @@ var DatariverService = protos_1.datariverProto.datariver.DataRiver;
 })(exports.Environment || (exports.Environment = {}));
 var Environment = exports.Environment;
 var Client = (function () {
-    function Client(environment, token) {
+    function Client(environment, token, service) {
         var _this = this;
+        if (service === void 0) { service = null; }
         this.environment = environment;
         this.token = token;
         this.metaData = new grpc.Metadata();
@@ -25,10 +26,9 @@ var Client = (function () {
             return datariverService;
         };
         this.getListing = function (listingId, callback) {
-            console.log('LOG>>>', _this.datariverService, '<<<LOG');
             return _this.datariverService.getListing(listingId, function (error, listingResponse) {
                 if (!error) {
-                    error = listingResponse.error;
+                    error = listingResponse.error || null;
                 }
                 callback(error, listingResponse.listing);
             });
@@ -36,7 +36,7 @@ var Client = (function () {
         this.deleteListing = function (listingId, callback) {
             return _this.datariverService.deleteListing(listingId, function (error, listingResponse) {
                 if (!error) {
-                    error = listingResponse.error;
+                    error = listingResponse.error || null;
                 }
                 callback(error, listingResponse.listing);
             });
@@ -44,7 +44,7 @@ var Client = (function () {
         this.putListing = function (listing, callback) {
             return _this.datariverService.putListing(listing, function (error, listingResponse) {
                 if (!error) {
-                    error = listingResponse.error;
+                    error = listingResponse.error || null;
                 }
                 callback(error, listingResponse.listing);
             });
@@ -56,7 +56,7 @@ var Client = (function () {
             this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
-        this.datariverService = this.getDatariverService(this.metaData, this.address);
+        this.datariverService = service || this.getDatariverService(this.metaData, this.address);
     }
     return Client;
 }());

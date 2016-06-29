@@ -10,7 +10,7 @@ export declare class Client {
     private metaData;
     private datariverService;
     private address;
-    constructor(environment: Environment, token: string);
+    constructor(environment: Environment, token: string, service?: any);
     private getDatariverService;
     getListing: (listingId: string, callback: any) => any;
     deleteListing: (listingId: string, callback: any) => any;

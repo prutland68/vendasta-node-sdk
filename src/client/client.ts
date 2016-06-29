@@ -16,7 +16,7 @@ export class Client {
     private datariverService:any;
     private address:string;
 
-    constructor(private environment:Environment, private token:string) {
+    constructor(private environment:Environment, private token:string, service = null) {
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }
@@ -24,7 +24,7 @@ export class Client {
             this.address = "directory-sandbox.vendasta.com:23000";  // assume test
         }
         this.metaData.add('token', token);
-        this.datariverService = this.getDatariverService(this.metaData, this.address)
+        this.datariverService = service || this.getDatariverService(this.metaData, this.address);
     }
     
     private getDatariverService = (metadata, address) => {
@@ -42,10 +42,9 @@ export class Client {
     }
 
     public getListing = (listingId:string, callback:any) => {
-        console.log('LOG>>>', this.datariverService, '<<<LOG')
         return this.datariverService.getListing(listingId, (error:string, listingResponse:datariver.ListingResponse) => {
             if (!error) {
-                error = listingResponse.error;
+                error = listingResponse.error || null;
             }
             callback(error, listingResponse.listing);
         });
@@ -53,7 +52,7 @@ export class Client {
     public deleteListing = (listingId:string, callback:any) => {
         return this.datariverService.deleteListing(listingId, (error:string, listingResponse:datariver.ListingResponse)=> {
             if (!error) {
-                error = listingResponse.error;
+                error = listingResponse.error || null;
             }
             callback(error, listingResponse.listing);
         });
@@ -61,7 +60,7 @@ export class Client {
     public putListing = (listing:datariver.Listing, callback:any) => {
         return this.datariverService.putListing(listing, (error:string, listingResponse:datariver.ListingResponse) => {
             if (!error) {
-                error = listingResponse.error;
+                error = listingResponse.error || null;
             }
             callback(error, listingResponse.listing);
         });
