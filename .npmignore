@@ -8,3 +8,4 @@ Dockerfile
 **/*.ts
 **/*.proto
 **/*.js.map
+**/*.spec.*
