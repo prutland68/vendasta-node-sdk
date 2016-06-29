@@ -1,6 +1,6 @@
 /// <reference path="protos/datariver.d.ts" />
-import { Client, Environment } from "./client";
+import { Client, Environment } from "./client/client";
 export { Client };
 export { Environment };
-export declare const Listing: any;
-export declare const Geo: any;
+export declare const Listing: () => datariver.Listing;
+export declare const Geo: () => datariver.Geo;

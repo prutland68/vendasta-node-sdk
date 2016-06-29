@@ -5,8 +5,12 @@
   "main": "src/index.js",
   "author": "Vendasta",
   "license": "ISC",
+  "scripts": {
+    "test": "./node_modules/jasmine-node-karma/bin/jasmine-node-karma src"
+  },
   "devDependencies": {
     "jasmine": "^2.4.1",
+    "jasmine-node-karma": "^1.6.1",
     "jsdoc": "^3.4.0",
     "karma": "^1.1.0",
     "karma-chrome-launcher": "^1.0.1",

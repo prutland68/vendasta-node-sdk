@@ -1,8 +1,8 @@
 "use strict";
-/// <reference path="../typings/index.d.ts" />
-/// <reference path="./protos/datariver.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../protos/datariver.d.ts" />
 var grpc = require("grpc");
-var protos_1 = require('./protos/protos');
+var protos_1 = require('../protos/protos');
 var DatariverService = protos_1.datariverProto.datariver.DataRiver;
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
@@ -15,7 +15,17 @@ var Client = (function () {
         this.environment = environment;
         this.token = token;
         this.metaData = new grpc.Metadata();
+        this.getDatariverService = function (metadata, address) {
+            var creds = grpc.credentials.createSsl();
+            var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
+                callback(null, metadata);
+            });
+            var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+            var datariverService = new DatariverService(address, combinedCreds);
+            return datariverService;
+        };
         this.getListing = function (listingId, callback) {
+            console.log('LOG>>>', _this.datariverService, '<<<LOG');
             return _this.datariverService.getListing(listingId, function (error, listingResponse) {
                 if (!error) {
                     error = listingResponse.error;
@@ -46,12 +56,7 @@ var Client = (function () {
             this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
-        var creds = grpc.credentials.createSsl();
-        var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
-            callback(null, _this.metaData);
-        });
-        var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        this.datariverService = new DatariverService(this.address, combinedCreds);
+        this.datariverService = this.getDatariverService(this.metaData, this.address);
     }
     return Client;
 }());
