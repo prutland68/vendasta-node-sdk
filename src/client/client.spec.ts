@@ -5,54 +5,45 @@ import {datariverProto} from '../protos/protos'
 import {Listing} from '../index';
 
 class mockedDatariverService {
+    public error: string = null;
+    public listingResponse = {};
+
     public getListing = (listingId: string, callback: any) => {
-        callback(null, {});
-    }
+        callback(this.error, this.listingResponse);
+    };
     
     public deleteListing = (listingId: string, callback: any) => {
-        callback(null, {});
-    }
+        callback(this.error, this.listingResponse);
+    };
     
     public putListing = (listing: datariver.Listing, callback: any) => {
-        callback(null, {});
-    }
+        callback(this.error, this.listingResponse);
+    };
 }
 
 describe('Client tests', () => {
-    beforeEach(() => {
-        this.client = new Client(Environment.TEST, "fake-token", new mockedDatariverService());
-    });
     describe("getListing tests", () => {
-        it('Should call my callback method with the returned listing.', () => {
-            let fakeListing: datariver.Listing = new Listing();
-            var callbackOwner = {
+        beforeEach(() => {
+            this.mockedService = new mockedDatariverService();
+            this.mockedClient = new Client(Environment.TEST, "fake-token", this.mockedService);
+            this.callbackOwner = {
                 callback: jasmine.createSpy('callback spy'),
-            }
-            this.client.getListing("fake listing id", callbackOwner.callback)
-            expect(callbackOwner.callback.wasCalled).toBeTruthy()
+            };
+
+        });
+        it('Should call my callback method with the returned listing.', () => {
+            this.mockedClient.getListing("fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
         });
         it('Should pass the main error into the callback if the main error exists.', () => {
-            let fakeListing: datariver.Listing = new Listing();
-            var callbackOwner = {
-                callback: jasmine.createSpy('callback spy'),
-            }
-            spyOn(this.client, 'getListing').andCallFake((listingId:string, callback:any) => {
-                callback('Error!', {});
-            })
-            this.client.getListing("fake listing id", callbackOwner.callback)
-            expect(callbackOwner.callback).toHaveBeenCalledWith('Error!', {})
+            this.mockedService.error = "Error!";
+            this.mockedClient.getListing("fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
         });
         it("Should pass the listingResponse's error into the callback if the main error doesn't exist.", () => {
-            let fakeListing: datariver.Listing = new Listing();
-            var callbackOwner = {
-                callback: jasmine.createSpy('callback spy'),
-            }
-            spyOn(this.client, 'getListing').andCallFake((listingId:string, callback:any) => {
-                callback(null, {error: 'ListingResponse error!'});
-            })
-            this.client.getListing("fake listing id", callbackOwner.callback)
-            expect(callbackOwner.callback).toHaveBeenCalledWith(null, 'ListingResponse error!')
-            // TODO finish writing this properly, so it actually tests the right thing
+            this.mockedService.listingResponse.error = "ListingResponse error!";
+            this.mockedClient.getListing("fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
         });
     });
 });

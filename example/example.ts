@@ -3,7 +3,7 @@ import {Client, Environment, Listing, Geo} from "../src/index"
 const client = new Client(Environment.TEST, '8d535a7c8301cd87957013b7210f4c03');
 
 // Create a listing object to put.
-var listing = new Listing();
+let listing: Listing = new Listing();
 listing.external_id = "vendasta-technologies-12345";
 listing.company_name = "Vendasta Technologies Inc.";
 listing.business_categories[0] = "marketing";

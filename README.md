@@ -43,13 +43,12 @@ client.deleteListing;
 
 - listingId: string => This is available from the Listing object after it has been saved.
 
-- callback: any  => Runs when the listing is retrieved. Signature is callback(error: string, listing: datariver.Listing)
+- callback: any  => Runs when the listing is retrieved. Signature is callback(error: string, listing: Listing)
 
 #### Typescript ####
 ```typescript
-import {datariver} from "vendasta-sdk/protos/datariver";
 import {Listing} from "vendasta-sdk/index";
-let listing: datariver.Listing = client.getListing("listing-id", callback);
+let listing: Listing = client.getListing("listing-id", callback);
 client.deleteListing("other-listing-id", callback);
 ```
 
@@ -69,16 +68,15 @@ This will either save a new listing, or update the existing one with the same li
 NOTE: A newly created listing's listing id will be ignored. YOU SHOULD NEVER SET THE LISTING ID.
 
 #### Arguments ####
-- listing: datariver.Listing
+- listing: Listing
 
-- callback: any => Runs when the listing is retrieved. Signature is callback(error: string, listing: datariver.Listing)
+- callback: any => Runs when the listing is retrieved. Signature is callback(error: string, listing: Listing)
 
 #### Typescript ####
 ```typescript
-import {datariver} from "vendasta-sdk/protos/datariver";
 import {Client, Listing, Environment} from "vendasta-sdk/index";
 client: Client = new Client(Environment.TEST, "my-access-token";
-listing: datariver.Listing = new Listing();
+listing: Listing = new Listing();
 listing.address = "123 Test Dr.";
 listing.external_id = "externalId";
 listing.url = "http://www.vendasta.com";
@@ -98,7 +96,6 @@ client.saveListing(listing, callback)
 
 ### Listing ###
 *The Listing class is used when interacting with the client.
-To get the type definitions you must use datariver.Listing from vendasta-sdk/protos/datariver.*
 
 #### Required Fields ####
 - external_id: string =>  This is your ID for this listing.
@@ -120,7 +117,7 @@ To get the type definitions you must use datariver.Listing from vendasta-sdk/pro
 
 - zip_code: string => The zip code / postal code of the business.
 
-- location: datariver.Geo => The latitude and longitude of the business location.
+- location: Geo => The latitude and longitude of the business location.
 
 - business_categories: array<string> =>  A list of categories that describes the business the listing represents.
 
@@ -134,7 +131,6 @@ To get the type definitions you must use datariver.Listing from vendasta-sdk/pro
 
 
 
-To use the typings for this class, you'll have to import it from vendasta-sdk/protos/datariver.
 
 ### Geo ###
 *This simple class is used to set the location of the listing.*
@@ -143,7 +139,6 @@ To use the typings for this class, you'll have to import it from vendasta-sdk/pr
 
 - longitude: number => longitudinal location of the listing.
 
-To use the typings for this class, you'll have to import it from vendasta-sdk/protos/datariver.
 
 
 ### Quickstart ###
