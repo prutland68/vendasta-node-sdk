@@ -1,4 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
 /// <reference path="../protos/datariver.d.ts" />
 const grpc = require("grpc");
 
@@ -44,7 +43,9 @@ export class Client {
             if (!error) {
                 error = listingResponse.error || null;
             }
-            callback(error, listingResponse.listing);
+            if (callback) {
+                callback(error, listingResponse.listing);
+            }
         });
     };
     public deleteListing = (listingId:string, callback:any) => {
@@ -52,7 +53,9 @@ export class Client {
             if (!error) {
                 error = listingResponse.error || null;
             }
-            callback(error, listingResponse.listing);
+            if (callback) {
+                callback(error, listingResponse.listing);
+            }
         });
     };
     public putListing = (listing:datariver.Listing, callback:any) => {
@@ -60,7 +63,9 @@ export class Client {
             if (!error) {
                 error = listingResponse.error || null;
             }
-            callback(error, listingResponse.listing);
+            if (callback) {
+                callback(error, listingResponse.listing);
+            }
         });
     };
 }

@@ -1,7 +1,7 @@
 "use strict";
 /// <reference path="../typings/index.d.ts" />
 var index_1 = require("../src/index");
-var client = new index_1.Client(index_1.Environment.TEST, '8d535a7c8301cd87957013b7210f4c03'); // ask us for a token.
+var client = new index_1.Client(index_1.Environment.TEST, 'my-example-token'); // ask us for a token.
 // Create a listing object to put.
 var listing = new index_1.Listing();
 listing.external_id = "vendasta-technologies-12345";
@@ -21,11 +21,17 @@ listing.phone = "1-306-955-5512";
 listing.url = "www.example-source.com/vendasta-technologies-12345";
 listing.website = "www.vendasta.com";
 listing.zip_code = "S7K 1M1";
+function lol(listing) {
+    console.log(listing);
+}
+lol(listing);
 client.putListing(listing, putListingCallback);
 var listingId = null;
 function putListingCallback(error, response) {
     console.log("**** Put listing output: ****");
     printErrorAndResponse(error, response);
+    if (error)
+        return;
     listingId = response['listing_id'];
     // Get the listing we just added
     client.getListing(listingId, getListingCallback);
@@ -33,12 +39,16 @@ function putListingCallback(error, response) {
 function getListingCallback(error, response) {
     console.log("**** Get listing output: ****");
     printErrorAndResponse(error, response);
+    if (error)
+        return;
     // Remove the listing we added
     client.deleteListing(listingId, deleteListingCallback);
 }
 function deleteListingCallback(error, response) {
     console.log("**** Delete listing output: ****");
     printErrorAndResponse(error, response);
+    if (error)
+        return;
     // To show that the delete went through.
     client.getListing(listingId, finalCallback);
 }

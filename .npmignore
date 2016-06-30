@@ -9,7 +9,6 @@ karma.conf.js
 *.json
 *.ts
 !*.d.ts
-*.proto
 *.js.map
 *.spec.*
 

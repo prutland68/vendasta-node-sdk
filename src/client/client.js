@@ -1,5 +1,4 @@
 "use strict";
-/// <reference path="../../typings/index.d.ts" />
 /// <reference path="../protos/datariver.d.ts" />
 var grpc = require("grpc");
 var protos_1 = require('../protos/protos');
@@ -29,7 +28,9 @@ var Client = (function () {
                 if (!error) {
                     error = listingResponse.error || null;
                 }
-                callback(error, listingResponse.listing);
+                if (callback) {
+                    callback(error, listingResponse.listing);
+                }
             });
         };
         this.deleteListing = function (listingId, callback) {
@@ -37,7 +38,9 @@ var Client = (function () {
                 if (!error) {
                     error = listingResponse.error || null;
                 }
-                callback(error, listingResponse.listing);
+                if (callback) {
+                    callback(error, listingResponse.listing);
+                }
             });
         };
         this.putListing = function (listing, callback) {
@@ -45,7 +48,9 @@ var Client = (function () {
                 if (!error) {
                     error = listingResponse.error || null;
                 }
-                callback(error, listingResponse.listing);
+                if (callback) {
+                    callback(error, listingResponse.listing);
+                }
             });
         };
         if (environment == Environment.PRODUCTION) {

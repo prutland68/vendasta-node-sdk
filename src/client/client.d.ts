@@ -1,4 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
 /// <reference path="../protos/datariver.d.ts" />
 export declare enum Environment {
     TEST = 1,

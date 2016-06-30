@@ -3,7 +3,7 @@ import {Client, Environment, Listing, Geo} from "../src/index"
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 // Create a listing object to put.
-var listing = new Listing();
+var listing = <Listing> new Listing();
 listing.external_id = "vendasta-technologies-12345";
 listing.company_name = "Vendasta Technologies Inc.";
 listing.business_categories[0] = "marketing";
@@ -22,33 +22,40 @@ listing.url = "www.example-source.com/vendasta-technologies-12345";
 listing.website = "www.vendasta.com";
 listing.zip_code = "S7K 1M1";
 
+
 client.putListing(listing, putListingCallback);
 let listingId: string = null;
 
 
-function putListingCallback(error: any, response: any) {
+function putListingCallback(error: string, response: Listing) {
     console.log("**** Put listing output: ****");
     printErrorAndResponse(error, response);
+    if (error)
+        return;
     listingId = response['listing_id'];
     // Get the listing we just added
     client.getListing(listingId, getListingCallback)
 }
 
-function getListingCallback(error: any, response: any) {
+function getListingCallback(error: string, response: Listing) {
     console.log("**** Get listing output: ****");
     printErrorAndResponse(error, response);
+    if (error)
+        return;
     // Remove the listing we added
     client.deleteListing(listingId, deleteListingCallback);
 }
 
-function deleteListingCallback(error: any, response: any) {
+function deleteListingCallback(error: string, response: Listing) {
     console.log("**** Delete listing output: ****");
     printErrorAndResponse(error, response);
+    if (error)
+        return;
     // To show that the delete went through.
     client.getListing(listingId, finalCallback);
 }
 
-function finalCallback(error: any, response: any) {
+function finalCallback(error: string, response: Listing) {
     console.log("**** Final get listing output: ****");
     printErrorAndResponse(error, response);
 }

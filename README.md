@@ -77,7 +77,7 @@ NOTE: A newly created listing's listing id will be ignored. YOU SHOULD NEVER SET
 ``` typescript
 import {Client, Listing, Environment} from "vendasta-sdk/index";
 client: Client = new Client(Environment.TEST, "my-access-token";
-listing: Listing = new Listing();
+listing: Listing = <Listing> new Listing();
 listing.address = "123 Test Dr.";
 listing.external_id = "externalId";
 listing.url = "http://www.vendasta.com";
