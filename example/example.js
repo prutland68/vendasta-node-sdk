@@ -4,9 +4,23 @@ var index_1 = require("../src/index");
 var client = new index_1.Client(index_1.Environment.TEST, '8d535a7c8301cd87957013b7210f4c03');
 // Create a listing object to put.
 var listing = new index_1.Listing();
-listing.address = "123 Test Dr.";
-listing.external_id = "externalId"; // Required
-listing.url = "http://www.vendasta.com"; // Required
+listing.external_id = "vendasta-technologies-12345";
+listing.company_name = "Vendasta Technologies Inc.";
+listing.business_categories[0] = "marketing";
+listing.additional_phone_numbers[0] = "1-306-555-1212";
+listing.address = "Suite 405, Avenue Building";
+listing.average_review_rating = 5;
+listing.city = "Saskatoon";
+listing.state = "SK";
+listing.country = "CA";
+listing.location = new index_1.Geo();
+listing.location.latitude = 52.1265741;
+listing.location.longitude = -106.6648763;
+listing.number_of_reviews = 17;
+listing.phone = "1-306-955-5512";
+listing.url = "www.example-source.com/vendasta-technologies-12345";
+listing.website = "www.vendasta.com";
+listing.zip_code = "S7K 1M1";
 client.putListing(listing, putListingCallback);
 var listingId = null;
 function putListingCallback(error, response) {
