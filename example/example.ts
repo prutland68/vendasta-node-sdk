@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 import {Client, Environment, Listing, Geo} from "../src/index"
-const client = new Client(Environment.TEST, '8d535a7c8301cd87957013b7210f4c03');
+const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 // Create a listing object to put.
 let listing: Listing = new Listing();

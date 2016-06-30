@@ -7,7 +7,8 @@ npm install --save vendasta-sdk
 ```
 
 ## Usage ##
-Note: The authentication mechanism is likely to change. You can use the static OAuth token from the example to hit the test environment for now. Production is not yet available.
+Note: The authentication mechanism is likely to change. Currently, it's done via a static oauth token. (ask us for one).
+You can hit the test environment for now. Production is not yet available.
 Better documentation is coming later, for now this readme can serve as a quick start guide.
 
 
