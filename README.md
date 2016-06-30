@@ -18,13 +18,15 @@ You'll use the client to interact with either our test or production (coming soo
 Creating the client is easy
 
 #### Typescript ####
-```typescript
+```
+typescript
 import {Client, Environment} from "vendasta-sdk/index"
 client: Client = new Client(Environment.TEST, "my-access-token";
 ```
 
 #### Javascript ####
-```javascript
+```
+javascript
 var vendastaSdk = require("vendasta-sdk/index");
 var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-fake-token");
 ```
@@ -32,11 +34,13 @@ var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-fake-token
 
 ### Retrieving a Listing / Deleting a Listing###
 Retrieve a listing with
-```typescript
+```
+typescript
 client.getListing;
 ```
 Delete a listing with
-```typescript
+```
+typescript
 client.deleteListing;
 ```
 
@@ -47,20 +51,23 @@ client.deleteListing;
 - callback: any  => Runs when the listing is retrieved. Signature is callback(error: string, listing: Listing)
 
 #### Typescript ####
-```typescript
+```
+typescript
 import {Listing} from "vendasta-sdk/index";
 let listing: Listing = client.getListing("listing-id", callback);
 client.deleteListing("other-listing-id", callback);
 ```
 
 #### Javascript ####
-```javascript
+```
+javascript
 var listing = client.getListing("listing-id", callback);
 client.deleteListing("other-listing-id", callback)
 ```
 
 ### Saving a Listing ###
-```typescript
+```
+typescript
 client.putListing;
 ```
 
@@ -74,7 +81,8 @@ NOTE: A newly created listing's listing id will be ignored. YOU SHOULD NEVER SET
 - callback: any => Runs when the listing is retrieved. Signature is callback(error: string, listing: Listing)
 
 #### Typescript ####
-```typescript
+```
+typescript
 import {Client, Listing, Environment} from "vendasta-sdk/index";
 client: Client = new Client(Environment.TEST, "my-access-token";
 listing: Listing = new Listing();
@@ -85,7 +93,8 @@ listing.url = "http://www.vendasta.com";
 ```
 
 #### Javascript ####
-```javascript
+```
+javascript
 var vendastaSdk = require("vendasta-sdk/index");
 var listing = new vendastaSdk.Listing();
 var client = new vendastaSdk.Client(Environment.TEST, "my-access-token")
