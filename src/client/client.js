@@ -22,8 +22,7 @@ var Client = (function () {
                 callback(null, metadata);
             });
             var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-            var datariverService = new DatariverService(address, combinedCreds);
-            return datariverService;
+            return new DatariverService(address, combinedCreds);
         };
         this.getListing = function (listingId, callback) {
             return _this.datariverService.getListing(listingId, function (error, listingResponse) {

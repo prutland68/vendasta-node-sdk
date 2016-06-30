@@ -9,12 +9,9 @@
     "test": "./node_modules/jasmine-node-karma/bin/jasmine-node-karma src"
   },
   "devDependencies": {
-    "jasmine": "^2.4.1",
     "jasmine-node-karma": "^1.6.1",
     "jsdoc": "^3.4.0",
-    "karma": "^1.1.0",
     "karma-chrome-launcher": "^1.0.1",
-    "karma-jasmine": "^1.0.2",
     "proto2typescript": "^2.2.0",
     "typescript": "^1.8.10",
     "typings": "^1.3.0"

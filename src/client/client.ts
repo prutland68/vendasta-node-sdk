@@ -36,10 +36,8 @@ export class Client {
             }
         );
         const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-
-        const datariverService = new DatariverService(address, combinedCreds);
-        return datariverService;
-    }
+        return new DatariverService(address, combinedCreds);
+    };
 
     public getListing = (listingId:string, callback:any) => {
         return this.datariverService.getListing(listingId, (error:string, listingResponse:datariver.ListingResponse) => {
