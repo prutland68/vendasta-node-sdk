@@ -59,7 +59,7 @@ var listing = client.getListing("listing-id", callback);
 client.deleteListing("other-listing-id", callback)
 ```
 
-### Saving a Listing ###
+### Saving a Listing ### 
 ``` typescript
 client.putListing;
 ```
