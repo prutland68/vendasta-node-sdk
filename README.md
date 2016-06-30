@@ -19,13 +19,13 @@ Creating the client is easy
 
 #### Typescript ####
 ``` typescript
-import {Client, Environment} from "vendasta-sdk/index"
-client: Client = new Client(Environment.TEST, "my-access-token";
+import {Client, Environment} from "vendasta-sdk/src/index"
+client: Client = new Client(Environment.TEST, "my-access-token");
 ```
 
 #### Javascript ####
 ``` javascript
-var vendastaSdk = require("vendasta-sdk/index");
+var vendastaSdk = require("vendasta-sdk");
 var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-fake-token");
 ```
 
@@ -48,7 +48,7 @@ client.deleteListing;
 
 #### Typescript ####
 ``` typescript
-import {Listing} from "vendasta-sdk/index";
+import {Listing} from "vendasta-sdk/src/index";
 let listing: Listing = client.getListing("listing-id", callback);
 client.deleteListing("other-listing-id", callback);
 ```
@@ -75,7 +75,7 @@ NOTE: A newly created listing's listing id will be ignored. YOU SHOULD NEVER SET
 
 #### Typescript ####
 ``` typescript
-import {Client, Listing, Environment} from "vendasta-sdk/index";
+import {Client, Listing, Environment} from "vendasta-sdk/src/index";
 client: Client = new Client(Environment.TEST, "my-access-token";
 listing: Listing = <Listing> new Listing();
 listing.address = "123 Test Dr.";
@@ -86,7 +86,7 @@ listing.url = "http://www.vendasta.com";
 
 #### Javascript ####
 ``` javascript
-var vendastaSdk = require("vendasta-sdk/index");
+var vendastaSdk = require("vendasta-sdk");
 var listing = new vendastaSdk.Listing();
 var client = new vendastaSdk.Client(Environment.TEST, "my-access-token")
 listing.address = "123 Test Dr.";
