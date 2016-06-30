@@ -1,6 +1,6 @@
 {
   "name": "vendasta-sdk",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Vendasta SDK",
   "main": "src/index.js",
   "author": "Vendasta",
