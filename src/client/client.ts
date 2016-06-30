@@ -16,7 +16,7 @@ export class Client {
     private datariverService:any;
     private address:string;
 
-    constructor(private environment:Environment, private token:string, service = null) {
+    constructor(private environment:Environment, private token:string, service: any = null) {
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }
@@ -27,7 +27,7 @@ export class Client {
         this.datariverService = service || this.getDatariverService(this.metaData, this.address);
     }
     
-    private getDatariverService = (metadata, address) => {
+    private getDatariverService = (metadata: any, address: string) => {
         const creds = grpc.credentials.createSsl();
 
         const callCreds = grpc.credentials.createFromMetadataGenerator(

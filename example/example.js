@@ -1,7 +1,7 @@
 "use strict";
 /// <reference path="../typings/index.d.ts" />
 var index_1 = require("../src/index");
-var client = new index_1.Client(index_1.Environment.TEST, '8d535a7c8301cd87957013b7210f4c03');
+var client = new index_1.Client(index_1.Environment.TEST, '8d535a7c8301cd87957013b7210f4c03'); // ask us for a token.
 // Create a listing object to put.
 var listing = new index_1.Listing();
 listing.external_id = "vendasta-technologies-12345";

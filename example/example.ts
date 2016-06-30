@@ -3,7 +3,7 @@ import {Client, Environment, Listing, Geo} from "../src/index"
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 // Create a listing object to put.
-let listing: Listing = new Listing();
+var listing = new Listing();
 listing.external_id = "vendasta-technologies-12345";
 listing.company_name = "Vendasta Technologies Inc.";
 listing.business_categories[0] = "marketing";
@@ -22,9 +22,8 @@ listing.url = "www.example-source.com/vendasta-technologies-12345";
 listing.website = "www.vendasta.com";
 listing.zip_code = "S7K 1M1";
 
-
 client.putListing(listing, putListingCallback);
-var listingId = null;
+let listingId: string = null;
 
 
 function putListingCallback(error: any, response: any) {
