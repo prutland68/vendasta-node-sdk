@@ -3,6 +3,7 @@ var _this = this;
 /// <reference path="../protos/datariver.d.ts" />
 var client_1 = require("./client");
 var client_2 = require("./client");
+var index_1 = require('../index');
 var mockedDatariverService = (function () {
     function mockedDatariverService() {
         var _this = this;
@@ -21,27 +22,77 @@ var mockedDatariverService = (function () {
     return mockedDatariverService;
 }());
 describe('Client tests', function () {
+    beforeEach(function () {
+        _this.mockedService = new mockedDatariverService();
+        _this.client = new client_1.Client(client_2.Environment.TEST, "fake-token", _this.mockedService);
+        _this.callbackOwner = {
+            callback: jasmine.createSpy('callback spy'),
+        };
+    });
     describe("getListing tests", function () {
-        beforeEach(function () {
-            _this.mockedService = new mockedDatariverService();
-            _this.mockedClient = new client_1.Client(client_2.Environment.TEST, "fake-token", _this.mockedService);
-            _this.callbackOwner = {
-                callback: jasmine.createSpy('callback spy'),
-            };
-        });
         it('Should call my callback method with the returned listing.', function () {
-            _this.mockedClient.getListing("fake listing id", _this.callbackOwner.callback);
+            _this.client.getListing("fake listing id", _this.callbackOwner.callback);
             expect(_this.callbackOwner.callback.wasCalled).toBeTruthy();
         });
         it('Should pass the main error into the callback if the main error exists.', function () {
             _this.mockedService.error = "Error!";
-            _this.mockedClient.getListing("fake listing id", _this.callbackOwner.callback);
+            _this.client.getListing("fake listing id", _this.callbackOwner.callback);
             expect(_this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
         });
         it("Should pass the listingResponse's error into the callback if the main error doesn't exist.", function () {
             _this.mockedService.listingResponse.error = "ListingResponse error!";
-            _this.mockedClient.getListing("fake listing id", _this.callbackOwner.callback);
+            _this.client.getListing("fake listing id", _this.callbackOwner.callback);
             expect(_this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
+        });
+        it("Should pass the listing from the ListingResponse to the callback", function () {
+            var fakeListing = new index_1.Listing();
+            _this.mockedService.listingResponse.listing = fakeListing;
+            _this.client.getListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeListing);
+        });
+    });
+    describe("deleteListing tests.", function () {
+        it('Should call my callback method with the returned listing.', function () {
+            _this.client.deleteListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback.wasCalled).toBeTruthy();
+        });
+        it('Should pass the main error into the callback if the main error exists.', function () {
+            _this.mockedService.error = "Error!";
+            _this.client.deleteListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
+        });
+        it("Should pass the listingResponse's error into the callback if the main error doesn't exist.", function () {
+            _this.mockedService.listingResponse.error = "ListingResponse error!";
+            _this.client.deleteListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
+        });
+        it("Should pass the listing from the ListingResponse to the callback", function () {
+            var fakeListing = new index_1.Listing();
+            _this.mockedService.listingResponse.listing = fakeListing;
+            _this.client.deleteListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeListing);
+        });
+    });
+    describe("deleteListing tests.", function () {
+        it('Should call my callback method with the returned listing.', function () {
+            _this.client.putListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback.wasCalled).toBeTruthy();
+        });
+        it('Should pass the main error into the callback if the main error exists.', function () {
+            _this.mockedService.error = "Error!";
+            _this.client.putListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
+        });
+        it("Should pass the listingResponse's error into the callback if the main error doesn't exist.", function () {
+            _this.mockedService.listingResponse.error = "ListingResponse error!";
+            _this.client.putListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
+        });
+        it("Should pass the listing from the ListingResponse to the callback", function () {
+            var fakeListing = new index_1.Listing();
+            _this.mockedService.listingResponse.listing = fakeListing;
+            _this.client.putListing("fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeListing);
         });
     });
 });
