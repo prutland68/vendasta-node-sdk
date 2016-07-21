@@ -1,8 +1,11 @@
 "use strict";
-/// <reference path="../protos/datariver.d.ts" />
+/// <reference path="../protos/directory.d.ts" />
 var grpc = require("grpc");
 var protos_1 = require('../protos/protos');
 var DatariverService = protos_1.datariverProto.datariver.DataRiver;
+console.log(protos_1.datariverProto);
+var foo = new protos_1.datariverProto.Listing.Client();
+console.log(foo);
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
     Environment[Environment["PRODUCTION"] = 2] = "PRODUCTION";

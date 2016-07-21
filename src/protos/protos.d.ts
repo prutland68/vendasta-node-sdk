@@ -1,4 +1,4 @@
-/// <reference path="datariver.d.ts" />
+/// <reference path="directory.d.ts" />
 export declare const datariverProto: any;
 export interface Listing extends datariver.Listing {
     constructor: {

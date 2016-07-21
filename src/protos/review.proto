@@ -1,0 +1,76 @@
+// To generate SDK:
+// protoc ./datariver-reviews.proto --python_out=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_python_plugin`
+
+syntax = "proto3";
+
+package datariver;
+
+// based on Review VObject
+message Review {
+	string review_id = 1;
+	string listing_id = 2;
+	string url = 4; // canonical URL to review
+
+	float star_rating = 5;
+	string reviewer_name = 6;
+	string reviewer_email = 7;
+	string reviewer_url = 8;
+	string content = 9;
+	int64 published_date = 10;
+	string title = 11;
+
+}
+
+message ReviewResponse {
+	string review_id = 1;
+	string listing_id = 2;
+
+	enum StatusCodes {
+	    UNUSED = 0;
+	    SUCCESS = 1;
+	    ERROR = 2;
+	    REJECTED = 3;
+	    NOT_FOUND = 4;
+	}
+	StatusCodes status = 4;
+	string error = 5;
+	Review review = 6;
+}
+
+message MultiReviewResponse {
+    string listing_id = 1;
+    string listing_external_id = 2;
+
+    enum StatusCodes {
+        UNUSED = 0;
+	    SUCCESS = 1;
+	    ERROR = 2;
+	    REJECTED = 3;
+	    NOT_FOUND = 4;
+    }
+    StatusCodes status = 4;
+	string error = 5;
+	repeated Review reviews = 6;
+}
+
+message GetReviewRequest {
+	string review_id = 1;
+}
+
+message DeleteReviewRequest {
+	string review_id = 1;
+}
+
+message ListReviewsRequest {
+    string listing_id = 1;
+    string listing_external_id = 2;
+    int64 offset = 3;
+    int64 page_size = 4;
+}
+
+service Reviews {
+	rpc Put(Review) returns (ReviewResponse);
+	rpc Get(GetReviewRequest) returns (ReviewResponse);
+	rpc Delete(DeleteReviewRequest) returns (ReviewResponse);
+	rpc List(ListReviewsRequest) returns (MultiReviewResponse);
+}

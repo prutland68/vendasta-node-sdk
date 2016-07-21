@@ -21,10 +21,6 @@ listing.phone = "1-306-955-5512";
 listing.url = "www.example-source.com/vendasta-technologies-12345";
 listing.website = "www.vendasta.com";
 listing.zip_code = "S7K 1M1";
-function lol(listing) {
-    console.log(listing);
-}
-lol(listing);
 client.putListing(listing, putListingCallback);
 var listingId = null;
 function putListingCallback(error, response) {

@@ -1,4 +1,4 @@
-/// <reference path="../protos/datariver.d.ts" />
+/// <reference path="../protos/directory.d.ts" />
 export declare enum Environment {
     TEST = 1,
     PRODUCTION = 2,

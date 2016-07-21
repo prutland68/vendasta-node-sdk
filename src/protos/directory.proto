@@ -1,0 +1,9 @@
+// To generate SDK:
+// protoc ./directory.proto --python_out=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_python_plugin`
+
+syntax = "proto3";
+
+package datariver;
+
+import "review.proto";
+import "listing.proto";

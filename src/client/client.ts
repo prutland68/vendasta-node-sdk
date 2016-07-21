@@ -1,9 +1,12 @@
-/// <reference path="../protos/datariver.d.ts" />
+/// <reference path="../protos/directory.d.ts" />
 const grpc = require("grpc");
 
 import {datariverProto} from '../protos/protos'
 
 const DatariverService = datariverProto.datariver.DataRiver;
+console.log(datariverProto);
+let foo = new datariverProto.Listing.Client();
+console.log(foo);
 
 export enum Environment{
     TEST = 1,

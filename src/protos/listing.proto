@@ -57,9 +57,9 @@ message DeleteListingRequest {
 	string listing_id = 1;
 }
 
-service DataRiver {
+service Listings {
 	// rpc StreamListing(stream Listing) returns (stream ListingResponse);
-	rpc PutListing(Listing) returns (ListingResponse);
-	rpc GetListing(GetListingRequest) returns (ListingResponse);
-	rpc DeleteListing(DeleteListingRequest) returns (ListingResponse);
+	rpc Put(Listing) returns (ListingResponse);
+	rpc Get(GetListingRequest) returns (ListingResponse);
+	rpc Delete(DeleteListingRequest) returns (ListingResponse);
 }

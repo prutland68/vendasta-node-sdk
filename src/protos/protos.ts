@@ -1,10 +1,10 @@
-/// <reference path="./datariver.d.ts" />
+/// <reference path="./directory.d.ts" />
 
 const grpc = require("grpc");
 
 export const datariverProto = grpc.load({
     root: __dirname,
-    file: "datariver.proto"
+    file: "directory.proto"
 });
 
 
