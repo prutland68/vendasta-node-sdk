@@ -38,34 +38,34 @@ export class Client {
     };
 
     public getListing = (listingId:string, callback:any) => {
-        return this.listingService.getListing(listingId, (error:string, listingResponse:Listing) => {
-            if (!error) {
-                error = listingResponse.error || null;
-            }
+        return this.listingService.getListing(listingId, (error:string, listing:Listing) => {
+            // if (!error) {
+            //     error = listing.error || null;
+            // }
             if (callback) {
-                callback(error, listingResponse.listing);
+                callback(error, listing);
             }
         });
     };
 
     public deleteListing = (listingId:string, callback:any) => {
-        return this.listingService.deleteListing(listingId, (error:string, listingResponse:Listing)=> {
-            if (!error) {
-                error = listingResponse.error || null;
-            }
+        return this.listingService.deleteListing(listingId, (error:string, listing:Listing)=> {
+            // if (!error) {
+            //     error = listing.error || null;
+            // }
             if (callback) {
-                callback(error, listingResponse.listing);
+                callback(error, listing);
             }
         });
     };
 
     public putListing = (listing:Listing, callback:any) => {
-        return this.listingService.putListing(listing, (error:string, listingResponse:Listing) => {
-            if (!error) {
-                error = listingResponse.error || null;
-            }
+        return this.listingService.putListing(listing, (error:string, listing:Listing) => {
+            // if (!error) {
+            //     error = listing.error || null;
+            // }
             if (callback) {
-                callback(error, listingResponse.listing);
+                callback(error, listing);
             }
         });
     };
@@ -82,7 +82,7 @@ export class Client {
         return new ReviewService(address, combinedCreds);
     };
 
-    public getReview = (reviewId:string, listingId: string, callback:any) => {
+    public getReview = (reviewId, listingId: string, callback:any) => {
         return this.reviewService.get(reviewId, listingId, (error:string, review:Review) => {
             // TODO: is this the right context, that we set with GRPC?
             // if (!error) {
@@ -94,16 +94,16 @@ export class Client {
         });
     };
 
-    // public deleteReview = (reviewId:string, callback:any) => {
-    //     return this.reviewService.delete(reviewId, (error:string, reviewResponse:Review)=> {
-    //         if (!error) {
-    //             error = reviewResponse.error || null;
-    //         }
-    //         if (callback) {
-    //             callback(error, reviewResponse.review);
-    //         }
-    //     });
-    // };
+    public deleteReview = (reviewId, listingId: string, callback:any) => {
+        return this.reviewService.delete(reviewId, listingId, (error:string, review:Review)=> {
+            // if (!error) {
+            //     error = reviewResponse.error || null;
+            // }
+            if (callback) {
+                callback(error, review);
+            }
+        });
+    };
     //
     // public putReview = (review:Review, callback:any) => {
     //     return this.reviewService.put(review, (error:string, reviewResponse:Review) => {

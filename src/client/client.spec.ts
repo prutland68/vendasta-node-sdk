@@ -20,10 +20,14 @@ class mockedListingService {
 
 class mockedReviewService {
     public error: string = null;
-    public listingResponse = {};
+    public review = {};
 
     public get = (reviewId, listingId: string, callback: any) => {
-        callback(this.error, this.listingResponse);
+        callback(this.error, this.review);
+    };
+
+    public delete = (reviewId, listingId: string, callback: any) => {
+        callback(this.error, this.review);
     };
 }
 
@@ -133,15 +137,44 @@ describe('Client tests', () => {
         //     this.client.getListing("fake listing id", this.callbackOwner.callback);
         //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
         // });
-        // it("Should pass the listing from the ListingResponse to the callback", () => {
-        //     let fakeListing = <Listing> new Listing();
-        //     this.mockedReviewService.listingResponse.listing = fakeListing;
-        //     this.client.getListing("fake listing id", this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeListing);
+        it("Should pass the review to the callback", () => {
+            let fakeReview = <Review> new Review();
+            this.mockedReviewService.review = fakeReview;
+            this.client.getReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeReview);
+        });
+        it("should not crash if callback is null",() => {
+            this.callbackOwner.callback = null;
+            expect(this.client.getReview).not.toThrow(Error);
+            this.client.getReview("fake review id", "fake listing id", this.callbackOwner.callback);
+        });
+    });
+
+    describe("deleteReview tests.", () => {
+        it('Should call my callback method with the returned review.', () => {
+            this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
+        });
+        // it('Should pass the main error into the callback if the main error exists.', () => {
+        //     this.mockedReviewService.error = "Error!";
+        //     this.client.deleteReview("fake review id", this.callbackOwner.callback);
+        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
         // });
-        // it("should not crash if callback is null",() => {
-        //     expect(this.client.getListing).not.toThrow(Error);
-        //     this.client.getListing("fake listing id", this.callbackOwner.callback);
+        // it("Should pass the reviewResponse's error into the callback if the main error doesn't exist.", () => {
+        //     this.mockedReviewService.reviewResponse.error = "ReviewResponse error!";
+        //     this.client.deleteReview("fake review id", this.callbackOwner.callback);
+        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ReviewResponse error!', undefined);
         // });
+        it("Should pass the review to the callback", () => {
+            let fakeReview = <Review> new Review();
+            this.mockedReviewService.review = fakeReview;
+            this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeReview);
+        });
+        it("should not crash if callback is null",() => {
+            this.callbackOwner.callback = null;
+            expect(this.client.deleteReview).not.toThrow(Error);
+            this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+        });
     });
 });

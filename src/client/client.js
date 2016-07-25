@@ -23,32 +23,32 @@ var Client = (function () {
             return new protos_1.ListingService(address, combinedCreds);
         };
         this.getListing = function (listingId, callback) {
-            return _this.listingService.getListing(listingId, function (error, listingResponse) {
-                if (!error) {
-                    error = listingResponse.error || null;
-                }
+            return _this.listingService.getListing(listingId, function (error, listing) {
+                // if (!error) {
+                //     error = listing.error || null;
+                // }
                 if (callback) {
-                    callback(error, listingResponse.listing);
+                    callback(error, listing);
                 }
             });
         };
         this.deleteListing = function (listingId, callback) {
-            return _this.listingService.deleteListing(listingId, function (error, listingResponse) {
-                if (!error) {
-                    error = listingResponse.error || null;
-                }
+            return _this.listingService.deleteListing(listingId, function (error, listing) {
+                // if (!error) {
+                //     error = listing.error || null;
+                // }
                 if (callback) {
-                    callback(error, listingResponse.listing);
+                    callback(error, listing);
                 }
             });
         };
         this.putListing = function (listing, callback) {
-            return _this.listingService.putListing(listing, function (error, listingResponse) {
-                if (!error) {
-                    error = listingResponse.error || null;
-                }
+            return _this.listingService.putListing(listing, function (error, listing) {
+                // if (!error) {
+                //     error = listing.error || null;
+                // }
                 if (callback) {
-                    callback(error, listingResponse.listing);
+                    callback(error, listing);
                 }
             });
         };
@@ -65,6 +65,16 @@ var Client = (function () {
                 // TODO: is this the right context, that we set with GRPC?
                 // if (!error) {
                 //     error = context.error || null;
+                // }
+                if (callback) {
+                    callback(error, review);
+                }
+            });
+        };
+        this.deleteReview = function (reviewId, listingId, callback) {
+            return _this.reviewService.delete(reviewId, listingId, function (error, review) {
+                // if (!error) {
+                //     error = reviewResponse.error || null;
                 // }
                 if (callback) {
                     callback(error, review);

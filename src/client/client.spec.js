@@ -23,9 +23,12 @@ var mockedReviewService = (function () {
     function mockedReviewService() {
         var _this = this;
         this.error = null;
-        this.listingResponse = {};
+        this.review = {};
         this.get = function (reviewId, listingId, callback) {
-            callback(_this.error, _this.listingResponse);
+            callback(_this.error, _this.review);
+        };
+        this.delete = function (reviewId, listingId, callback) {
+            callback(_this.error, _this.review);
         };
     }
     return mockedReviewService;
@@ -134,16 +137,44 @@ describe('Client tests', function () {
         //     this.client.getListing("fake listing id", this.callbackOwner.callback);
         //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
         // });
-        // it("Should pass the listing from the ListingResponse to the callback", () => {
-        //     let fakeListing = <Listing> new Listing();
-        //     this.mockedReviewService.listingResponse.listing = fakeListing;
-        //     this.client.getListing("fake listing id", this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeListing);
+        it("Should pass the review to the callback", function () {
+            var fakeReview = new protos_1.Review();
+            _this.mockedReviewService.review = fakeReview;
+            _this.client.getReview("fake review id", "fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeReview);
+        });
+        it("should not crash if callback is null", function () {
+            _this.callbackOwner.callback = null;
+            expect(_this.client.getReview).not.toThrow(Error);
+            _this.client.getReview("fake review id", "fake listing id", _this.callbackOwner.callback);
+        });
+    });
+    describe("deleteReview tests.", function () {
+        it('Should call my callback method with the returned review.', function () {
+            _this.client.deleteReview("fake review id", "fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback.wasCalled).toBeTruthy();
+        });
+        // it('Should pass the main error into the callback if the main error exists.', () => {
+        //     this.mockedReviewService.error = "Error!";
+        //     this.client.deleteReview("fake review id", this.callbackOwner.callback);
+        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
         // });
-        // it("should not crash if callback is null",() => {
-        //     expect(this.client.getListing).not.toThrow(Error);
-        //     this.client.getListing("fake listing id", this.callbackOwner.callback);
+        // it("Should pass the reviewResponse's error into the callback if the main error doesn't exist.", () => {
+        //     this.mockedReviewService.reviewResponse.error = "ReviewResponse error!";
+        //     this.client.deleteReview("fake review id", this.callbackOwner.callback);
+        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ReviewResponse error!', undefined);
         // });
+        it("Should pass the review to the callback", function () {
+            var fakeReview = new protos_1.Review();
+            _this.mockedReviewService.review = fakeReview;
+            _this.client.deleteReview("fake review id", "fake listing id", _this.callbackOwner.callback);
+            expect(_this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeReview);
+        });
+        it("should not crash if callback is null", function () {
+            _this.callbackOwner.callback = null;
+            expect(_this.client.deleteReview).not.toThrow(Error);
+            _this.client.deleteReview("fake review id", "fake listing id", _this.callbackOwner.callback);
+        });
     });
 });
 //# sourceMappingURL=client.spec.js.map
