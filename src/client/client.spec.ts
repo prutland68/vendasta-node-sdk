@@ -1,5 +1,5 @@
 import {Client, Environment} from "./client";
-import {ListingService, ReviewService, Listing, Review } from '../protos/protos'
+import {ListingService, ReviewService, Listing, Review, ListReviewsResponse} from '../protos/protos'
 
 class mockedListingService {
     public error: string = null;
@@ -22,6 +22,7 @@ class mockedListingService {
 class mockedReviewService {
     public error: string = null;
     public review = {};
+    public listReviewsResponse = {};
 
     public get = (reviewId: string, callback: any) => {
         callback(this.error, this.review);
@@ -32,8 +33,13 @@ class mockedReviewService {
     };
 
     public put = (review: Review, callback: any) => {
-        callback(this.error, this.review)
+        callback(this.error, this.review);
     };
+
+    public list = (listingId: string, callback: any) => {
+        console.log(this.listReviewsResponse);
+        callback(this.error, this.listReviewsResponse);
+    }
 }
 
 describe('Client tests', () => {
@@ -163,4 +169,34 @@ describe('Client tests', () => {
             this.client.putReview(this.fakeReview, null);
         });
     });
+
+    describe("listReviews tests", () => {
+        it('Should call my callback method.', () => {
+            this.client.listReviews("listing-id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
+        });
+        it('Should pass the error into the callback if the error exists.', () => {
+            this.mockedReviewService.error = "Error!";
+            this.client.listReviews("fake listing id", this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', jasmine.any(Object));
+        });
+        it("Should pass the reviews to the callback", () => {
+            let fakeReview1 = new Review();
+            fakeReview1.star_rating = 3;
+            let fakeReview2 = new Review();
+            fakeReview2.star_rating = 5;
+            let fakeReviewsResponse = new ListReviewsResponse();
+            fakeReviewsResponse.reviews = [fakeReview1, fakeReview2];
+            this.listReviewsResponse = fakeReviewsResponse;
+            this.client.listReviews("fake listing id", (error, fakeReviewsResponse) => {
+                expect(this.mockedReviewService.listReviewsResponse).toEqual(fakeReviewsResponse);
+            });
+        });
+        it("should not crash if callback is null", () => {
+            this.callbackOwner.callback = null;
+            expect(this.client.listReviews).not.toThrow(Error);
+            this.client.listReviews("fake listing id", this.callbackOwner.callback);
+        });
+    });
+
 });

@@ -1,5 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
-import {Client, Environment, Listing, Geo} from "../src/index"
+import {Client, Environment, Listing, Geo, Review} from "../src/index"
+import Timestamp = Proto2TypeScript.google.protobuf.Timestamp;
+import ListReviewsResponse = Proto2TypeScript.datariver.ListReviewsResponse;
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 // Create a listing object to put.
@@ -52,10 +54,10 @@ function deleteListingCallback(error: string, response: Listing) {
     if (error)
         return;
     // To show that the delete went through.
-    client.getListing(listingId, finalCallback);
+    client.getListing(listingId, finalListingCallback);
 }
 
-function finalCallback(error: string, response: Listing) {
+function finalListingCallback(error: string, response: Listing) {
     console.log("**** Final get listing output: ****");
     printErrorAndResponse(error, response);
 }
@@ -63,6 +65,69 @@ function finalCallback(error: string, response: Listing) {
 function printErrorAndResponse(error: any, response: any) {
     if (error)
         console.log(error.toString());
+    console.log(error);
+    console.log(response);
+}
+
+
+// Create a review object to put.
+var review = new Review();
+review.url = "www.example-source.com/vendasta-technologies-12345";
+review.star_rating = 5.0;
+review.reviewer_name = "John Jones"
+review.reviewer_email = "john12345@jones.com";
+review.reviewer_url = "jones.com/blog";
+review.content = "Such an amazing place!";
+review.published_date = new Timestamp(Date.now() / 1000, Date.now() * 1000);
+review.title = "My review!";
+
+client.putReview(listing, putReviewCallback);
+let reviewId: string = null;
+
+
+function putReviewCallback(error: string, response: Review) {
+    console.log("**** Put review output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    reviewId = response['review_id'];
+    // Get the review we just added
+    client.getReview(reviewId, getReviewCallback)
+}
+
+function getReviewCallback(error: string, response: Review) {
+    console.log("**** Get review output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // Remove the review we added
+    client.deleteReview(reviewId, deleteReviewCallback);
+}
+
+function deleteReviewCallback(error: string, response: Review) {
+    console.log("**** Delete review output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // To show that the delete went through.
+    client.listReviews(listingId, listReviewsCallback);
+}
+
+function listReviewsCallback(error: string, response: ListReviewsResponse) {
+    console.log("**** List reviews output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // Get the reviews we just added
+    client.getReview(reviewId, finalReviewCallback)
+}
+
+function finalReviewCallback(error: string, response: Review) {
+    console.log("**** Final get review output: ****");
+    printErrorAndResponse(error, response);
+}
+
+function printErrorAndResponse(error: any, response: any) {
     console.log(error);
     console.log(response);
 }

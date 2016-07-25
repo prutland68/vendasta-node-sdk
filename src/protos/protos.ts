@@ -39,5 +39,6 @@ export const ListingService = listingProto.datariver.ListingService;
 export const Listing = listingProto.datariver.Listing;
 export const ListReviewsResponse = reviewProto.datariver.ListReviewsResponse;
 export const ReviewService = reviewProto.datariver.ReviewService;
+export const ListReviewsResponse = reviewProto.datariver.ListReviewsResponse;
 export const Review = reviewProto.datariver.Review;
 export const Geo = listingProto.datariver.Geo;

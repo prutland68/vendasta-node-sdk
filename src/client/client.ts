@@ -1,3 +1,4 @@
+import ListReviewsResponse = Proto2TypeScript.datariver.ListReviewsResponse;
 const grpc = require("grpc");
 
 import {Listing, Review, Empty} from '../protos/protos'
@@ -126,5 +127,15 @@ export class Client {
                 callback(error, review);
             }
         });
-    }
-};
+    };
+
+    public listReviews = (listingId: string, callback:any) => {
+        return this.reviewService.list(listingId, (error:any, reviews:ListReviewsResponse) => {
+            if (callback) {
+                if (error)
+                    error = error.toString();
+                callback(error, reviews);
+            }
+        });
+    };
+}

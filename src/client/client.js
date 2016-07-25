@@ -107,6 +107,15 @@ var Client = (function () {
                 }
             });
         };
+        this.listReviews = function (listingId, callback) {
+            return _this.reviewService.list(listingId, function (error, reviews) {
+                if (callback) {
+                    if (error)
+                        error = error.toString();
+                    callback(error, reviews);
+                }
+            });
+        };
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }
