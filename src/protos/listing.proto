@@ -1,9 +1,8 @@
-// To generate SDK:
-// protoc ./datariver.proto --python_out=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_python_plugin`
-
 syntax = "proto3";
 
 package datariver;
+
+import "google/protobuf/empty.proto";
 
 message Geo {
 	double latitude = 1;
@@ -14,39 +13,24 @@ message Geo {
 message Listing {
 	string listing_id = 1;
 	string external_id = 2;
-	string url = 4; // canonical URL
+	string url = 3;
 
 	//Basic NAP data
-	string company_name = 5;
-	string address = 6;
-	string city = 7;
-	string state = 8;
-	string country = 9;
-	string zip_code = 10;
-	Geo location = 11;
-	string phone = 12;
-	repeated string additional_phone_numbers = 13;
-	string website = 14;
+	string company_name = 4;
+	string address = 5;
+	string city = 6;
+	string state = 7;
+	string country = 8;
+	string zip_code = 9;
+	Geo location = 10;
+	string phone = 11;
+	repeated string additional_phone_numbers = 12;
+	string website = 13;
 
 	//Extended NAP data
-	int32 number_of_reviews = 15;
-	float average_review_rating = 16;
-	repeated string business_categories = 17;
-}
-
-message ListingResponse {
-	string listing_id = 1;
-	string external_id = 2;
-	enum StatusCodes {
-	    UNUSED = 0;
-	    SUCCESS = 1;
-	    ERROR = 2;
-	    REJECTED = 3;
-	    NOT_FOUND = 4;
-	}
-	StatusCodes status = 3;
-	string error = 4;
-	Listing listing = 5;
+	int32 number_of_reviews = 14;
+	float average_review_rating = 15;
+	repeated string business_categories = 16;
 }
 
 message GetListingRequest {
@@ -57,9 +41,8 @@ message DeleteListingRequest {
 	string listing_id = 1;
 }
 
-service Listings {
-	// rpc StreamListing(stream Listing) returns (stream ListingResponse);
-	rpc Put(Listing) returns (ListingResponse);
-	rpc Get(GetListingRequest) returns (ListingResponse);
-	rpc Delete(DeleteListingRequest) returns (ListingResponse);
+service ListingService {
+	rpc Put(Listing) returns (Listing);
+	rpc Get(GetListingRequest) returns (Listing);
+	rpc Delete(DeleteListingRequest) returns (google.protobuf.Empty);
 }

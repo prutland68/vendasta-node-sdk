@@ -1,12 +1,6 @@
-/// <reference path="../protos/directory.d.ts" />
 const grpc = require("grpc");
 
-import {datariverProto} from '../protos/protos'
-
-const DatariverService = datariverProto.datariver.DataRiver;
-console.log(datariverProto);
-let foo = new datariverProto.Listing.Client();
-console.log(foo);
+import {ListingService, ReviewService, Listing, Review } from '../protos/protos'
 
 export enum Environment{
     TEST = 1,
@@ -15,10 +9,11 @@ export enum Environment{
 
 export class Client {
     private metaData = new grpc.Metadata();
-    private datariverService:any;
+    private listingService:any;
+    private reviewService:any;
     private address:string;
 
-    constructor(private environment:Environment, private token:string, service: any = null) {
+    constructor(private environment:Environment, private token:string, listingService: any = null, reviewService: any = null) {
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }
@@ -26,10 +21,11 @@ export class Client {
             this.address = "directory-sandbox.vendasta.com:23000";  // assume test
         }
         this.metaData.add('token', token);
-        this.datariverService = service || this.getDatariverService(this.metaData, this.address);
+        this.listingService = listingService || this.getListingService(this.metaData, this.address);
+        this.reviewService = reviewService || this.getReviewService(this.metaData, this.address);
     }
     
-    private getDatariverService = (metadata: any, address: string) => {
+    private getListingService = (metadata: any, address: string) => {
         const creds = grpc.credentials.createSsl();
 
         const callCreds = grpc.credentials.createFromMetadataGenerator(
@@ -38,11 +34,22 @@ export class Client {
             }
         );
         const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        return new DatariverService(address, combinedCreds);
+        return new ListingService(address, combinedCreds);
+    };
+    private getReviewService = (metadata: any, address: string) => {
+        const creds = grpc.credentials.createSsl();
+
+        const callCreds = grpc.credentials.createFromMetadataGenerator(
+            (serviceUrl:string, callback:any) => {
+                callback(null, metadata)
+            }
+        );
+        const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+        return new ReviewService(address, combinedCreds);
     };
 
     public getListing = (listingId:string, callback:any) => {
-        return this.datariverService.getListing(listingId, (error:string, listingResponse:datariver.ListingResponse) => {
+        return this.listingService.getListing(listingId, (error:string, listingResponse:datariver.Listing) => {
             if (!error) {
                 error = listingResponse.error || null;
             }
@@ -52,7 +59,7 @@ export class Client {
         });
     };
     public deleteListing = (listingId:string, callback:any) => {
-        return this.datariverService.deleteListing(listingId, (error:string, listingResponse:datariver.ListingResponse)=> {
+        return this.listingService.deleteListing(listingId, (error:string, listingResponse:datariver.Listing)=> {
             if (!error) {
                 error = listingResponse.error || null;
             }
@@ -62,7 +69,7 @@ export class Client {
         });
     };
     public putListing = (listing:datariver.Listing, callback:any) => {
-        return this.datariverService.putListing(listing, (error:string, listingResponse:datariver.ListingResponse) => {
+        return this.listingService.putListing(listing, (error:string, listingResponse:datariver.Listing) => {
             if (!error) {
                 error = listingResponse.error || null;
             }

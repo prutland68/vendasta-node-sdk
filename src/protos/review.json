@@ -1,273 +1,209 @@
 {
-    "package": "datariver",
+    "package": null,
     "messages": [
         {
-            "name": "Review",
-            "fields": [
+            "name": "google",
+            "fields": [],
+            "messages": [
                 {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "review_id",
-                    "id": 1
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "listing_id",
-                    "id": 2
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "url",
-                    "id": 4
-                },
-                {
-                    "rule": "optional",
-                    "type": "float",
-                    "name": "star_rating",
-                    "id": 5
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "reviewer_name",
-                    "id": 6
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "reviewer_email",
-                    "id": 7
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "reviewer_url",
-                    "id": 8
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "content",
-                    "id": 9
-                },
-                {
-                    "rule": "optional",
-                    "type": "int64",
-                    "name": "published_date",
-                    "id": 10
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "title",
-                    "id": 11
-                }
-            ]
-        },
-        {
-            "name": "ReviewResponse",
-            "fields": [
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "review_id",
-                    "id": 1
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "listing_id",
-                    "id": 2
-                },
-                {
-                    "rule": "optional",
-                    "type": "StatusCodes",
-                    "name": "status",
-                    "id": 4
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "error",
-                    "id": 5
-                },
-                {
-                    "rule": "optional",
-                    "type": "Review",
-                    "name": "review",
-                    "id": 6
-                }
-            ],
-            "enums": [
-                {
-                    "name": "StatusCodes",
-                    "values": [
+                    "name": "protobuf",
+                    "fields": [],
+                    "options": {
+                        "csharp_namespace": "Google.Protobuf.WellKnownTypes",
+                        "go_package": "github.com/golang/protobuf/ptypes/timestamp",
+                        "java_package": "com.google.protobuf",
+                        "java_outer_classname": "TimestampProto",
+                        "java_multiple_files": true,
+                        "java_generate_equals_and_hash": true,
+                        "objc_class_prefix": "GPB",
+                        "cc_enable_arenas": true
+                    },
+                    "messages": [
                         {
-                            "name": "UNUSED",
-                            "id": 0
+                            "name": "Empty",
+                            "fields": []
                         },
                         {
-                            "name": "SUCCESS",
-                            "id": 1
-                        },
-                        {
-                            "name": "ERROR",
-                            "id": 2
-                        },
-                        {
-                            "name": "REJECTED",
-                            "id": 3
-                        },
-                        {
-                            "name": "NOT_FOUND",
-                            "id": 4
+                            "name": "Timestamp",
+                            "fields": [
+                                {
+                                    "rule": "optional",
+                                    "type": "int64",
+                                    "name": "seconds",
+                                    "id": 1
+                                },
+                                {
+                                    "rule": "optional",
+                                    "type": "int32",
+                                    "name": "nanos",
+                                    "id": 2
+                                }
+                            ]
                         }
                     ]
                 }
             ]
         },
         {
-            "name": "MultiReviewResponse",
-            "fields": [
+            "name": "datariver",
+            "fields": [],
+            "messages": [
                 {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "listing_id",
-                    "id": 1
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "listing_external_id",
-                    "id": 2
-                },
-                {
-                    "rule": "optional",
-                    "type": "StatusCodes",
-                    "name": "status",
-                    "id": 4
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "error",
-                    "id": 5
-                },
-                {
-                    "rule": "repeated",
-                    "type": "Review",
-                    "name": "reviews",
-                    "id": 6
-                }
-            ],
-            "enums": [
-                {
-                    "name": "StatusCodes",
-                    "values": [
+                    "name": "Review",
+                    "fields": [
                         {
-                            "name": "UNUSED",
-                            "id": 0
-                        },
-                        {
-                            "name": "SUCCESS",
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "review_id",
                             "id": 1
                         },
                         {
-                            "name": "ERROR",
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "listing_id",
                             "id": 2
                         },
                         {
-                            "name": "REJECTED",
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "url",
                             "id": 3
                         },
                         {
-                            "name": "NOT_FOUND",
+                            "rule": "optional",
+                            "type": "float",
+                            "name": "star_rating",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "reviewer_name",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "reviewer_email",
+                            "id": 6
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "reviewer_url",
+                            "id": 7
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "content",
+                            "id": 8
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "google.protobuf.Timestamp",
+                            "name": "published_date",
+                            "id": 9
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "title",
+                            "id": 10
+                        }
+                    ]
+                },
+                {
+                    "name": "GetReviewRequest",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "review_id",
+                            "id": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "DeleteReviewRequest",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "review_id",
+                            "id": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "ListReviewsRequest",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "listing_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "string",
+                            "name": "listing_external_id",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "int64",
+                            "name": "offset",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "type": "int64",
+                            "name": "page_size",
                             "id": 4
                         }
                     ]
+                },
+                {
+                    "name": "ListReviewsResponse",
+                    "fields": [
+                        {
+                            "rule": "repeated",
+                            "type": "Review",
+                            "name": "reviews",
+                            "id": 1
+                        }
+                    ]
+                }
+            ],
+            "services": [
+                {
+                    "name": "ReviewService",
+                    "options": {},
+                    "rpc": {
+                        "Put": {
+                            "request": "Review",
+                            "response": "Review",
+                            "options": {}
+                        },
+                        "Get": {
+                            "request": "GetReviewRequest",
+                            "response": "Review",
+                            "options": {}
+                        },
+                        "Delete": {
+                            "request": "DeleteReviewRequest",
+                            "response": "google.protobuf.Empty",
+                            "options": {}
+                        },
+                        "List": {
+                            "request": "ListReviewsRequest",
+                            "response": "ListReviewsResponse",
+                            "options": {}
+                        }
+                    }
                 }
             ]
-        },
-        {
-            "name": "GetReviewRequest",
-            "fields": [
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "review_id",
-                    "id": 1
-                }
-            ]
-        },
-        {
-            "name": "DeleteReviewRequest",
-            "fields": [
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "review_id",
-                    "id": 1
-                }
-            ]
-        },
-        {
-            "name": "ListReviewsRequest",
-            "fields": [
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "listing_id",
-                    "id": 1
-                },
-                {
-                    "rule": "optional",
-                    "type": "string",
-                    "name": "listing_external_id",
-                    "id": 2
-                },
-                {
-                    "rule": "optional",
-                    "type": "int64",
-                    "name": "offset",
-                    "id": 3
-                },
-                {
-                    "rule": "optional",
-                    "type": "int64",
-                    "name": "page_size",
-                    "id": 4
-                }
-            ]
-        }
-    ],
-    "services": [
-        {
-            "name": "Reviews",
-            "options": {},
-            "rpc": {
-                "Put": {
-                    "request": "Review",
-                    "response": "ReviewResponse",
-                    "options": {}
-                },
-                "Get": {
-                    "request": "GetReviewRequest",
-                    "response": "ReviewResponse",
-                    "options": {}
-                },
-                "Delete": {
-                    "request": "DeleteReviewRequest",
-                    "response": "ReviewResponse",
-                    "options": {}
-                },
-                "List": {
-                    "request": "ListReviewsRequest",
-                    "response": "MultiReviewResponse",
-                    "options": {}
-                }
-            }
         }
     ]
 }

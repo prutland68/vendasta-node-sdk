@@ -1,10 +1,17 @@
-/// <reference path="./directory.d.ts" />
+/// <reference path="./listing.d.ts" />
+/// <reference path="./review.d.ts" />
 "use strict";
 var grpc = require("grpc");
-exports.datariverProto = grpc.load({
+exports.listingProto = grpc.load({
     root: __dirname,
-    file: "directory.proto"
+    file: "listing.proto"
 });
-exports.Listing = exports.datariverProto.datariver.Listing;
-exports.Geo = exports.datariverProto.datariver.Geo;
+exports.reviewProto = grpc.load({
+    root: __dirname,
+    file: "review.proto"
+});
+console.log(exports.listingProto);
+exports.Listing = exports.listingProto.datariver.Listing;
+exports.Review = exports.reviewProto.datariver.Review;
+exports.Geo = exports.listingProto.datariver.Geo;
 //# sourceMappingURL=protos.js.map
