@@ -16,7 +16,7 @@ export declare class Client {
     deleteListing: (listingId: string, callback: any) => any;
     putListing: (listing: Listing, callback: any) => any;
     private getReviewService;
-    getReview: (reviewId: any, listingId: string, callback: any) => any;
-    deleteReview: (reviewId: any, listingId: string, callback: any) => any;
+    getReview: (reviewId: string, callback: any) => any;
+    deleteReview: (reviewId: string, callback: any) => any;
     putReview: (review: Review, callback: any) => any;
 }

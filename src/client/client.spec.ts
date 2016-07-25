@@ -22,11 +22,11 @@ class mockedReviewService {
     public error: string = null;
     public review = {};
 
-    public get = (reviewId, listingId: string, callback: any) => {
+    public get = (reviewId: string, callback: any) => {
         callback(this.error, this.review);
     };
 
-    public delete = (reviewId, listingId: string, callback: any) => {
+    public delete = (reviewId: string, callback: any) => {
         callback(this.error, this.review);
     };
 
@@ -128,57 +128,47 @@ describe('Client tests', () => {
 
     describe("getReview tests", () => {
         it('Should call my callback method with the returned review.', () => {
-            this.client.getReview("review-id", "listing-id", this.callbackOwner.callback);
+            this.client.getReview("review-id", this.callbackOwner.callback);
             expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
         });
-        // it('Should pass the main error into the callback if the main error exists.', () => {
-        //     this.mockedReviewService.error = "Error!";
-        //     this.client.getListing("fake listing id", this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
-        // });
-        // it("Should pass the listingResponse's error into the callback if the main error doesn't exist.", () => {
-        //     this.mockedReviewService.listingResponse.error = "ListingResponse error!";
-        //     this.client.getListing("fake listing id", this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ListingResponse error!', undefined);
-        // });
+        it('Should pass the error into the callback if the error exists.', () => {
+            this.mockedReviewService.error = "Error!";
+            this.client.getReview(this.fakeReview, this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', jasmine.any(Object));
+        });
         it("Should pass the review to the callback", () => {
             let fakeReview = <Review> new Review();
             this.mockedReviewService.review = fakeReview;
-            this.client.getReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            this.client.getReview("fake review id", this.callbackOwner.callback);
             expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeReview);
         });
         it("should not crash if callback is null",() => {
             this.callbackOwner.callback = null;
             expect(this.client.getReview).not.toThrow(Error);
-            this.client.getReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            this.client.getReview("fake review id", this.callbackOwner.callback);
         });
     });
 
     describe("deleteReview tests.", () => {
         it('Should call my callback method with the returned review.', () => {
-            this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            this.client.deleteReview("fake review id", this.callbackOwner.callback);
             expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
         });
-        // it('Should pass the main error into the callback if the main error exists.', () => {
-        //     this.mockedReviewService.error = "Error!";
-        //     this.client.deleteReview("fake review id", this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
-        // });
-        // it("Should pass the reviewResponse's error into the callback if the main error doesn't exist.", () => {
-        //     this.mockedReviewService.reviewResponse.error = "ReviewResponse error!";
-        //     this.client.deleteReview("fake review id", this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ReviewResponse error!', undefined);
-        // });
+        it('Should pass the error into the callback if the error exists.', () => {
+            this.mockedReviewService.error = "Error!";
+            this.client.deleteReview(this.fakeReview, this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', jasmine.any(Object));
+        });
         it("Should pass the review to the callback", () => {
             let fakeReview = <Review> new Review();
             this.mockedReviewService.review = fakeReview;
-            this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            this.client.deleteReview("fake review id", this.callbackOwner.callback);
             expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, fakeReview);
         });
         it("should not crash if callback is null",() => {
             this.callbackOwner.callback = null;
             expect(this.client.deleteReview).not.toThrow(Error);
-            this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+            this.client.deleteReview("fake review id", this.callbackOwner.callback);
         });
     });
 
@@ -190,16 +180,11 @@ describe('Client tests', () => {
             this.client.putReview(this.fakeReview, this.callbackOwner.callback);
             expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
         });
-        // it('Should pass the main error into the callback if the main error exists.', () => {
-        //     this.mockedReviewService.error = "Error!";
-        //     this.client.putReview(this.fakeReview, this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
-        // });
-        // it("Should pass the reviewResponse's error into the callback if the main error doesn't exist.", () => {
-        //     this.mockedReviewService.reviewResponse.error = "ReviewResponse error!";
-        //     this.client.putReview(this.fakeReview, this.callbackOwner.callback);
-        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ReviewResponse error!', undefined);
-        // });
+        it('Should pass the error into the callback if the error exists.', () => {
+            this.mockedReviewService.error = "Error!";
+            this.client.putReview(this.fakeReview, this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', jasmine.any(Object));
+        });
         it("Should pass the review to the callback", () => {
             this.mockedReviewService.review = this.fakeReview;
             this.client.putReview(this.fakeReview, this.callbackOwner.callback);

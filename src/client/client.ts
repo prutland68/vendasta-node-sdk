@@ -82,35 +82,31 @@ export class Client {
         return new ReviewService(address, combinedCreds);
     };
 
-    public getReview = (reviewId, listingId: string, callback:any) => {
-        return this.reviewService.get(reviewId, listingId, (error:string, review:Review) => {
-            // TODO: is this the right context, that we set with GRPC?
-            // if (!error) {
-            //     error = context.error || null;
-            // }
+    public getReview = (reviewId: string, callback:any) => {
+        return this.reviewService.get(reviewId, (error:any, review:Review) => {
             if (callback) {
+                if (error)
+                    error = error.toString();
                 callback(error, review);
             }
         });
     };
 
-    public deleteReview = (reviewId, listingId: string, callback:any) => {
-        return this.reviewService.delete(reviewId, listingId, (error:string, review:Review)=> {
-            // if (!error) {
-            //     error = reviewResponse.error || null;
-            // }
+    public deleteReview = (reviewId: string, callback:any) => {
+        return this.reviewService.delete(reviewId, (error:any, review:Review)=> {
             if (callback) {
+                if (error)
+                    error = error.toString();
                 callback(error, review);
             }
         });
     };
     
     public putReview = (review:Review, callback:any) => {
-        return this.reviewService.put(review, (error:string, review:Review) => {
-            // if (!error) {
-            //     error = reviewResponse.error || null;
-            // }
+        return this.reviewService.put(review, (error:any, review:Review) => {
             if (callback) {
+                if (error)
+                    error = error.toString();
                 callback(error, review);
             }
         });

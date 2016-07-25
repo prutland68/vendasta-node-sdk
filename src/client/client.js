@@ -60,33 +60,29 @@ var Client = (function () {
             var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
             return new protos_1.ReviewService(address, combinedCreds);
         };
-        this.getReview = function (reviewId, listingId, callback) {
-            return _this.reviewService.get(reviewId, listingId, function (error, review) {
-                // TODO: is this the right context, that we set with GRPC?
-                // if (!error) {
-                //     error = context.error || null;
-                // }
+        this.getReview = function (reviewId, callback) {
+            return _this.reviewService.get(reviewId, function (error, review) {
                 if (callback) {
+                    if (error)
+                        error = error.toString();
                     callback(error, review);
                 }
             });
         };
-        this.deleteReview = function (reviewId, listingId, callback) {
-            return _this.reviewService.delete(reviewId, listingId, function (error, review) {
-                // if (!error) {
-                //     error = reviewResponse.error || null;
-                // }
+        this.deleteReview = function (reviewId, callback) {
+            return _this.reviewService.delete(reviewId, function (error, review) {
                 if (callback) {
+                    if (error)
+                        error = error.toString();
                     callback(error, review);
                 }
             });
         };
         this.putReview = function (review, callback) {
             return _this.reviewService.put(review, function (error, review) {
-                // if (!error) {
-                //     error = reviewResponse.error || null;
-                // }
                 if (callback) {
+                    if (error)
+                        error = error.toString();
                     callback(error, review);
                 }
             });
