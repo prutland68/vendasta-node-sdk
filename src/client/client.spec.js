@@ -36,7 +36,6 @@ var mockedReviewService = (function () {
             callback(_this.error, _this.review);
         };
         this.list = function (listingId, callback) {
-            console.log(_this.listReviewsResponse);
             callback(_this.error, _this.listReviewsResponse);
         };
     }
@@ -165,14 +164,11 @@ describe('Client tests', function () {
         });
     });
     describe("listReviews tests", function () {
-        it('Should call my callback method.', function () {
-            _this.client.listReviews("listing-id", _this.callbackOwner.callback);
-            expect(_this.callbackOwner.callback.wasCalled).toBeTruthy();
-        });
         it('Should pass the error into the callback if the error exists.', function () {
             _this.mockedReviewService.error = "Error!";
-            _this.client.listReviews("fake listing id", _this.callbackOwner.callback);
-            expect(_this.callbackOwner.callback).toHaveBeenCalledWith('Error!', jasmine.any(Object));
+            _this.client.listReviews("fake listing id", function (error, reviews) {
+                expect(error).toEqual("Error!");
+            });
         });
         it("Should pass the reviews to the callback", function () {
             var fakeReview1 = new protos_1.Review();
@@ -187,9 +183,8 @@ describe('Client tests', function () {
             });
         });
         it("should not crash if callback is null", function () {
-            _this.callbackOwner.callback = null;
             expect(_this.client.listReviews).not.toThrow(Error);
-            _this.client.listReviews("fake listing id", _this.callbackOwner.callback);
+            _this.client.listReviews("fake listing id", null);
         });
     });
 });

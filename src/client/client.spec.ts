@@ -37,7 +37,6 @@ class mockedReviewService {
     };
 
     public list = (listingId: string, callback: any) => {
-        console.log(this.listReviewsResponse);
         callback(this.error, this.listReviewsResponse);
     }
 }
@@ -171,14 +170,11 @@ describe('Client tests', () => {
     });
 
     describe("listReviews tests", () => {
-        it('Should call my callback method.', () => {
-            this.client.listReviews("listing-id", this.callbackOwner.callback);
-            expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
-        });
         it('Should pass the error into the callback if the error exists.', () => {
             this.mockedReviewService.error = "Error!";
-            this.client.listReviews("fake listing id", this.callbackOwner.callback);
-            expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', jasmine.any(Object));
+            this.client.listReviews("fake listing id", (error, reviews) => {
+                expect(error).toEqual("Error!");
+            });
         });
         it("Should pass the reviews to the callback", () => {
             let fakeReview1 = new Review();
@@ -193,9 +189,8 @@ describe('Client tests', () => {
             });
         });
         it("should not crash if callback is null", () => {
-            this.callbackOwner.callback = null;
             expect(this.client.listReviews).not.toThrow(Error);
-            this.client.listReviews("fake listing id", this.callbackOwner.callback);
+            this.client.listReviews("fake listing id", null);
         });
     });
 
