@@ -6,4 +6,7 @@ var protos_1 = require('./protos/protos');
 exports.Listing = protos_1.Listing;
 exports.Geo = protos_1.Geo;
 exports.Review = protos_1.Review;
+exports.ListReviewsResponse = protos_1.ListReviewsResponse;
+exports.Empty = protos_1.Empty;
+exports.Timestamp = protos_1.Timestamp;
 //# sourceMappingURL=index.js.map

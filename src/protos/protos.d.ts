@@ -29,11 +29,22 @@ export interface ListReviewsResponse extends datariver.ListReviewsResponse {
         new (): ListReviewsResponse;
     };
 }
+export interface Timestamp extends protobuf.Timestamp {
+    constructor: {
+        new (): Timestamp;
+    };
+}
+export interface ListReviewsRequest extends datariver.ListReviewsRequest {
+    constructor: {
+        new (): ListReviewsRequest;
+    };
+}
+export declare const Timestamp: any;
 export declare const Empty: any;
 export declare const ListingService: any;
 export declare const Listing: any;
 export declare const ListReviewsResponse: any;
-export declare const ReviewService: any;
-export declare const ListReviewsResponse: any;
-export declare const Review: any;
 export declare const Geo: any;
+export declare const ReviewService: any;
+export declare const Review: any;
+export declare const ListReviewsRequest: any;

@@ -33,31 +33,29 @@ export class Client {
     }
 
     private getListingService = (metadata: any, address: string) => {
-        //const creds = grpc.credentials.createSsl();
-        //const callCreds = grpc.credentials.createFromMetadataGenerator(
-        //    (serviceUrl:string, callback:any) => {
-        //        callback(null, metadata)
-        //    }
-        //);
-        //const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        let combinedCreds = grpc.credentials.createInsecure();
+        const creds = grpc.credentials.createSsl();
+        const callCreds = grpc.credentials.createFromMetadataGenerator(
+            (serviceUrl:string, callback:any) => {
+                callback(null, metadata)
+            }
+        );
+        const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
         return new ListingService(address, combinedCreds);
     };
     private getReviewService = (metadata: any, address: string) => {
-        //const creds = grpc.credentials.createSsl();
-        //
-        //const callCreds = grpc.credentials.createFromMetadataGenerator(
-        //    (serviceUrl:string, callback:any) => {
-        //        callback(null, metadata)
-        //    }
-        //);
-        //const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        let combinedCreds = grpc.credentials.createInsecure();
+        const creds = grpc.credentials.createSsl();
+
+        const callCreds = grpc.credentials.createFromMetadataGenerator(
+            (serviceUrl:string, callback:any) => {
+                callback(null, metadata)
+            }
+        );
+        const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
         return new ReviewService(address, combinedCreds);
     };
 
     public getListing = (listingId:string, callback:any) => {
-        return this.listingService.get(listingId, (error:string, listing:Listing) => {
+        return this.listingService.get(listingId, (error:any, listing:Listing) => {
             // error.toString() returns just the error message.
             if (callback) {
                 if (error)
@@ -77,7 +75,7 @@ export class Client {
         });
     };
     public putListing = (listing:Listing, callback:any) => {
-        return this.listingService.put(listing, (error:string, listing:Listing) => {
+        return this.listingService.put(listing, (error:any, listing:Listing) => {
             // error.toString() returns just the error message.
             if (callback) {
                 if (error)
@@ -86,18 +84,6 @@ export class Client {
             }
         });
     };
-
-    //private getReviewService = (metadata: any, address: string) => {
-    //    const creds = grpc.credentials.createSsl();
-    //
-    //    const callCreds = grpc.credentials.createFromMetadataGenerator(
-    //        (serviceUrl:string, callback:any) => {
-    //            callback(null, metadata)
-    //        }
-    //    );
-    //    const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-    //    return new ReviewService(address, combinedCreds);
-    //};
 
     public getReview = (reviewId: string, callback:any) => {
         return this.reviewService.get(reviewId, (error:any, review:Review) => {
@@ -129,7 +115,7 @@ export class Client {
         });
     };
 
-    public listReviews = (listingId: string, callback:any) => {
+    public listReviews = (listingId: any, callback:any) => {
         return this.reviewService.list(listingId, (error:any, reviews:ListReviewsResponse) => {
             if (callback) {
                 if (error)

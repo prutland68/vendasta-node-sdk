@@ -1,6 +1,8 @@
 "use strict";
 /// <reference path="../typings/index.d.ts" />
 var index_1 = require("../src/index");
+var index_2 = require("../src/index");
+var protos_1 = require("../src/protos/protos");
 var client = new index_1.Client(index_1.Environment.TEST, 'my-example-token'); // ask us for a token.
 // Create a listing object to put.
 var listing = new index_1.Listing();
@@ -58,24 +60,34 @@ function printErrorAndResponse(error, response) {
     console.log(error);
     console.log(response);
 }
+client.putListing(listing, putListingCallback2);
+var listing_id = null;
 // Create a review object to put.
-var review = new index_1.Review();
-review.url = "www.example-source.com/vendasta-technologies-12345";
-review.star_rating = 5.0;
-review.reviewer_name = "John Jones";
-review.reviewer_email = "john12345@jones.com";
-review.reviewer_url = "jones.com/blog";
-review.content = "Such an amazing place!";
-review.published_date = new Timestamp(Date.now() / 1000, Date.now() * 1000);
-review.title = "My review!";
-client.putReview(listing, putReviewCallback);
-var reviewId = null;
+function putListingCallback2(error, listing) {
+    console.log("**** PUT LISTING FOR REVIEW ****");
+    printErrorAndResponse(error, listing);
+    if (error)
+        return;
+    listing_id = listing.listing_id;
+    console.log(listing);
+    var review = new index_1.Review();
+    review.url = "www.example-source.com/vendasta-technologies-12345";
+    review.star_rating = 5.0;
+    review.reviewer_name = "John Jones";
+    review.reviewer_email = "john12345@jones.com";
+    review.reviewer_url = "jones.com/blog";
+    review.content = "Such an amazing place!";
+    review.published_date = new index_2.Timestamp(Date.now() / 1000, Date.now() * 1000);
+    review.title = "My review!";
+    review.listing_id = listing.listing_id;
+    client.putReview(review, putReviewCallback);
+}
 function putReviewCallback(error, response) {
     console.log("**** Put review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
-    reviewId = response['review_id'];
+    var reviewId = response['review_id'];
     // Get the review we just added
     client.getReview(reviewId, getReviewCallback);
 }
@@ -84,28 +96,38 @@ function getReviewCallback(error, response) {
     printErrorAndResponse(error, response);
     if (error)
         return;
-    // Remove the review we added
-    client.deleteReview(reviewId, deleteReviewCallback);
+    var request = new protos_1.ListReviewsRequest();
+    request.listing_id = listing_id;
+    request.page_size = 2;
+    request.offset = 0;
+    // To show that the delete went through.
+    client.listReviews(request, listReviewsCallback);
 }
 function deleteReviewCallback(error, response) {
-    console.log("**** Delete review output: ****");
+    console.log("**** Delete reviews output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
-    // To show that the delete went through.
-    client.listReviews(listingId, listReviewsCallback);
 }
 function listReviewsCallback(error, response) {
-    console.log("**** List reviews output: ****");
+    console.log("**** LIST REVIEWS output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
-    // Get the reviews we just added
-    client.getReview(reviewId, finalReviewCallback);
+    for (var index in response.reviews) {
+        var review = response.reviews[index];
+        if (index == (response.reviews.length - 1)) {
+            client.deleteReview(review.review_id, finalReviewCallback);
+        }
+        else {
+            client.deleteReview(review.review_id, null);
+        }
+    }
 }
 function finalReviewCallback(error, response) {
     console.log("**** Final get review output: ****");
     printErrorAndResponse(error, response);
+    client.deleteListing(listingId, deleteListingCallback);
 }
 function printErrorAndResponse(error, response) {
     console.log(error);

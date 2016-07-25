@@ -69,17 +69,6 @@ var Client = (function () {
                 }
             });
         };
-        //private getReviewService = (metadata: any, address: string) => {
-        //    const creds = grpc.credentials.createSsl();
-        //
-        //    const callCreds = grpc.credentials.createFromMetadataGenerator(
-        //        (serviceUrl:string, callback:any) => {
-        //            callback(null, metadata)
-        //        }
-        //    );
-        //    const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        //    return new ReviewService(address, combinedCreds);
-        //};
         this.getReview = function (reviewId, callback) {
             return _this.reviewService.get(reviewId, function (error, review) {
                 if (callback) {
