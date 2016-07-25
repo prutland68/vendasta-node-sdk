@@ -1,4 +1,4 @@
-import { Listing } from '../protos/protos';
+import { Listing, Review } from '../protos/protos';
 export declare enum Environment {
     TEST = 1,
     PRODUCTION = 2,
@@ -18,4 +18,5 @@ export declare class Client {
     private getReviewService;
     getReview: (reviewId: any, listingId: string, callback: any) => any;
     deleteReview: (reviewId: any, listingId: string, callback: any) => any;
+    putReview: (review: Review, callback: any) => any;
 }

@@ -81,6 +81,16 @@ var Client = (function () {
                 }
             });
         };
+        this.putReview = function (review, callback) {
+            return _this.reviewService.put(review, function (error, review) {
+                // if (!error) {
+                //     error = reviewResponse.error || null;
+                // }
+                if (callback) {
+                    callback(error, review);
+                }
+            });
+        };
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }

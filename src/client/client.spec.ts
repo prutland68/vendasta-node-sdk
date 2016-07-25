@@ -29,6 +29,10 @@ class mockedReviewService {
     public delete = (reviewId, listingId: string, callback: any) => {
         callback(this.error, this.review);
     };
+
+    public put = (review: Review, callback: any) => {
+        callback(this.error, this.review)
+    };
 }
 
 describe('Client tests', () => {
@@ -175,6 +179,36 @@ describe('Client tests', () => {
             this.callbackOwner.callback = null;
             expect(this.client.deleteReview).not.toThrow(Error);
             this.client.deleteReview("fake review id", "fake listing id", this.callbackOwner.callback);
+        });
+    });
+
+    describe("putReview tests.", () => {
+        beforeEach(() => {
+            this.fakeReview = <Review> new Review();
+        });
+        it('Should call my callback method with the returned review.', () => {
+            this.client.putReview(this.fakeReview, this.callbackOwner.callback);
+            expect(this.callbackOwner.callback.wasCalled).toBeTruthy();
+        });
+        // it('Should pass the main error into the callback if the main error exists.', () => {
+        //     this.mockedReviewService.error = "Error!";
+        //     this.client.putReview(this.fakeReview, this.callbackOwner.callback);
+        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('Error!', undefined);
+        // });
+        // it("Should pass the reviewResponse's error into the callback if the main error doesn't exist.", () => {
+        //     this.mockedReviewService.reviewResponse.error = "ReviewResponse error!";
+        //     this.client.putReview(this.fakeReview, this.callbackOwner.callback);
+        //     expect(this.callbackOwner.callback).toHaveBeenCalledWith('ReviewResponse error!', undefined);
+        // });
+        it("Should pass the review to the callback", () => {
+            this.mockedReviewService.review = this.fakeReview;
+            this.client.putReview(this.fakeReview, this.callbackOwner.callback);
+            expect(this.callbackOwner.callback).toHaveBeenCalledWith(null, this.fakeReview);
+        });
+        it("should not crash if callback is null",() => {
+            this.callbackOwner.callback = null;
+            expect(this.client.putReview).not.toThrow(Error);
+            this.client.putReview(this.fakeReview, this.callbackOwner.callback);
         });
     });
 });

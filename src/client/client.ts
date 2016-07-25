@@ -104,15 +104,15 @@ export class Client {
             }
         });
     };
-    //
-    // public putReview = (review:Review, callback:any) => {
-    //     return this.reviewService.put(review, (error:string, reviewResponse:Review) => {
-    //         if (!error) {
-    //             error = reviewResponse.error || null;
-    //         }
-    //         if (callback) {
-    //             callback(error, reviewResponse.review);
-    //         }
-    //     });
-    // };
+    
+    public putReview = (review:Review, callback:any) => {
+        return this.reviewService.put(review, (error:string, review:Review) => {
+            // if (!error) {
+            //     error = reviewResponse.error || null;
+            // }
+            if (callback) {
+                callback(error, review);
+            }
+        });
+    };
 }
