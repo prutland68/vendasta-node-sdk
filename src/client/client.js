@@ -1,33 +1,29 @@
 "use strict";
-/// <reference path="../protos/directory.d.ts" />
 var grpc = require("grpc");
 var protos_1 = require('../protos/protos');
-var DatariverService = protos_1.datariverProto.datariver.DataRiver;
-console.log(protos_1.datariverProto);
-var foo = new protos_1.datariverProto.Listing.Client();
-console.log(foo);
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
     Environment[Environment["PRODUCTION"] = 2] = "PRODUCTION";
 })(exports.Environment || (exports.Environment = {}));
 var Environment = exports.Environment;
 var Client = (function () {
-    function Client(environment, token, service) {
+    function Client(environment, token, listingService, reviewService) {
         var _this = this;
-        if (service === void 0) { service = null; }
+        if (listingService === void 0) { listingService = null; }
+        if (reviewService === void 0) { reviewService = null; }
         this.environment = environment;
         this.token = token;
         this.metaData = new grpc.Metadata();
-        this.getDatariverService = function (metadata, address) {
+        this.getListingService = function (metadata, address) {
             var creds = grpc.credentials.createSsl();
             var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
                 callback(null, metadata);
             });
             var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-            return new DatariverService(address, combinedCreds);
+            return new protos_1.ListingService(address, combinedCreds);
         };
         this.getListing = function (listingId, callback) {
-            return _this.datariverService.getListing(listingId, function (error, listingResponse) {
+            return _this.listingService.getListing(listingId, function (error, listingResponse) {
                 if (!error) {
                     error = listingResponse.error || null;
                 }
@@ -37,7 +33,7 @@ var Client = (function () {
             });
         };
         this.deleteListing = function (listingId, callback) {
-            return _this.datariverService.deleteListing(listingId, function (error, listingResponse) {
+            return _this.listingService.deleteListing(listingId, function (error, listingResponse) {
                 if (!error) {
                     error = listingResponse.error || null;
                 }
@@ -47,12 +43,31 @@ var Client = (function () {
             });
         };
         this.putListing = function (listing, callback) {
-            return _this.datariverService.putListing(listing, function (error, listingResponse) {
+            return _this.listingService.putListing(listing, function (error, listingResponse) {
                 if (!error) {
                     error = listingResponse.error || null;
                 }
                 if (callback) {
                     callback(error, listingResponse.listing);
+                }
+            });
+        };
+        this.getReviewService = function (metadata, address) {
+            var creds = grpc.credentials.createSsl();
+            var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
+                callback(null, metadata);
+            });
+            var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+            return new protos_1.ReviewService(address, combinedCreds);
+        };
+        this.getReview = function (reviewId, listingId, callback) {
+            return _this.reviewService.get(reviewId, listingId, function (error, review) {
+                // TODO: is this the right context, that we set with GRPC?
+                // if (!error) {
+                //     error = context.error || null;
+                // }
+                if (callback) {
+                    callback(error, review);
                 }
             });
         };
@@ -63,7 +78,8 @@ var Client = (function () {
             this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
-        this.datariverService = service || this.getDatariverService(this.metaData, this.address);
+        this.listingService = listingService || this.getListingService(this.metaData, this.address);
+        this.reviewService = reviewService || this.getReviewService(this.metaData, this.address);
     }
     return Client;
 }());
