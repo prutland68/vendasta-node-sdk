@@ -53,6 +53,8 @@ function finalCallback(error, response) {
     printErrorAndResponse(error, response);
 }
 function printErrorAndResponse(error, response) {
+    if (error)
+        console.log(error.toString());
     console.log(error);
     console.log(response);
 }

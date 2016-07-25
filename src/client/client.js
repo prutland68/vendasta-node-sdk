@@ -1,6 +1,8 @@
 "use strict";
 var grpc = require("grpc");
 var protos_1 = require('../protos/protos');
+var ListingService = protos_1.listingProto.datariver.ListingService;
+var ReviewService = protos_1.reviewProto.datariver.ReviewService;
 (function (Environment) {
     Environment[Environment["TEST"] = 1] = "TEST";
     Environment[Environment["PRODUCTION"] = 2] = "PRODUCTION";
@@ -9,57 +11,75 @@ var Environment = exports.Environment;
 var Client = (function () {
     function Client(environment, token, listingService, reviewService) {
         var _this = this;
-        if (listingService === void 0) { listingService = null; }
-        if (reviewService === void 0) { reviewService = null; }
+        if (listingService === void 0) { listingService = undefined; }
+        if (reviewService === void 0) { reviewService = undefined; }
         this.environment = environment;
         this.token = token;
         this.metaData = new grpc.Metadata();
         this.getListingService = function (metadata, address) {
-            var creds = grpc.credentials.createSsl();
-            var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
-                callback(null, metadata);
-            });
-            var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-            return new protos_1.ListingService(address, combinedCreds);
+            //const creds = grpc.credentials.createSsl();
+            //const callCreds = grpc.credentials.createFromMetadataGenerator(
+            //    (serviceUrl:string, callback:any) => {
+            //        callback(null, metadata)
+            //    }
+            //);
+            //const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+            var combinedCreds = grpc.credentials.createInsecure();
+            return new ListingService(address, combinedCreds);
+        };
+        this.getReviewService = function (metadata, address) {
+            //const creds = grpc.credentials.createSsl();
+            //
+            //const callCreds = grpc.credentials.createFromMetadataGenerator(
+            //    (serviceUrl:string, callback:any) => {
+            //        callback(null, metadata)
+            //    }
+            //);
+            //const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+            var combinedCreds = grpc.credentials.createInsecure();
+            return new ReviewService(address, combinedCreds);
         };
         this.getListing = function (listingId, callback) {
-            return _this.listingService.getListing(listingId, function (error, listing) {
-                // if (!error) {
-                //     error = listing.error || null;
-                // }
+            return _this.listingService.get(listingId, function (error, listing) {
+                // error.toString() returns just the error message.
                 if (callback) {
+                    if (error)
+                        error = error.toString();
                     callback(error, listing);
                 }
             });
         };
         this.deleteListing = function (listingId, callback) {
-            return _this.listingService.deleteListing(listingId, function (error, listing) {
-                // if (!error) {
-                //     error = listing.error || null;
-                // }
+            return _this.listingService.delete(listingId, function (error, emptyResponse) {
+                // error.toString() returns just the error message.
                 if (callback) {
-                    callback(error, listing);
+                    if (error)
+                        error = error.toString();
+                    callback(error, emptyResponse);
                 }
             });
         };
         this.putListing = function (listing, callback) {
-            return _this.listingService.putListing(listing, function (error, listing) {
-                // if (!error) {
-                //     error = listing.error || null;
-                // }
+            return _this.listingService.put(listing, function (error, listing) {
+                // error.toString() returns just the error message.
                 if (callback) {
+                    if (error)
+                        error = error.toString();
                     callback(error, listing);
                 }
             });
         };
-        this.getReviewService = function (metadata, address) {
-            var creds = grpc.credentials.createSsl();
-            var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
-                callback(null, metadata);
-            });
-            var combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-            return new protos_1.ReviewService(address, combinedCreds);
-        };
+        //private getReviewService = (metadata: any, address: string) => {
+        //    const creds = grpc.credentials.createSsl();
+        //
+        //    const callCreds = grpc.credentials.createFromMetadataGenerator(
+        //        (serviceUrl:string, callback:any) => {
+        //            callback(null, metadata)
+        //        }
+        //    );
+        //    const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
+        //    return new ReviewService(address, combinedCreds);
+        //};
         this.getReview = function (reviewId, callback) {
             return _this.reviewService.get(reviewId, function (error, review) {
                 if (callback) {
@@ -91,13 +111,14 @@ var Client = (function () {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "directory-sandbox.vendasta.com:23000"; // assume test
+            this.address = "localhost:9090";
         }
         this.metaData.add('token', token);
-        this.listingService = listingService || this.getListingService(this.metaData, this.address);
+        this.listingService = this.getListingService(this.metaData, this.address);
         this.reviewService = reviewService || this.getReviewService(this.metaData, this.address);
     }
     return Client;
 }());
 exports.Client = Client;
+;
 //# sourceMappingURL=client.js.map

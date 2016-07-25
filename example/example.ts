@@ -61,6 +61,8 @@ function finalCallback(error: string, response: Listing) {
 }
 
 function printErrorAndResponse(error: any, response: any) {
+    if (error)
+        console.log(error.toString());
     console.log(error);
     console.log(response);
 }

@@ -12,10 +12,10 @@ export declare class Client {
     private address;
     constructor(environment: Environment, token: string, listingService?: any, reviewService?: any);
     private getListingService;
+    private getReviewService;
     getListing: (listingId: string, callback: any) => any;
     deleteListing: (listingId: string, callback: any) => any;
     putListing: (listing: Listing, callback: any) => any;
-    private getReviewService;
     getReview: (reviewId: string, callback: any) => any;
     deleteReview: (reviewId: string, callback: any) => any;
     putReview: (review: Review, callback: any) => any;
