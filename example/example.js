@@ -46,10 +46,55 @@ function deleteListingCallback(error, response) {
     if (error)
         return;
     // To show that the delete went through.
-    client.getListing(listingId, finalCallback);
+    client.getListing(listingId, finalListingCallback);
 }
-function finalCallback(error, response) {
+function finalListingCallback(error, response) {
     console.log("**** Final get listing output: ****");
+    printErrorAndResponse(error, response);
+}
+function printErrorAndResponse(error, response) {
+    console.log(error);
+    console.log(response);
+}
+// Create a review object to put.
+var review = new index_1.Review();
+review.url = "www.example-source.com/vendasta-technologies-12345";
+review.star_rating = 5.0;
+review.reviewer_name = "John Jones";
+review.reviewer_email = "john12345@jones.com";
+review.reviewer_url = "jones.com/blog";
+review.content = "Such an amazing place!";
+review.published_date = new Timestamp(Date.now() / 1000, Date.now() * 1000);
+review.title = "My review!";
+client.putReview(listing, putReviewCallback);
+var reviewId = null;
+function putReviewCallback(error, response) {
+    console.log("**** Put review output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    reviewId = response['review_id'];
+    // Get the review we just added
+    client.getReview(reviewId, getReviewCallback);
+}
+function getReviewCallback(error, response) {
+    console.log("**** Get review output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // Remove the review we added
+    client.deleteReview(reviewId, deleteReviewCallback);
+}
+function deleteReviewCallback(error, response) {
+    console.log("**** Delete review output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // To show that the delete went through.
+    client.getReview(reviewId, finalReviewCallback);
+}
+function finalReviewCallback(error, response) {
+    console.log("**** Final get review output: ****");
     printErrorAndResponse(error, response);
 }
 function printErrorAndResponse(error, response) {
