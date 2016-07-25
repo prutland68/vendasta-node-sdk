@@ -10,10 +10,10 @@ exports.reviewProto = grpc.load({
     root: __dirname,
     file: "review.proto"
 });
+exports.Empty = exports.reviewProto.google.protobuf.Empty;
 exports.ListingService = exports.listingProto.datariver.ListingService;
-exports.ListingResponse = exports.listingProto.datariver.ListingResponse;
 exports.Listing = exports.listingProto.datariver.Listing;
-exports.ReviewResponse = exports.reviewProto.datariver.ReviewResponse;
+exports.ListReviewsResponse = exports.reviewProto.datariver.ListReviewsResponse;
 exports.ReviewService = exports.reviewProto.datariver.ReviewService;
 exports.ListReviewsResponse = exports.reviewProto.datariver.ListReviewsResponse;
 exports.Review = exports.reviewProto.datariver.Review;
