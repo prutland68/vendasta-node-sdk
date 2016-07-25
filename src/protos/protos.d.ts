@@ -23,5 +23,6 @@ export declare const ListingResponse: any;
 export declare const Listing: any;
 export declare const ReviewResponse: any;
 export declare const ReviewService: any;
+export declare const ListReviewsResponse: any;
 export declare const Review: any;
 export declare const Geo: any;

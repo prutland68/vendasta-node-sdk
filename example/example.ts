@@ -1,6 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 import {Client, Environment, Listing, Geo, Review} from "../src/index"
 import Timestamp = Proto2TypeScript.google.protobuf.Timestamp;
+import ListReviewsResponse = Proto2TypeScript.datariver.ListReviewsResponse;
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 // Create a listing object to put.
@@ -107,7 +108,16 @@ function deleteReviewCallback(error: string, response: Review) {
     if (error)
         return;
     // To show that the delete went through.
-    client.getReview(reviewId, finalReviewCallback);
+    client.listReviews(listingId, listReviewsCallback);
+}
+
+function listReviewsCallback(error: string, response: ListReviewsResponse) {
+    console.log("**** List reviews output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // Get the reviews we just added
+    client.getReview(reviewId, finalReviewCallback)
 }
 
 function finalReviewCallback(error: string, response: Review) {

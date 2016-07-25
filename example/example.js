@@ -91,6 +91,14 @@ function deleteReviewCallback(error, response) {
     if (error)
         return;
     // To show that the delete went through.
+    client.listReviews(listingId, listReviewsCallback);
+}
+function listReviewsCallback(error, response) {
+    console.log("**** List reviews output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    // Get the reviews we just added
     client.getReview(reviewId, finalReviewCallback);
 }
 function finalReviewCallback(error, response) {
