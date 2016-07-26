@@ -96,10 +96,10 @@ var Client = (function () {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "localhost:9090";
+            this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
-        var callCredentials = grpc.credentials.createInsecure() || this.getCallCredentials(this.metaData);
+        var callCredentials = this.getCallCredentials(this.metaData);
         this.listingService = listingService || new protos_1.ListingService(this.address, callCredentials);
         this.reviewService = reviewService || new protos_1.ReviewService(this.address, callCredentials);
     }

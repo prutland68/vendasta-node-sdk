@@ -25,12 +25,12 @@ listing.website = "www.vendasta.com";
 listing.zip_code = "S7K 1M1";
 
 client.putListing(listing, putListingCallback);
-let listingId = null;
-let reviewId = null;
+let listingId: string = null;
+let reviewId: string = null;
 // Create a review object to put.
 
 
-function putListingCallback(error, listing) {
+function putListingCallback(error: any, listing: Listing) {
     console.log("**** PUT LISTING FOR REVIEW ****");
     printErrorAndResponse(error, listing);
     if (error)
@@ -84,7 +84,7 @@ function listReviewsCallback(error: string, reviews: [Review]) {
     printErrorAndResponse(error, reviews);
     if (error)
         return;
-    for (var index in reviews) {
+    for (var index=0; index < reviews.length; index++) {
         let review = reviews[index];
         console.log(review.review_id);
         if (index == (reviews.length - 1)) {

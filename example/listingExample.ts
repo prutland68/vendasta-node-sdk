@@ -1,7 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 import {Client, Environment, Listing, Geo, Review} from "../src/index"
-import {Timestamp, Empty, ListReviewsResponse} from "../src/protos/protos";
-import {ListReviewsRequest} from "../src/protos/protos";
+import {Timestamp, Empty, ListReviewsResponse, ListReviewsRequest} from "../src/protos/protos";
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 // Create a listing object to put.

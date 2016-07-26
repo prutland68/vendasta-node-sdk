@@ -1,3 +1,5 @@
 node_modules
 .idea
 npm-debug.log
+src/protos/listing.json
+src/protos/review.json
