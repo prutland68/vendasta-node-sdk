@@ -11,8 +11,7 @@ export declare class Client {
     private reviewService;
     private address;
     constructor(environment: Environment, token: string, listingService?: any, reviewService?: any);
-    private getListingService;
-    private getReviewService;
+    private getCallCredentials(metadata);
     getListing: (listingId: string, callback: any) => any;
     deleteListing: (listingId: string, callback: any) => any;
     putListing: (listing: Listing, callback: any) => any;

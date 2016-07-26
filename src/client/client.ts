@@ -1,12 +1,6 @@
-import ListReviewsResponse = Proto2TypeScript.datariver.ListReviewsResponse;
 const grpc = require("grpc");
 
-import {Listing, Review, Empty} from '../protos/protos'
-
-import {listingProto, reviewProto} from '../protos/protos'
-
-const ListingService =  listingProto.datariver.ListingService;
-const ReviewService = reviewProto.datariver.ReviewService;
+import {Listing, Review, Empty, ReviewService, ListingService, ListReviewsResponse, reviewProto} from '../protos/protos'
 
 export enum Environment{
     TEST = 1,
@@ -19,40 +13,30 @@ export class Client {
     private reviewService:any;
     private address:string;
 
-    constructor(private environment:Environment, private token:string, listingService: any = undefined, reviewService: any = undefined) {
+    constructor(private environment:Environment, private token:string,
+                listingService: any = null, reviewService: any = null) {
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address ="localhost:9090";
+            this.address = "localhost:9090";
             // this.address = "directory-sandbox.vendasta.com:23000";  // assume test
         }
         this.metaData.add('token', token);
-        this.listingService = this.getListingService(this.metaData, this.address);
-        this.reviewService = reviewService || this.getReviewService(this.metaData, this.address);
+        let callCredentials = this.getCallCredentials(this.metaData);
+        this.listingService = listingService || new ListingService(this.address, callCredentials);
+        this.reviewService = reviewService || new ReviewService(this.address, callCredentials);
     }
 
-    private getListingService = (metadata: any, address: string) => {
+    private getCallCredentials(metadata: any) {
         const creds = grpc.credentials.createSsl();
         const callCreds = grpc.credentials.createFromMetadataGenerator(
             (serviceUrl:string, callback:any) => {
                 callback(null, metadata)
             }
         );
-        const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        return new ListingService(address, combinedCreds);
-    };
-    private getReviewService = (metadata: any, address: string) => {
-        const creds = grpc.credentials.createSsl();
-
-        const callCreds = grpc.credentials.createFromMetadataGenerator(
-            (serviceUrl:string, callback:any) => {
-                callback(null, metadata)
-            }
-        );
-        const combinedCreds = grpc.credentials.combineChannelCredentials(creds, callCreds);
-        return new ReviewService(address, combinedCreds);
-    };
+        return grpc.credentials.combineChannelCredentials(creds, callCreds);
+    }
 
     public getListing = (listingId:string, callback:any) => {
         return this.listingService.get(listingId, (error:any, listing:Listing) => {
