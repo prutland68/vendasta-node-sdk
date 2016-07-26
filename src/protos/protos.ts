@@ -38,19 +38,22 @@ export interface Timestamp extends protobuf.Timestamp {
     constructor:{ new():Timestamp };
 }
 
-export interface ListReviewsRequest extends datariver.ListReviewsRequest {
-    constructor:{ new():ListReviewsRequest };
-}
 export const Timestamp = reviewProto.google.protobuf.Timestamp;
 export const Empty = reviewProto.google.protobuf.Empty;
 
 export const ListingService = listingProto.datariver.ListingService;
 export const Listing = listingProto.datariver.Listing;
-export const ListReviewsResponse = reviewProto.datariver.ListReviewsResponse;
+export const GetListingRequest = listingProto.datariver.GetListingRequest;
+export const DeleteListingRequest = listingProto.datariver.DeleteListingRequest;
 export const Geo = listingProto.datariver.Geo;
+
 
 export const ReviewService = reviewProto.datariver.ReviewService;
 export const Review = reviewProto.datariver.Review;
+export const GetReviewRequest = reviewProto.datariver.GetReviewRequest;
+export const DeleteReviewRequest = reviewProto.datariver.DeleteReviewRequest;
 export const ListReviewsRequest = reviewProto.datariver.ListReviewsRequest;
+export const ListReviewsResponse = reviewProto.datariver.ListReviewsResponse;
+
 
 

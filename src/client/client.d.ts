@@ -18,5 +18,5 @@ export declare class Client {
     getReview: (reviewId: string, callback: any) => any;
     deleteReview: (reviewId: string, callback: any) => any;
     putReview: (review: Review, callback: any) => any;
-    listReviews: (listingId: any, callback: any) => any;
+    listReviews: (listingId: string, page_size: number, offset: number, callback: any) => any;
 }

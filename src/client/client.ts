@@ -1,6 +1,7 @@
 const grpc = require("grpc");
 
-import {Listing, Review, Empty, ReviewService, ListingService, ListReviewsResponse, reviewProto} from '../protos/protos'
+import {Listing, Review, Empty, ListingService, ReviewService, GetListingRequest, DeleteListingRequest,
+        GetReviewRequest, DeleteReviewRequest, ListReviewsRequest, ListReviewsResponse} from '../protos/protos';
 
 export enum Environment{
     TEST = 1,
@@ -19,8 +20,7 @@ export class Client {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "localhost:9090";
-            // this.address = "directory-sandbox.vendasta.com:23000";  // assume test
+            this.address = "directory-sandbox.vendasta.com:23000";  // assume test
         }
         this.metaData.add('token', token);
         let callCredentials = this.getCallCredentials(this.metaData);
@@ -39,6 +39,8 @@ export class Client {
     }
 
     public getListing = (listingId:string, callback:any) => {
+        let request = new GetListingRequest();
+        request.listing_id = listingId;
         return this.listingService.get(listingId, (error:any, listing:Listing) => {
             // error.toString() returns just the error message.
             if (callback) {
@@ -49,7 +51,9 @@ export class Client {
         });
     };
     public deleteListing = (listingId:string, callback:any) => {
-        return this.listingService.delete(listingId, (error:any, emptyResponse:Empty)=> {
+        let request = new DeleteListingRequest();
+        request.listing_id = listingId;
+        return this.listingService.delete(request, (error:any, emptyResponse:Empty)=> {
             // error.toString() returns just the error message.
             if (callback) {
                 if (error)
@@ -70,7 +74,9 @@ export class Client {
     };
 
     public getReview = (reviewId: string, callback:any) => {
-        return this.reviewService.get(reviewId, (error:any, review:Review) => {
+        let request = new GetReviewRequest();
+        request.review_id = reviewId;
+        return this.reviewService.get(request, (error:any, review:Review) => {
             if (callback) {
                 if (error)
                     error = error.toString();
@@ -80,7 +86,9 @@ export class Client {
     };
 
     public deleteReview = (reviewId: string, callback:any) => {
-        return this.reviewService.delete(reviewId, (error:any, review:Review)=> {
+        let request = new DeleteReviewRequest();
+        request.review_id = reviewId;
+        return this.reviewService.delete(request, (error:any, review:Review)=> {
             if (callback) {
                 if (error)
                     error = error.toString();
@@ -99,12 +107,16 @@ export class Client {
         });
     };
 
-    public listReviews = (listingId: any, callback:any) => {
-        return this.reviewService.list(listingId, (error:any, reviews:ListReviewsResponse) => {
+    public listReviews = (listingId: string, page_size: number, offset: number, callback:any) => {
+        let request = new ListReviewsRequest();
+        request.listing_id = listingId;
+        request.page_size = page_size;
+        request.offset = offset;
+        return this.reviewService.list(request, (error:any, reviewResponse:ListReviewsResponse) => {
             if (callback) {
                 if (error)
                     error = error.toString();
-                callback(error, reviews);
+                callback(error, reviewResponse.reviews);
             }
         });
     };

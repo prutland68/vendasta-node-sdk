@@ -15,6 +15,8 @@ var Client = (function () {
         this.token = token;
         this.metaData = new grpc.Metadata();
         this.getListing = function (listingId, callback) {
+            var request = new protos_1.GetListingRequest();
+            request.listing_id = listingId;
             return _this.listingService.get(listingId, function (error, listing) {
                 // error.toString() returns just the error message.
                 if (callback) {
@@ -25,7 +27,9 @@ var Client = (function () {
             });
         };
         this.deleteListing = function (listingId, callback) {
-            return _this.listingService.delete(listingId, function (error, emptyResponse) {
+            var request = new protos_1.DeleteListingRequest();
+            request.listing_id = listingId;
+            return _this.listingService.delete(request, function (error, emptyResponse) {
                 // error.toString() returns just the error message.
                 if (callback) {
                     if (error)
@@ -45,7 +49,9 @@ var Client = (function () {
             });
         };
         this.getReview = function (reviewId, callback) {
-            return _this.reviewService.get(reviewId, function (error, review) {
+            var request = new protos_1.GetReviewRequest();
+            request.review_id = reviewId;
+            return _this.reviewService.get(request, function (error, review) {
                 if (callback) {
                     if (error)
                         error = error.toString();
@@ -54,7 +60,9 @@ var Client = (function () {
             });
         };
         this.deleteReview = function (reviewId, callback) {
-            return _this.reviewService.delete(reviewId, function (error, review) {
+            var request = new protos_1.DeleteReviewRequest();
+            request.review_id = reviewId;
+            return _this.reviewService.delete(request, function (error, review) {
                 if (callback) {
                     if (error)
                         error = error.toString();
@@ -71,12 +79,16 @@ var Client = (function () {
                 }
             });
         };
-        this.listReviews = function (listingId, callback) {
-            return _this.reviewService.list(listingId, function (error, reviews) {
+        this.listReviews = function (listingId, page_size, offset, callback) {
+            var request = new protos_1.ListReviewsRequest();
+            request.listing_id = listingId;
+            request.page_size = page_size;
+            request.offset = offset;
+            return _this.reviewService.list(request, function (error, reviewResponse) {
                 if (callback) {
                     if (error)
                         error = error.toString();
-                    callback(error, reviews);
+                    callback(error, reviewResponse.reviews);
                 }
             });
         };
@@ -87,7 +99,7 @@ var Client = (function () {
             this.address = "localhost:9090";
         }
         this.metaData.add('token', token);
-        var callCredentials = this.getCallCredentials(this.metaData);
+        var callCredentials = grpc.credentials.createInsecure() || this.getCallCredentials(this.metaData);
         this.listingService = listingService || new protos_1.ListingService(this.address, callCredentials);
         this.reviewService = reviewService || new protos_1.ReviewService(this.address, callCredentials);
     }
