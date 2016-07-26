@@ -1,6 +1,4 @@
-import {Client, Environment, Listing, Geo, Review} from "../src/index"
-import {Timestamp, Empty, ListReviewsResponse} from "../src/protos/protos";
-import {ListReviewsRequest} from "../src/protos/protos";
+import {Client, Environment, Listing, Geo, Review, Timestamp, Empty} from "../src/index"
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 
