@@ -95,52 +95,6 @@ listing.url = "http://www.vendasta.com";
 client.saveListing(listing, callback)
 ```
 
-### Listing ###
-*The Listing class is used when interacting with the client.
-
-#### Required Fields ####
-- external_id: string =>  This is your ID for this listing.
-
-- url: string => The URL where the listing can be found. (Not to be confused with the business’ website, above.)
-
-#### Optional Fields ####
-- listing_id: string => The id used to identify the listing. This will only be set after saving the listing.
-
-- company_name: string => The name of the company the listing represents.
-
-- address: string => The address of the company the listing represents.
-
-- city: string => The city the business resides in.
-
-- state: string => The state / province  the business resides in.
-
-- country: string => The country the business resides in.
-
-- zip_code: string => The zip code / postal code of the business.
-
-- location: Geo => The latitude and longitude of the business location.
-
-- business_categories: array<string> =>  A list of categories that describes the business the listing represents.
-
-- phone string =>  The primary contact number for the business.
-
-- additional_phone_numbers: Array<string> =>  Numbers that are registered for the business, but is not the primary contact number.
-
-- average_review_rating: number =>  The average review rating for the business (if applicable) across reviews for this listing.
-
-- website: string => The website owned by the business. Not to be confused with the URL of the listing itself (see url below).
-
-
-
-
-### Geo ###
-*This simple class is used to set the location of the listing.*
-
-- latitude: number => latitudinal location of the listing.
-
-- longitude: number => longitudinal location of the listing.
-
-
 
 ### Retrieving a Review / Deleting a Review ###
 Retrieve a review with
@@ -207,6 +161,86 @@ review.star_rating = 5.0;
 client.putReview(review, callback);
 ```
 
+### Retrieving a list of reviews ###
+
+#### Typescript ####
+``` typescript
+import {Client, Review, Environment} from "vendasta-sdk/src/index";
+client: Client = new Client(Environment.TEST, "my-access-token";
+// assume a listing with some reviews here ...
+let pageSize = 10;
+let offset = 0;
+
+var reviews: Review[];
+client.listReviews(listingId, pageSize, offset, getAllReviews);
+
+function getAllReviews(error: string, listedReviews: [Review]) {
+    if (listedReviews.length > 0) {
+        reviews = reviews.concat(listedReviews);
+        offset += pageSize;
+        client.listReviews(listingId, page_size, offset, getAllReviews);
+    }
+    else {
+        return;
+    }
+}
+```
+
+#### Javascript ####
+``` javascript
+var vendastaSdk = require("vendasta-sdk");
+var client = new vendastaSdk.Client(Environment.TEST, "my-access-token");
+// assume a listing with some reviews here ...
+var page_size = 10;
+var offset = 0;
+
+var reviews = [];
+client.listReviews(listingId, pageSize, offset, getAllReviews);
+
+function getAllReviews(error, listedReviews) {
+    if (listedReviews.length > 0) {
+        reviews = reviews.concat(listedReviews);
+        offset += pageSize;
+        client.listReviews(listingId, page_size, offset, getAllReviews);
+    }
+    else {
+        return;
+    }
+}
+```
+
+### Quickstart ###
+See `listingExample.ts` and `reviewExample.ts` in vendasta-sdk/example [here](https://github.com/vendasta/vendasta-node-sdk/tree/master/example)
+
+
+## Objects ##
+### Listing ###
+*The Listing class is used when interacting with the client.
+
+#### Required Fields ####
+- external_id: string =>  This is your ID for this listing.
+- url: string => The URL where the listing can be found. (Not to be confused with the business’ website, above.)
+
+#### Optional Fields ####
+- listing_id: string => The id used to identify the listing. This will only be set after saving the listing.
+- company_name: string => The name of the company the listing represents.
+- address: string => The address of the company the listing represents.
+- city: string => The city the business resides in.
+- state: string => The state / province  the business resides in.
+- country: string => The country the business resides in.
+- zip_code: string => The zip code / postal code of the business.
+- location: Geo => The latitude and longitude of the business location.
+- business_categories: array<string> =>  A list of categories that describes the business the listing represents.
+- phone: string =>  The primary contact number for the business.
+- additional_phone_numbers: Array<string> =>  Numbers that are registered for the business, but is not the primary contact number.
+- average_review_rating: number =>  The average review rating for the business (if applicable) across reviews for this listing.
+- website: string => The website owned by the business. Not to be confused with the URL of the listing itself (see url below).
+
+### Geo ###
+*This simple class is used to set the location of the listing.*
+- latitude: number => latitudinal location of the listing.
+- longitude: number => longitudinal location of the listing.
+
 ### Review ###
 *The Review class is used when interacting with the client.
 
@@ -214,18 +248,24 @@ client.putReview(review, callback);
 - listing_id: string => The ID of the listing this review belongs to.
 
 #### Optional Fields ####
-- review_id: string => The id used to identify the listing. This will only be set after saving the listing.
-- url =>
-- title => The title of the review.
-- star_rating => The rating of the review.
-- reviewer_name => The name of the reviewer who created the review.
-- reviewer_email => The email address of the reviewer.
-- reviewer_url => The URL to the reviewer's profile.
-- content => The full text content of the review.
-- published_date => The date on which the review was published.
+- review_id: string => The ID used to identify the listing. This will only be set after saving the listing.
+- url: string => The URL to the review.
+- title: string => The title of the review.
+- star_rating: number => The rating of the review.
+- reviewer_name: string => The name of the reviewer who created the review.
+- reviewer_email: string => The email address of the reviewer.
+- reviewer_url: string => The URL to the reviewer's profile.
+- content: string => The full text content of the review.
+- published_date: Timestamp => The date on which the review was published.
 
-### Quickstart ###
-See `listingExample.ts` and `reviewExample.ts` in vendasta-sdk/example [here](https://github.com/vendasta/vendasta-node-sdk/tree/master/example)
+### Empty ###
+*This is an empty object from GRPC.*
+- It has no fields.
+
+### Timestamp ###
+*This is a timestamp object from GRPC.*
+- seconds: number => The number of seconds after (positive) or before (negative) the 1970 epoch.
+- nanos: number => The fractional portion of the last second, in nanoseconds. This number must always be positive, even for negative timestamps.
 
 
 ## Development ##
