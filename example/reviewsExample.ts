@@ -3,7 +3,7 @@ const client = new Client(Environment.TEST, 'my-example-token');    // ask us fo
 
 
 // Create a listing object to put.
-var listing = <Listing> new Listing();
+var listing = new Listing();
 listing.external_id = "vendasta-technologies-12345";
 listing.company_name = "Vendasta Technologies Inc.";
 listing.business_categories[0] = "marketing";
@@ -35,7 +35,7 @@ function putListingCallback(error: any, listing: Listing) {
         return;
     listingId = listing.listing_id;
     console.log(listing);
-    var review = <Review> new Review();
+    var review = new Review();
     review.url = "www.example-source.com/vendasta-technologies-12345";
     review.star_rating = 5.0;
     review.reviewer_name = "John Jones";

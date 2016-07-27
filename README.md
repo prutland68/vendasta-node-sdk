@@ -77,7 +77,7 @@ NOTE: A newly created listing's listing id will be ignored. YOU SHOULD NEVER SET
 ``` typescript
 import {Client, Listing, Environment} from "vendasta-sdk/src/index";
 client: Client = new Client(Environment.TEST, "my-access-token";
-listing: Listing = <Listing> new Listing();
+listing: Listing = new Listing();
 listing.address = "123 Test Dr.";
 listing.external_id = "externalId";
 listing.url = "http://www.vendasta.com";
@@ -188,7 +188,7 @@ If you do not supply an ID, it will create a new review.
 import {Client, Review, Environment} from "vendasta-sdk/src/index";
 client: Client = new Client(Environment.TEST, "my-access-token";
 // create a listing or get an existing listing here ...
-review: Review = <Review> new Review();
+review: Review = new Review();
 review.listing_id = listing.listing_id;
 review.external_id = "externalId";
 review.star_rating = 5.0;
@@ -244,16 +244,12 @@ To install the node_modules folder locally, run:
 ./build.sh npm install
 ```
 To install any extra [typings](https://github.com/typings/typings), run:
-```
+```re
 ./build.sh typings # (any command typings supports)
 ```
 To regenerate the documentation, run:
 ```
 ./build.sh jsdoc -c jsdoc_conf.json
-```
-To regenerate the proto objects files, run:
-```
-./build.sh bash build_proto_def.sh
 ```
 
 ### Testing ###

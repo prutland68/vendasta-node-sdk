@@ -49,7 +49,7 @@ export class Client {
      *                  Should be of the form function(error: string, listing: Listing)
      */
     public getListing = (listingId:string, callback:any) => {
-        let request = new GetListingRequest();
+        let request: GetListingRequest = new GetListingRequest();
         request.listing_id = listingId;
         return this.listingService.get(listingId, (error:any, listing:Listing) => {
             if (callback) {
@@ -66,7 +66,7 @@ export class Client {
      *                  Should be of the form function(error: string, empty: Empty)
      */
     public deleteListing = (listingId:string, callback:any) => {
-        let request = new DeleteListingRequest();
+        let request: DeleteListingRequest = new DeleteListingRequest();
         request.listing_id = listingId;
         return this.listingService.delete(request, (error:any, emptyResponse:Empty)=> {
             if (callback) {
@@ -98,7 +98,7 @@ export class Client {
      *                  Should be of the form function(error: string, review: Review)
      */
     public getReview = (reviewId: string, callback:any) => {
-        let request = new GetReviewRequest();
+        let request: GetReviewRequest = new GetReviewRequest();
         request.review_id = reviewId;
         return this.reviewService.get(request, (error:any, review:Review) => {
             if (callback) {
@@ -116,7 +116,7 @@ export class Client {
      *                 Should be of the form function(error: string, listing: Listing)
      */
     public deleteReview = (reviewId: string, callback:any) => {
-        let request = new DeleteReviewRequest();
+        let request: DeleteReviewRequest = new DeleteReviewRequest();
         request.review_id = reviewId;
         return this.reviewService.delete(request, (error:any, review:Review)=> {
             if (callback) {
@@ -151,7 +151,7 @@ export class Client {
      *                  Should be of the form function(error: string, listing: Listing)
      */
     public listReviews = (listingId: string, page_size: number, offset: number, callback:any) => {
-        let request = new ListReviewsRequest();
+        let request: ListReviewsRequest = new ListReviewsRequest();
         request.listing_id = listingId;
         request.page_size = page_size;
         request.offset = offset;

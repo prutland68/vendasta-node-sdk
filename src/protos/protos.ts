@@ -1,9 +1,6 @@
 /// <reference path="./listing.d.ts" />
 /// <reference path="./review.d.ts" />
 
-import datariver = Proto2TypeScript.datariver;
-import protobuf = Proto2TypeScript.google.protobuf;
-
 const grpc = require("grpc");
 
 export const listingProto = grpc.load({
@@ -26,16 +23,36 @@ export interface Geo extends datariver.Geo {
     constructor:{ new():Geo };
 }
 
-export interface Empty extends protobuf.Empty {
+export interface Empty extends datariver.Empty {
     constructor:{ new():Empty };
+}
+
+export interface Timestamp extends datariver.Timestamp {
+    constructor:{ new():Timestamp };
 }
 
 export interface ListReviewsResponse extends datariver.ListReviewsResponse {
     constructor:{ new():ListReviewsResponse };
 }
 
-export interface Timestamp extends protobuf.Timestamp {
-    constructor:{ new():Timestamp };
+export interface ListReviewsRequest extends datariver.ListReviewsRequest {
+    constructor:{ new():ListReviewsRequest}
+}
+
+export interface GetListingRequest extends datariver.GetListingRequest {
+     constructor:{ new():GetListingRequest}
+}
+
+export interface DeleteListingRequest extends datariver.DeleteListingRequest {
+     constructor:{ new():DeleteListingRequest}
+}
+
+export interface GetReviewRequest extends datariver.GetReviewRequest {
+     constructor:{ new():GetReviewRequest}
+}
+
+export interface DeleteReviewRequest extends datariver.DeleteReviewRequest {
+     constructor:{ new():DeleteReviewRequest}
 }
 
 export const Timestamp = reviewProto.google.protobuf.Timestamp;
