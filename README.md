@@ -26,7 +26,7 @@ client: Client = new Client(Environment.TEST, "my-access-token");
 #### Javascript ####
 ``` javascript
 var vendastaSdk = require("vendasta-sdk");
-var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-fake-token");
+var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-access-token");
 ```
 
 
@@ -64,7 +64,7 @@ client.deleteListing("other-listing-id", callback)
 client.putListing;
 ```
 
-This will either save a new listing, or update the existing one with the same listing id.
+This will either save a new listing, or update the existing one with the given listing id.
 
 NOTE: A newly created listing's listing id will be ignored. YOU SHOULD NEVER SET THE LISTING ID.
 
@@ -142,8 +142,90 @@ client.saveListing(listing, callback)
 
 
 
+### Retrieving a Review / Deleting a Review ###
+Retrieve a review with
+``` typescript
+client.getReview;
+```
+Delete a review with
+``` typescript
+client.deleteReview;
+```
+
+#### Arguments ####
+
+- reviewId: string => This is available from the Review object after it has been saved.
+
+- callback: any  => Runs when the review is retrieved. Signature is callback(error: string, review: Review)
+
+#### Typescript ####
+``` typescript
+import {Review} from "vendasta-sdk/src/index";
+let review: Review = client.getReview("review-id", callback);
+client.deleteReview("other-review-id", callback);
+```
+
+#### Javascript ####
+``` javascript
+var review = client.getReview("review-id", callback);
+client.deleteReview("other-review-id", callback)
+```
+
+### Saving a Review ###
+``` typescript
+client.putReview;
+```
+
+NOTE: If you supply a review ID, that ID will be used to update an existing review, if it exists.
+If you do not supply an ID, it will create a new review.
+
+#### Arguments ####
+- review: Review
+- callback: any => Runs when the review is retrieved. Signature is callback(error: string, review: Review)
+
+#### Typescript ####
+``` typescript
+import {Client, Review, Environment} from "vendasta-sdk/src/index";
+client: Client = new Client(Environment.TEST, "my-access-token";
+// create a listing or get an existing listing here ...
+review: Review = <Review> new Review();
+review.listing_id = listing.listing_id;
+review.external_id = "externalId";
+review.star_rating = 5.0;
+client.putReview(review, callback);
+```
+
+#### Javascript ####
+``` javascript
+var vendastaSdk = require("vendasta-sdk");
+var client = new vendastaSdk.Client(Environment.TEST, "my-access-token");
+// create a listing or get an existing listing here ...
+var review = new vendastaSdk.Review();
+review.listing_id = listing.listing_id;
+review.external_id = "externalId";
+review.star_rating = 5.0;
+client.putReview(review, callback);
+```
+
+### Review ###
+*The Review class is used when interacting with the client.
+
+#### Required Fields ####
+- listing_id: string => The ID of the listing this review belongs to.
+
+#### Optional Fields ####
+- review_id: string => The id used to identify the listing. This will only be set after saving the listing.
+- url =>
+- title => The title of the review.
+- star_rating => The rating of the review.
+- reviewer_name => The name of the reviewer who created the review.
+- reviewer_email => The email address of the reviewer.
+- reviewer_url => The URL to the reviewer's profile.
+- content => The full text content of the review.
+- published_date => The date on which the review was published.
+
 ### Quickstart ###
-See example.ts in vendasta-sdk/example [here](https://github.com/vendasta/vendasta-node-sdk/tree/master/example)
+See `listingExample.ts` and `reviewExample.ts` in vendasta-sdk/example [here](https://github.com/vendasta/vendasta-node-sdk/tree/master/example)
 
 
 ## Development ##
