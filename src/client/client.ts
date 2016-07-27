@@ -14,6 +14,11 @@ export class Client {
     private reviewService:any;
     private address:string;
 
+    /**
+     *
+     * @param environment: Environment.TEST or Environment.PRODUCTION. (Production not implemented yet).
+     * @param token: Token provided by us.
+     */
     constructor(private environment:Environment, private token:string,
                 listingService: any = null, reviewService: any = null) {
         if (environment == Environment.PRODUCTION) {
@@ -38,33 +43,15 @@ export class Client {
         return grpc.credentials.combineChannelCredentials(creds, callCreds);
     }
 
+    /** Get a listing by listingId
+     * @param listingId: The listingId of the listing.
+     * @param callback: Callback is called when the listing is retrieved.
+     *                  Should be of the form function(error: string, listing: Listing)
+     */
     public getListing = (listingId:string, callback:any) => {
         let request = new GetListingRequest();
         request.listing_id = listingId;
         return this.listingService.get(listingId, (error:any, listing:Listing) => {
-            // error.toString() returns just the error message.
-            if (callback) {
-                if (error)
-                    error = error.toString();
-                callback(error, listing);
-            }
-        });
-    };
-    public deleteListing = (listingId:string, callback:any) => {
-        let request = new DeleteListingRequest();
-        request.listing_id = listingId;
-        return this.listingService.delete(request, (error:any, emptyResponse:Empty)=> {
-            // error.toString() returns just the error message.
-            if (callback) {
-                if (error)
-                    error = error.toString();
-                callback(error, emptyResponse);
-            }
-        });
-    };
-    public putListing = (listing:Listing, callback:any) => {
-        return this.listingService.put(listing, (error:any, listing:Listing) => {
-            // error.toString() returns just the error message.
             if (callback) {
                 if (error)
                     error = error.toString();
@@ -73,6 +60,43 @@ export class Client {
         });
     };
 
+    /** Delete the listing with the given listingId
+     * @param listingId: The listingId of the listing to delete.
+     * @param callback: Callback is called when the listing is retrieved.
+     *                  Should be of the form function(error: string, empty: Empty)
+     */
+    public deleteListing = (listingId:string, callback:any) => {
+        let request = new DeleteListingRequest();
+        request.listing_id = listingId;
+        return this.listingService.delete(request, (error:any, emptyResponse:Empty)=> {
+            if (callback) {
+                if (error)
+                    error = error.toString();
+                callback(error, emptyResponse);
+            }
+        });
+    };
+
+    /** Save the listing.
+     * @param listing: A Listing object. (url, external_id are required).
+     * @param callback Callback is called when the listing is retrieved.
+     *                 Should be of the form function(error: string, listing: Listing)
+     */
+    public putListing = (listing:Listing, callback:any) => {
+        return this.listingService.put(listing, (error:any, listing:Listing) => {
+            if (callback) {
+                if (error)
+                    error = error.toString();
+                callback(error, listing);
+            }
+        });
+    };
+
+    /** Get the review with the given reviewId
+     * @param reviewId: reviewId of the review to retrieve.
+     * @param callback: Callback is called when the listing is retrieved.
+     *                  Should be of the form function(error: string, review: Review)
+     */
     public getReview = (reviewId: string, callback:any) => {
         let request = new GetReviewRequest();
         request.review_id = reviewId;
@@ -85,6 +109,12 @@ export class Client {
         });
     };
 
+    /** Delete the review with the given reviewId
+     *
+     * @param reviewId: reviewId of the review to retrieve.
+     * @param callback Callback is called when the listing is retrieved.
+     *                 Should be of the form function(error: string, listing: Listing)
+     */
     public deleteReview = (reviewId: string, callback:any) => {
         let request = new DeleteReviewRequest();
         request.review_id = reviewId;
@@ -97,6 +127,11 @@ export class Client {
         });
     };
 
+    /** Save the review.
+     * @param review: The Review object to save.
+     * @param callback: Callback is called when the listing is retrieved.
+     *                  Should be of the form function(error: string, listing: Listing)
+     */
     public putReview = (review:Review, callback:any) => {
         return this.reviewService.put(review, (error:any, review:Review) => {
             if (callback) {
@@ -107,6 +142,14 @@ export class Client {
         });
     };
 
+    /** Retrieve the reviews from the given listingId. These should be paged through via offset and page_size.
+     * If iterating over all of the reviews, you should call the offset incremented by the page_size on every call.
+     * @param listingId: the listingId tied to the review.
+     * @param page_size: The number of reviews to return.
+     * @param offset: The offset at which to start searching.
+     * @param callback: Callback is called when the listing is retrieved.
+     *                  Should be of the form function(error: string, listing: Listing)
+     */
     public listReviews = (listingId: string, page_size: number, offset: number, callback:any) => {
         let request = new ListReviewsRequest();
         request.listing_id = listingId;
