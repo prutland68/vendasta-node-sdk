@@ -7,6 +7,11 @@ var protos_1 = require('../protos/protos');
 })(exports.Environment || (exports.Environment = {}));
 var Environment = exports.Environment;
 var Client = (function () {
+    /**
+     *
+     * @param environment: Environment.TEST or Environment.PRODUCTION. (Production not implemented yet).
+     * @param token: Token provided by us.
+     */
     function Client(environment, token, listingService, reviewService) {
         var _this = this;
         if (listingService === void 0) { listingService = null; }
@@ -14,11 +19,15 @@ var Client = (function () {
         this.environment = environment;
         this.token = token;
         this.metaData = new grpc.Metadata();
+        /** Get a listing by listingId
+         * @param listingId: The listingId of the listing.
+         * @param callback: Callback is called when the listing is retrieved.
+         *                  Should be of the form function(error: string, listing: Listing)
+         */
         this.getListing = function (listingId, callback) {
             var request = new protos_1.GetListingRequest();
             request.listing_id = listingId;
             return _this.listingService.get(listingId, function (error, listing) {
-                // error.toString() returns just the error message.
                 if (callback) {
                     if (error)
                         error = error.toString();
@@ -26,11 +35,15 @@ var Client = (function () {
                 }
             });
         };
+        /** Delete the listing with the given listingId
+         * @param listingId: The listingId of the listing to delete.
+         * @param callback: Callback is called when the listing is retrieved.
+         *                  Should be of the form function(error: string, empty: Empty)
+         */
         this.deleteListing = function (listingId, callback) {
             var request = new protos_1.DeleteListingRequest();
             request.listing_id = listingId;
             return _this.listingService.delete(request, function (error, emptyResponse) {
-                // error.toString() returns just the error message.
                 if (callback) {
                     if (error)
                         error = error.toString();
@@ -38,9 +51,13 @@ var Client = (function () {
                 }
             });
         };
+        /** Save the listing.
+         * @param listing: A Listing object. (url, external_id are required).
+         * @param callback Callback is called when the listing is retrieved.
+         *                 Should be of the form function(error: string, listing: Listing)
+         */
         this.putListing = function (listing, callback) {
             return _this.listingService.put(listing, function (error, listing) {
-                // error.toString() returns just the error message.
                 if (callback) {
                     if (error)
                         error = error.toString();
@@ -48,6 +65,11 @@ var Client = (function () {
                 }
             });
         };
+        /** Get the review with the given reviewId
+         * @param reviewId: reviewId of the review to retrieve.
+         * @param callback: Callback is called when the listing is retrieved.
+         *                  Should be of the form function(error: string, review: Review)
+         */
         this.getReview = function (reviewId, callback) {
             var request = new protos_1.GetReviewRequest();
             request.review_id = reviewId;
@@ -59,6 +81,12 @@ var Client = (function () {
                 }
             });
         };
+        /** Delete the review with the given reviewId
+         *
+         * @param reviewId: reviewId of the review to retrieve.
+         * @param callback Callback is called when the listing is retrieved.
+         *                 Should be of the form function(error: string, listing: Listing)
+         */
         this.deleteReview = function (reviewId, callback) {
             var request = new protos_1.DeleteReviewRequest();
             request.review_id = reviewId;
@@ -70,6 +98,11 @@ var Client = (function () {
                 }
             });
         };
+        /** Save the review.
+         * @param review: The Review object to save.
+         * @param callback: Callback is called when the listing is retrieved.
+         *                  Should be of the form function(error: string, listing: Listing)
+         */
         this.putReview = function (review, callback) {
             return _this.reviewService.put(review, function (error, review) {
                 if (callback) {
@@ -79,6 +112,14 @@ var Client = (function () {
                 }
             });
         };
+        /** Retrieve the reviews from the given listingId. These should be paged through via offset and page_size.
+         * If iterating over all of the reviews, you should call the offset incremented by the page_size on every call.
+         * @param listingId: the listingId tied to the review.
+         * @param page_size: The number of reviews to return.
+         * @param offset: The offset at which to start searching.
+         * @param callback: Callback is called when the listing is retrieved.
+         *                  Should be of the form function(error: string, listing: Listing)
+         */
         this.listReviews = function (listingId, page_size, offset, callback) {
             var request = new protos_1.ListReviewsRequest();
             request.listing_id = listingId;
