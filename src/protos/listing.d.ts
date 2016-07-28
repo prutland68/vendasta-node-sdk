@@ -1,4 +1,3 @@
-
 declare module datariver {
 	interface ProtoBufModel {
 		toArrayBuffer(): ArrayBuffer;
@@ -46,4 +45,3 @@ declare module datariver {
 
 	}
 }
-
