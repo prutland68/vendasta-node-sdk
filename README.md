@@ -88,11 +88,11 @@ listing.url = "http://www.vendasta.com";
 ``` javascript
 var vendastaSdk = require("vendasta-sdk");
 var listing = new vendastaSdk.Listing();
-var client = new vendastaSdk.Client(Environment.TEST, "my-access-token")
+var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-access-token")
 listing.address = "123 Test Dr.";
 listing.external_id = "externalId";
 listing.url = "http://www.vendasta.com";
-client.saveListing(listing, callback)
+client.putListing(listing, callback)
 ```
 
 
@@ -152,7 +152,7 @@ client.putReview(review, callback);
 #### Javascript ####
 ``` javascript
 var vendastaSdk = require("vendasta-sdk");
-var client = new vendastaSdk.Client(Environment.TEST, "my-access-token");
+var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-access-token");
 // create a listing or get an existing listing here ...
 var review = new vendastaSdk.Review();
 review.listing_id = listing.listing_id;
@@ -189,7 +189,7 @@ function getAllReviews(error: string, listedReviews: [Review]) {
 #### Javascript ####
 ``` javascript
 var vendastaSdk = require("vendasta-sdk");
-var client = new vendastaSdk.Client(Environment.TEST, "my-access-token");
+var client = new vendastaSdk.Client(vendastaSdk.Environment.TEST, "my-access-token");
 // assume a listing with some reviews here ...
 var page_size = 10;
 var offset = 0;
