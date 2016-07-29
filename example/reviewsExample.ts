@@ -1,5 +1,5 @@
 import {Client, Environment, Listing, Geo, Review, Timestamp, Empty} from "../src/index"
-const client = new Client(Environment.TEST, 'thisistestingonly');    // ask us for a token.
+const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
 
 // Create a listing object to put.
