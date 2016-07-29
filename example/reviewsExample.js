@@ -67,6 +67,16 @@ function getReviewCallback(error, response) {
     var page_size = 10;
     var offset = 0;
     // To show that the delete went through.
+    client.listReviews(null, listingExternalId, page_size, offset, listReviewsExternalIdCallback);
+}
+function listReviewsExternalIdCallback(error, response) {
+    console.log("**** List review by external id output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    var page_size = 10;
+    var offset = 0;
+    // To show that the delete went through.
     client.listReviews(null, listingExternalId, page_size, offset, listReviewsCallback);
 }
 function deleteReviewCallback(error, response) {
@@ -76,7 +86,7 @@ function deleteReviewCallback(error, response) {
         return;
 }
 function listReviewsCallback(error, reviews) {
-    console.log("**** LIST REVIEWS output: ****");
+    console.log("**** LIST REVIEWS by listing_id output: ****");
     printErrorAndResponse(error, reviews);
     if (error)
         return;

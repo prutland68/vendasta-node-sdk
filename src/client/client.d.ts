@@ -56,7 +56,9 @@ export declare class Client {
     putReview: (review: Review, callback: any) => any;
     /** Retrieve the reviews from the given listingId. These should be paged through via offset and page_size.
      * If iterating over all of the reviews, you should call the offset incremented by the page_size on every call.
+     * NOTE: Only one of listingId and listingExternalId can be provided.
      * @param listingId: the listingId tied to the review.
+     * @param listingExternalId: The external id of the listing to get the reviews for.
      * @param page_size: The number of reviews to return.
      * @param offset: The offset at which to start searching.
      * @param callback: Callback is called when the listing is retrieved.

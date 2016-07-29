@@ -114,7 +114,9 @@ var Client = (function () {
         };
         /** Retrieve the reviews from the given listingId. These should be paged through via offset and page_size.
          * If iterating over all of the reviews, you should call the offset incremented by the page_size on every call.
+         * NOTE: Only one of listingId and listingExternalId can be provided.
          * @param listingId: the listingId tied to the review.
+         * @param listingExternalId: The external id of the listing to get the reviews for.
          * @param page_size: The number of reviews to return.
          * @param offset: The offset at which to start searching.
          * @param callback: Callback is called when the listing is retrieved.
@@ -122,12 +124,8 @@ var Client = (function () {
          */
         this.listReviews = function (listingId, listingExternalId, page_size, offset, callback) {
             var request = new protos_1.ListReviewsRequest();
-            if (listingId) {
-                request.listing_id = listingId;
-            }
-            if (listingExternalId) {
-                request.listing_external_id = listingExternalId;
-            }
+            request.listing_id = listingId || '';
+            request.listing_external_id = listingExternalId || '';
             request.page_size = page_size;
             request.offset = offset;
             return _this.reviewService.list(request, function (error, reviewResponse) {
@@ -142,10 +140,10 @@ var Client = (function () {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "localhost:9090";
+            this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
-        var callCredentials = grpc.credentials.createInsecure() || this.getCallCredentials(this.metaData);
+        var callCredentials = this.getCallCredentials(this.metaData);
         this.listingService = listingService || new protos_1.ListingService(this.address, callCredentials);
         this.reviewService = reviewService || new protos_1.ReviewService(this.address, callCredentials);
     }
