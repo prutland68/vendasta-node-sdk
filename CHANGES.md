@@ -1,3 +1,5 @@
+## 0.4.0
+- Added support for getting a list of reviews by the listing's external id.
 ## 0.3.0
 ### Added support for reviews.
 - Put a Review

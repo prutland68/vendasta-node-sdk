@@ -162,6 +162,11 @@ client.putReview(review, callback);
 ```
 
 ### Retrieving a list of reviews ###
+NOTE:: You can either specify listingId or listingExternalId, not both.
+listingId: The listing_id of the Listing to get the reviews for.
+listingExternalId: The external_id of the Listing to get the reviews for.
+page_size: The number of reviews to return with each request.
+offset: How far into the batch of reviews you are.
 
 #### Typescript ####
 ``` typescript
@@ -178,7 +183,7 @@ function getAllReviews(error: string, listedReviews: [Review]) {
     if (listedReviews.length > 0) {
         reviews = reviews.concat(listedReviews);
         offset += pageSize;
-        client.listReviews(listingId, page_size, offset, getAllReviews);
+        client.listReviews(listingId, null, page_size, offset, getAllReviews);
     }
     else {
         return;
@@ -201,7 +206,7 @@ function getAllReviews(error, listedReviews) {
     if (listedReviews.length > 0) {
         reviews = reviews.concat(listedReviews);
         offset += pageSize;
-        client.listReviews(listingId, page_size, offset, getAllReviews);
+        client.listReviews(listingId, null, page_size, offset, getAllReviews);
     }
     else {
         return;

@@ -22,6 +22,7 @@ listing.website = "www.vendasta.com";
 listing.zip_code = "S7K 1M1";
 client.putListing(listing, putListingCallback);
 var listingId = null;
+var listingExternalId = null;
 var reviewId = null;
 // Create a review object to put.
 function putListingCallback(error, listing) {
@@ -30,6 +31,7 @@ function putListingCallback(error, listing) {
     if (error)
         return;
     listingId = listing.listing_id;
+    listingExternalId = listing.external_id;
     console.log(listing);
     var review = new index_1.Review();
     review.url = "www.example-source.com/vendasta-technologies-12345";
@@ -41,6 +43,9 @@ function putListingCallback(error, listing) {
     review.published_date = new index_1.Timestamp(Date.now() / 1000, Date.now() * 1000);
     review.title = "My review!";
     review.listing_id = listing.listing_id;
+    client.putReview(review, null);
+    client.putReview(review, null);
+    client.putReview(review, null);
     client.putReview(review, null);
     client.putReview(review, null);
     client.putReview(review, putReviewCallback);
@@ -62,7 +67,17 @@ function getReviewCallback(error, response) {
     var page_size = 10;
     var offset = 0;
     // To show that the delete went through.
-    client.listReviews(listingId, page_size, offset, listReviewsCallback);
+    client.listReviews(null, listingExternalId, page_size, offset, listReviewsExternalIdCallback);
+}
+function listReviewsExternalIdCallback(error, response) {
+    console.log("**** List review by external id output: ****");
+    printErrorAndResponse(error, response);
+    if (error)
+        return;
+    var page_size = 10;
+    var offset = 0;
+    // To show that the delete went through.
+    client.listReviews(listingId, null, page_size, offset, listReviewsCallback);
 }
 function deleteReviewCallback(error, response) {
     console.log("**** Delete reviews output: ****");
@@ -71,7 +86,7 @@ function deleteReviewCallback(error, response) {
         return;
 }
 function listReviewsCallback(error, reviews) {
-    console.log("**** LIST REVIEWS output: ****");
+    console.log("**** LIST REVIEWS by listing_id output: ****");
     printErrorAndResponse(error, reviews);
     if (error)
         return;

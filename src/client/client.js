@@ -114,15 +114,18 @@ var Client = (function () {
         };
         /** Retrieve the reviews from the given listingId. These should be paged through via offset and page_size.
          * If iterating over all of the reviews, you should call the offset incremented by the page_size on every call.
+         * NOTE: Only one of listingId and listingExternalId can be provided.
          * @param listingId: the listingId tied to the review.
+         * @param listingExternalId: The external id of the listing to get the reviews for.
          * @param page_size: The number of reviews to return.
          * @param offset: The offset at which to start searching.
          * @param callback: Callback is called when the listing is retrieved.
          *                  Should be of the form function(error: string, listing: Listing)
          */
-        this.listReviews = function (listingId, page_size, offset, callback) {
+        this.listReviews = function (listingId, listingExternalId, page_size, offset, callback) {
             var request = new protos_1.ListReviewsRequest();
-            request.listing_id = listingId;
+            request.listing_id = listingId || '';
+            request.listing_external_id = listingExternalId || '';
             request.page_size = page_size;
             request.offset = offset;
             return _this.reviewService.list(request, function (error, reviewResponse) {
