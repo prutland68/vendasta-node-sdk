@@ -62,5 +62,5 @@ export declare class Client {
      * @param callback: Callback is called when the listing is retrieved.
      *                  Should be of the form function(error: string, listing: Listing)
      */
-    listReviews: (listingId: string, page_size: number, offset: number, callback: any) => any;
+    listReviews: (listingId: string, listingExternalId: string, page_size: number, offset: number, callback: any) => any;
 }

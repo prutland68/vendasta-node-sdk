@@ -120,9 +120,14 @@ var Client = (function () {
          * @param callback: Callback is called when the listing is retrieved.
          *                  Should be of the form function(error: string, listing: Listing)
          */
-        this.listReviews = function (listingId, page_size, offset, callback) {
+        this.listReviews = function (listingId, listingExternalId, page_size, offset, callback) {
             var request = new protos_1.ListReviewsRequest();
-            request.listing_id = listingId;
+            if (listingId) {
+                request.listing_id = listingId;
+            }
+            if (listingExternalId) {
+                request.listing_external_id = listingExternalId;
+            }
             request.page_size = page_size;
             request.offset = offset;
             return _this.reviewService.list(request, function (error, reviewResponse) {
@@ -137,10 +142,10 @@ var Client = (function () {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "directory-sandbox.vendasta.com:23000"; // assume test
+            this.address = "localhost:9090";
         }
         this.metaData.add('token', token);
-        var callCredentials = this.getCallCredentials(this.metaData);
+        var callCredentials = grpc.credentials.createInsecure() || this.getCallCredentials(this.metaData);
         this.listingService = listingService || new protos_1.ListingService(this.address, callCredentials);
         this.reviewService = reviewService || new protos_1.ReviewService(this.address, callCredentials);
     }

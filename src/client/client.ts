@@ -109,20 +109,6 @@ export class Client {
         });
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /** Delete the review with the given reviewId
      *
      * @param reviewId: reviewId of the review to retrieve.
@@ -158,15 +144,18 @@ export class Client {
 
     /** Retrieve the reviews from the given listingId. These should be paged through via offset and page_size.
      * If iterating over all of the reviews, you should call the offset incremented by the page_size on every call.
+     * NOTE: Only one of listingId and listingExternalId can be provided.
      * @param listingId: the listingId tied to the review.
+     * @param listingExternalId: The external id of the listing to get the reviews for.
      * @param page_size: The number of reviews to return.
      * @param offset: The offset at which to start searching.
      * @param callback: Callback is called when the listing is retrieved.
      *                  Should be of the form function(error: string, listing: Listing)
      */
-    public listReviews = (listingId: string, page_size: number, offset: number, callback:any) => {
+    public listReviews = (listingId: string, listingExternalId: string, page_size: number, offset: number, callback:any) => {
         let request: ListReviewsRequest = new ListReviewsRequest();
-        request.listing_id = listingId;
+        request.listing_id = listingId || '';
+        request.listing_external_id = listingExternalId || '';
         request.page_size = page_size;
         request.offset = offset;
         return this.reviewService.list(request, (error:any, reviewResponse:ListReviewsResponse) => {
