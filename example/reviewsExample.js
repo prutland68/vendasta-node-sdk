@@ -77,7 +77,7 @@ function listReviewsExternalIdCallback(error, response) {
     var page_size = 10;
     var offset = 0;
     // To show that the delete went through.
-    client.listReviews(null, listingExternalId, page_size, offset, listReviewsCallback);
+    client.listReviews(listingId, null, page_size, offset, listReviewsCallback);
 }
 function deleteReviewCallback(error, response) {
     console.log("**** Delete reviews output: ****");

@@ -72,7 +72,7 @@ function getReviewCallback(error: string, response: Review) {
     let page_size = 10;
     let offset = 0;
     // To show that the delete went through.
-    client.listReviews(null,listingExternalId,  page_size, offset, listReviewsExternalIdCallback);
+    client.listReviews(null, listingExternalId,  page_size, offset, listReviewsExternalIdCallback);
 }
 
 function listReviewsExternalIdCallback(error: string, response: [Review]) {
@@ -83,7 +83,7 @@ function listReviewsExternalIdCallback(error: string, response: [Review]) {
     let page_size = 10;
     let offset = 0;
     // To show that the delete went through.
-    client.listReviews(null,listingExternalId,  page_size, offset, listReviewsCallback);
+    client.listReviews(listingId, null,  page_size, offset, listReviewsCallback);
 }
 
 function deleteReviewCallback(error: string, response: Review) {
