@@ -179,7 +179,7 @@ describe('Client tests', function () {
     describe("listReviews tests", function () {
         it('Should pass the error into the callback if the error exists.', function (done) {
             _this.mockedReviewService.error = "Error!";
-            _this.client.listReviews("fake listing id", function (error, reviews) {
+            _this.client.listReviews("fake listing id", null, 15, 0, function (error, reviews) {
                 expect(error).toEqual("Error!");
                 done();
             });
@@ -191,15 +191,15 @@ describe('Client tests', function () {
             fakeReview2.star_rating = 5;
             var fakeReviewsResponse = new protos_1.ListReviewsResponse();
             fakeReviewsResponse.reviews = [fakeReview1, fakeReview2];
-            _this.listReviewsResponse = fakeReviewsResponse;
-            _this.client.listReviews("fake listing id", function (error, fakeReviewsResponse) {
-                expect(_this.mockedReviewService.listReviewsResponse).toEqual(fakeReviewsResponse);
+            _this.mockedReviewService.listReviewsResponse = fakeReviewsResponse;
+            _this.client.listReviews("fake listing id", null, 15, 0, function (error, reviews) {
+                expect(_this.mockedReviewService.listReviewsResponse.reviews).toEqual(reviews);
                 done();
             });
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.listReviews).not.toThrow(Error);
-            _this.client.listReviews("fake listing id", function () { done(); });
+            _this.client.listReviews("fake listing id", null, 15, 0, function () { done(); });
         });
     });
 });
