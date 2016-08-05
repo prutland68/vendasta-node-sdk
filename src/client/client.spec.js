@@ -67,7 +67,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.getListing).not.toThrow(Error);
-            _this.client.getListing("fake listing id", function () { done(); });
+            _this.client.getListing("fake listing id", done);
         });
     });
     describe("deleteListing tests.", function () {
@@ -86,7 +86,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.deleteListing).not.toThrow(Error);
-            _this.client.deleteListing("fake listing id", function () { done(); });
+            _this.client.deleteListing("fake listing id", done);
         });
     });
     describe("putListing tests.", function () {
@@ -110,7 +110,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.putListing).not.toThrow(Error);
-            _this.client.putListing(_this.fakeListing, function () { done(); });
+            _this.client.putListing(_this.fakeListing, done);
         });
     });
     describe("getReview tests", function () {
@@ -131,7 +131,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.getReview).not.toThrow(Error);
-            _this.client.getReview("fake review id", function () { done(); });
+            _this.client.getReview("fake review id", done);
         });
     });
     describe("deleteReview tests.", function () {
@@ -150,7 +150,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.deleteReview).not.toThrow(Error);
-            _this.client.deleteReview("fake review id", function () { done(); });
+            _this.client.deleteReview("fake review id", done);
         });
     });
     describe("putReview tests.", function () {
@@ -173,7 +173,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.putReview).not.toThrow(Error);
-            _this.client.putReview(_this.fakeReview, function () { done(); });
+            _this.client.putReview(_this.fakeReview, done);
         });
     });
     describe("listReviews tests", function () {
@@ -199,7 +199,7 @@ describe('Client tests', function () {
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.listReviews).not.toThrow(Error);
-            _this.client.listReviews("fake listing id", null, 15, 0, function () { done(); });
+            _this.client.listReviews("fake listing id", null, 15, 0, done);
         });
     });
 });

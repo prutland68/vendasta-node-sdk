@@ -68,7 +68,7 @@ describe('Client tests', () => {
         });
         it("should not crash if callback is null", (done) => {
             expect(this.client.getListing).not.toThrow(Error);
-            this.client.getListing("fake listing id", () => {done()});
+            this.client.getListing("fake listing id", done);
         });
     });
     describe("deleteListing tests.", () => {
@@ -87,7 +87,7 @@ describe('Client tests', () => {
         });
         it("should not crash if callback is null", (done) => {
             expect(this.client.deleteListing).not.toThrow(Error);
-            this.client.deleteListing("fake listing id", () => {done()});
+            this.client.deleteListing("fake listing id", done);
         });
     });
     describe("putListing tests.", () => {
@@ -111,7 +111,7 @@ describe('Client tests', () => {
         });
         it("should not crash if callback is null",(done) => {
             expect(this.client.putListing).not.toThrow(Error);
-            this.client.putListing(this.fakeListing, () => {done();});
+            this.client.putListing(this.fakeListing, done);
         });
     });
 
@@ -134,14 +134,14 @@ describe('Client tests', () => {
 
         it("should not crash if callback is null", (done) => {
             expect(this.client.getReview).not.toThrow(Error);
-            this.client.getReview("fake review id", () => {done();});
+            this.client.getReview("fake review id", done);
         });
     });
 
     describe("deleteReview tests.", () => {
         it('Should call my callback method with the returned emptyResponse.', (done) => {
             this.client.deleteReview("fake review id", (error: string, response: Empty) => {
-                expect(response).toEqual({})
+                expect(response).toEqual({});
                 done();
             });
         });
@@ -154,7 +154,7 @@ describe('Client tests', () => {
         });
         it("should not crash if callback is null", (done) => {
             expect(this.client.deleteReview).not.toThrow(Error);
-            this.client.deleteReview("fake review id", () => {done();} );
+            this.client.deleteReview("fake review id", done );
         });
     });
 
@@ -178,7 +178,7 @@ describe('Client tests', () => {
         });
         it("should not crash if callback is null", (done) => {
             expect(this.client.putReview).not.toThrow(Error);
-            this.client.putReview(this.fakeReview, () => {done();});
+            this.client.putReview(this.fakeReview, done);
         });
     });
 
@@ -205,7 +205,7 @@ describe('Client tests', () => {
         });
         it("should not crash if callback is null", (done) => {
             expect(this.client.listReviews).not.toThrow(Error);
-            this.client.listReviews("fake listing id", null, 15, 0, () => {done();});
+            this.client.listReviews("fake listing id", null, 15, 0, done);
         });
     });
 
