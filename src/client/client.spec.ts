@@ -51,99 +51,110 @@ describe('Client tests', () => {
 
     });
     describe("getListing tests", () => {
-        it('Should call my callback method with the returned listing.', () => {
+        it('Should call my callback method with the returned listing.', (done) => {
             this.mockedListingService.listing = new Listing();
             this.mockedListingService.listing.url = "blahblahblah";
             this.client.getListing("fake listing id", (error: string, listing: Listing) => {
                 expect(this.mockedListingService.listing).toEqual(listing);
+                done();
             });
         });
-        it('Should pass the main error into the callback if the main error exists.', () => {
+        it('Should pass the main error into the callback if the main error exists.', (done) => {
             this.mockedListingService.error = "Error!";
             this.client.getListing("fake listing id", (error: string, listing: Listing) => {
                 expect(error).toEqual("Error!");
+                done();
             });
         });
-        it("should not crash if callback is null",() => {
+        it("should not crash if callback is null", (done) => {
             expect(this.client.getListing).not.toThrow(Error);
-            this.client.getListing("fake listing id", null);
+            this.client.getListing("fake listing id", done);
         });
     });
     describe("deleteListing tests.", () => {
-        it('Should call my callback method with empty response.', () => {
+        it('Should call my callback method with empty response.', (done) => {
             this.client.deleteListing("fake listing id", (error: string, emptyResponse: Empty) => {
                 expect(emptyResponse).toEqual({});
+                done();
             });
         });
-        it('Should pass the main error into the callback if the main error exists.', () => {
+        it('Should pass the main error into the callback if the main error exists.', (done) => {
             this.mockedListingService.error = "Error!";
             this.client.deleteListing("fake listing id", (error: string, emptyResponse: Empty) => {
                 expect(error).toEqual("Error!");
+                done();
             });
         });
-        it("should not crash if callback is null",() => {
+        it("should not crash if callback is null", (done) => {
             expect(this.client.deleteListing).not.toThrow(Error);
+            this.client.deleteListing("fake listing id", done);
         });
     });
     describe("putListing tests.", () => {
         beforeEach(() => {
             this.fakeListing = <Listing> new Listing();
         });
-        it('Should call my callback method with the returned listing.', () => {
+        it('Should call my callback method with the returned listing.', (done) => {
             this.mockedListingService.listing = new Listing();
             this.mockedListingService.company_name = "blah blah blah";
             this.client.putListing(this.fakeListing, (error: string, listing: Listing) => {
                 expect(listing).toEqual(this.mockedListingService.listing);
+                done();
             });
         });
-        it('Should pass the main error into the callback if the main error exists.', () => {
+        it('Should pass the main error into the callback if the main error exists.', (done) => {
             this.mockedListingService.error = "Error!";
             this.client.putListing(this.fakeListing, (error: string, listing: Listing) => {
                 expect(error).toEqual("Error!");
+                done()
             });
         });
-        it("should not crash if callback is null",() => {
+        it("should not crash if callback is null",(done) => {
             expect(this.client.putListing).not.toThrow(Error);
-            this.client.putListing(this.fakeListing, null);
+            this.client.putListing(this.fakeListing, done);
         });
     });
 
     describe("getReview tests", () => {
-        it('Should call my callback method with the returned review.', () => {
+        it('Should call my callback method with the returned review.', (done) => {
             let fakeReview = <Review> new Review();
             this.mockedReviewService.review = fakeReview;
             this.client.getReview("review-id", (error: string, review: Review) => {
                 expect(review).toEqual(fakeReview);
+                done();
             });
         });
-        it('Should pass the error into the callback if the error exists.', () => {
+        it('Should pass the error into the callback if the error exists.', (done) => {
             this.mockedReviewService.error = "Error!";
             this.client.getReview("review-id", (error: string, review: Review) => {
                 expect(error).toEqual("Error!");
+                done();
             });
         });
 
-        it("should not crash if callback is null",() => {
+        it("should not crash if callback is null", (done) => {
             expect(this.client.getReview).not.toThrow(Error);
-            this.client.getReview("fake review id", null);
+            this.client.getReview("fake review id", done);
         });
     });
 
     describe("deleteReview tests.", () => {
-        it('Should call my callback method with the returned emptyResponse.', () => {
+        it('Should call my callback method with the returned emptyResponse.', (done) => {
             this.client.deleteReview("fake review id", (error: string, response: Empty) => {
-                expect(response).toEqual({})
+                expect(response).toEqual({});
+                done();
             });
         });
-        it('Should pass the error into the callback if the error exists.', () => {
+        it('Should pass the error into the callback if the error exists.', (done) => {
             this.mockedReviewService.error = "Error!";
             this.client.deleteReview(this.fakeReview, (error: string, response: Empty) => {
                 expect(error).toEqual("Error!");
+                done()
             });
         });
-        it("should not crash if callback is null",() => {
+        it("should not crash if callback is null", (done) => {
             expect(this.client.deleteReview).not.toThrow(Error);
-            this.client.deleteReview("fake review id", null);
+            this.client.deleteReview("fake review id", done );
         });
     });
 
@@ -151,46 +162,56 @@ describe('Client tests', () => {
         beforeEach(() => {
             this.fakeReview = <Review> new Review();
         });
-        it('Should call my callback method with the returned review.', () => {
+        it('Should call my callback method with the returned review.', (done) => {
             this.mockedReviewService.review = this.fakeReview;
             this.client.putReview(this.fakeReview, (error: string, review: Review) => {
                 expect(review).toEqual(this.fakeReview);
+                done();
             });
         });
-        it('Should pass the error into the callback if the error exists.', () => {
+        it('Should pass the error into the callback if the error exists.', (done) => {
             this.mockedReviewService.error = "Error!";
             this.client.putReview(this.fakeReview, (error: string, review: Review) => {
                 expect(error).toEqual("Error!");
+                done();
             });
         });
-        it("should not crash if callback is null",() => {
+        it("should not crash if callback is null", (done) => {
             expect(this.client.putReview).not.toThrow(Error);
-            this.client.putReview(this.fakeReview, null);
+            this.client.putReview(this.fakeReview, done);
         });
     });
 
     describe("listReviews tests", () => {
-        it('Should pass the error into the callback if the error exists.', () => {
+        beforeEach(() => {
+            this.pageSize = 15;
+            this.offset = 0;
+            this.listingExternalId = null;
+            this.listingId = "fake listing id";
+        });
+        it('Should pass the error into the callback if the error exists.', (done) => {
             this.mockedReviewService.error = "Error!";
-            this.client.listReviews("fake listing id", (error: string, reviews: [Review]) => {
+            this.client.listReviews(this.listingId, this.listingExternalId, this.pageSize, this.offset, (error: string, reviews: [Review]) => {
                 expect(error).toEqual("Error!");
+                done();
             });
         });
-        it("Should pass the reviews to the callback", () => {
+        it("Should pass the reviews to the callback", (done) => {
             let fakeReview1 = new Review();
             fakeReview1.star_rating = 3;
             let fakeReview2 = new Review();
             fakeReview2.star_rating = 5;
             let fakeReviewsResponse = new ListReviewsResponse();
             fakeReviewsResponse.reviews = [fakeReview1, fakeReview2];
-            this.listReviewsResponse = fakeReviewsResponse;
-            this.client.listReviews("fake listing id", (error: string, fakeReviewsResponse: [Review]) => {
-                expect(this.mockedReviewService.listReviewsResponse).toEqual(fakeReviewsResponse);
+            this.mockedReviewService.listReviewsResponse = fakeReviewsResponse;
+            this.client.listReviews(this.listingId, this.listingExternalId, this.pageSize, this.offset, (error: string, reviews: [Review]) => {
+                expect(this.mockedReviewService.listReviewsResponse.reviews).toEqual(reviews);
+                done();
             });
         });
-        it("should not crash if callback is null", () => {
+        it("should not crash if callback is null", (done) => {
             expect(this.client.listReviews).not.toThrow(Error);
-            this.client.listReviews("fake listing id", null);
+            this.client.listReviews(this.listingId, this.listingExternalId, this.pageSize, this.offset, done);
         });
     });
 
