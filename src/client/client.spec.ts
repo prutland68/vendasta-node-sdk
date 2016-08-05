@@ -183,9 +183,15 @@ describe('Client tests', () => {
     });
 
     describe("listReviews tests", () => {
+        beforeEach(() => {
+            this.pageSize = 15;
+            this.offset = 0;
+            this.listingExternalId = null;
+            this.listingId = "fake listing id";
+        });
         it('Should pass the error into the callback if the error exists.', (done) => {
             this.mockedReviewService.error = "Error!";
-            this.client.listReviews("fake listing id", null, 15, 0, (error: string, reviews: [Review]) => {
+            this.client.listReviews(this.listingId, this.listingExternalId, this.pageSize, this.offset, (error: string, reviews: [Review]) => {
                 expect(error).toEqual("Error!");
                 done();
             });
@@ -198,14 +204,14 @@ describe('Client tests', () => {
             let fakeReviewsResponse = new ListReviewsResponse();
             fakeReviewsResponse.reviews = [fakeReview1, fakeReview2];
             this.mockedReviewService.listReviewsResponse = fakeReviewsResponse;
-            this.client.listReviews("fake listing id", null, 15, 0, (error: string, reviews: [Review]) => {
+            this.client.listReviews(this.listingId, this.listingExternalId, this.pageSize, this.offset, (error: string, reviews: [Review]) => {
                 expect(this.mockedReviewService.listReviewsResponse.reviews).toEqual(reviews);
                 done();
             });
         });
         it("should not crash if callback is null", (done) => {
             expect(this.client.listReviews).not.toThrow(Error);
-            this.client.listReviews("fake listing id", null, 15, 0, done);
+            this.client.listReviews(this.listingId, this.listingExternalId, this.pageSize, this.offset, done);
         });
     });
 

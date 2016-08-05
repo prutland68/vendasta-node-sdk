@@ -177,9 +177,15 @@ describe('Client tests', function () {
         });
     });
     describe("listReviews tests", function () {
+        beforeEach(function () {
+            _this.pageSize = 15;
+            _this.offset = 0;
+            _this.listingExternalId = null;
+            _this.listingId = "fake listing id";
+        });
         it('Should pass the error into the callback if the error exists.', function (done) {
             _this.mockedReviewService.error = "Error!";
-            _this.client.listReviews("fake listing id", null, 15, 0, function (error, reviews) {
+            _this.client.listReviews(_this.listingId, _this.listingExternalId, _this.pageSize, _this.offset, function (error, reviews) {
                 expect(error).toEqual("Error!");
                 done();
             });
@@ -192,14 +198,14 @@ describe('Client tests', function () {
             var fakeReviewsResponse = new protos_1.ListReviewsResponse();
             fakeReviewsResponse.reviews = [fakeReview1, fakeReview2];
             _this.mockedReviewService.listReviewsResponse = fakeReviewsResponse;
-            _this.client.listReviews("fake listing id", null, 15, 0, function (error, reviews) {
+            _this.client.listReviews(_this.listingId, _this.listingExternalId, _this.pageSize, _this.offset, function (error, reviews) {
                 expect(_this.mockedReviewService.listReviewsResponse.reviews).toEqual(reviews);
                 done();
             });
         });
         it("should not crash if callback is null", function (done) {
             expect(_this.client.listReviews).not.toThrow(Error);
-            _this.client.listReviews("fake listing id", null, 15, 0, done);
+            _this.client.listReviews(_this.listingId, _this.listingExternalId, _this.pageSize, _this.offset, done);
         });
     });
 });
