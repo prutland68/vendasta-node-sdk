@@ -1,4 +1,4 @@
-declare module datariver {
+declare module vendasta.listings {
     interface ProtoBufModel {
         toArrayBuffer(): ArrayBuffer;
         //toBuffer(): NodeBuffer;
@@ -43,5 +43,11 @@ declare module datariver {
     export interface DeleteListingRequest extends ProtoBufModel {
         listing_id?: string;
 
+    }
+
+    export interface ListingService extends ProtoBufModel {
+        put(listing: Listing, callback: (error: any, listing:Listing) => any): void;
+        get(request: GetListingRequest, callback: (error: any, listing:Listing) => any): void;
+        delete(listingId: Empty, callback: (error: any, empty:Empty) => any): void;
     }
 }

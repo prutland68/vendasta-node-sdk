@@ -1,6 +1,6 @@
 "use strict";
 var index_1 = require("../src/index");
-var client = new index_1.Client(index_1.Environment.TEST, 'my-example-token'); // ask us for a token.
+var client = new index_1.Client(index_1.Environment.TEST, 'thisistestingonly'); // ask us for a token.
 // Create a listing object to put.
 var listing = new index_1.Listing();
 listing.external_id = "vendasta-technologies-12345";

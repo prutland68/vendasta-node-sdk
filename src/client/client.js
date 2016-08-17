@@ -27,7 +27,7 @@ var Client = (function () {
         this.getListing = function (listingId, callback) {
             var request = new protos_1.GetListingRequest();
             request.listing_id = listingId;
-            return _this.listingService.get(listingId, function (error, listing) {
+            return _this.listingService.get(request, function (error, listing) {
                 if (callback) {
                     if (error)
                         error = error.toString();
@@ -140,7 +140,7 @@ var Client = (function () {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "directory-sandbox.vendasta.com:23000"; // assume test
+            this.address = "localhost:9090";
         }
         this.metaData.add('token', token);
         var callCredentials = this.getCallCredentials(this.metaData);
@@ -148,11 +148,14 @@ var Client = (function () {
         this.reviewService = reviewService || new protos_1.ReviewService(this.address, callCredentials);
     }
     Client.prototype.getCallCredentials = function (metadata) {
-        var creds = grpc.credentials.createSsl();
-        var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
-            callback(null, metadata);
-        });
-        return grpc.credentials.combineChannelCredentials(creds, callCreds);
+        return grpc.credentials.createInsecure();
+        //const creds = grpc.credentials.createSsl();
+        //const callCreds = grpc.credentials.createFromMetadataGenerator(
+        //    (serviceUrl:string, callback:any) => {
+        //        callback(null, metadata)
+        //    }
+        //);
+        //return grpc.credentials.combineChannelCredentials(creds, callCreds);
     };
     return Client;
 }());

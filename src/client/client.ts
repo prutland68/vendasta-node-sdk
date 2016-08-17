@@ -10,8 +10,8 @@ export enum Environment{
 
 export class Client {
     private metaData = new grpc.Metadata();
-    private listingService:any;
-    private reviewService:any;
+    private listingService:ListingService;
+    private reviewService:ReviewService;
     private address:string;
 
     /**
@@ -20,7 +20,7 @@ export class Client {
      * @param token: Token provided by us.
      */
     constructor(private environment:Environment, private token:string,
-                listingService: any = null, reviewService: any = null) {
+                listingService: ListingService = null, reviewService: ReviewService = null) {
         if (environment == Environment.PRODUCTION) {
             throw new Error("Production not available yet.");
         }
@@ -51,7 +51,7 @@ export class Client {
     public getListing = (listingId:string, callback:any) => {
         let request: GetListingRequest = new GetListingRequest();
         request.listing_id = listingId;
-        return this.listingService.get(listingId, (error:any, listing:Listing) => {
+        return this.listingService.get(request, (error:any, listing:Listing) => {
             if (callback) {
                 if (error)
                     error = error.toString();

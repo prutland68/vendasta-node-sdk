@@ -1,6 +1,8 @@
+// version: 2.0.0
+
 syntax = "proto3";
 
-package datariver;
+package vendasta.listings;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
