@@ -1,3 +1,6 @@
+## 0.5.0
+- Package of proto has been updated
+- Updated client to work with new gRPC package name
 ## 0.4.0
 - Added support for getting a list of reviews by the listing's external id.
 ## 0.3.0

@@ -1,9 +1,10 @@
 import {Client, Environment, Listing, Geo, Review, Timestamp, Empty} from "../src/index"
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
+let review = new Review();
 
 // Create a listing object to put.
-var listing = new Listing();
+let listing = new Listing();
 listing.external_id = "vendasta-technologies-12345";
 listing.company_name = "Vendasta Technologies Inc.";
 listing.business_categories[0] = "marketing";
@@ -25,26 +26,23 @@ listing.zip_code = "S7K 1M1";
 client.putListing(listing, putListingCallback);
 let listingId: string = null;
 let listingExternalId: string = null;
-let reviewId: string = null;
 // Create a review object to put.
 
-
 function putListingCallback(error: any, listing: Listing) {
-    console.log("**** PUT LISTING FOR REVIEW ****");
+    console.log("\n**** PUT LISTING FOR REVIEW ****");
     printErrorAndResponse(error, listing);
     if (error)
         return;
     listingId = listing.listing_id;
     listingExternalId = listing.external_id;
     console.log(listing);
-    var review = new Review();
     review.url = "www.example-source.com/vendasta-technologies-12345";
     review.star_rating = 5.0;
     review.reviewer_name = "John Jones";
     review.reviewer_email = "john12345@jones.com";
     review.reviewer_url = "jones.com/blog";
     review.content = "Such an amazing place!";
-    review.published_date = new Timestamp(Date.now() / 1000, Date.now() * 1000);
+    review.published_date = new Timestamp(Date.now() / 1000, 0); // Date.now() has millisecond precision
     review.title = "My review!";
     review.listing_id = listing.listing_id;
     client.putReview(review, null);
@@ -54,18 +52,24 @@ function putListingCallback(error: any, listing: Listing) {
     client.putReview(review, null);
     client.putReview(review, putReviewCallback);
 }
+
 function putReviewCallback(error: string, response: Review) {
-    console.log("**** Put review output: ****");
+    console.log("\n**** Put review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
-    reviewId = response['review_id'];
+    review.review_id = response.review_id;
+    if(response.published_date.seconds != review.published_date.seconds) {
+        console.log("Published date seconds are: " + response.published_date.seconds);
+        console.log("Should be " + review.published_date.seconds);
+        throw new Error("!!! Review that was put does not match response from server");
+    }
     // Get the review we just added
-    client.getReview(reviewId, getReviewCallback)
+    client.getReview(review.review_id, getReviewCallback)
 }
 
 function getReviewCallback(error: string, response: Review) {
-    console.log("**** Get review output: ****");
+    console.log("\n**** Get review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
@@ -76,7 +80,7 @@ function getReviewCallback(error: string, response: Review) {
 }
 
 function listReviewsExternalIdCallback(error: string, response: [Review]) {
-    console.log("**** List review by external id output: ****");
+    console.log("\n**** List review by external id output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
@@ -86,40 +90,36 @@ function listReviewsExternalIdCallback(error: string, response: [Review]) {
     client.listReviews(listingId, null,  page_size, offset, listReviewsCallback);
 }
 
-function deleteReviewCallback(error: string, response: Review) {
-    console.log("**** Delete reviews output: ****");
-    printErrorAndResponse(error, response);
-    if (error)
-        return;
-}
 
 function listReviewsCallback(error: string, reviews: [Review]) {
     console.log("**** LIST REVIEWS by listing_id output: ****");
     printErrorAndResponse(error, reviews);
     if (error)
         return;
-    for (var index=0; index < reviews.length; index++) {
+    for (let index=0; index < reviews.length; index++) {
         let review = reviews[index];
         console.log(review.review_id);
-        if (index == (reviews.length - 1)) {
-            client.deleteReview(review.review_id, finalGetReviewCallback)
-        }
-        else {
-            client.deleteReview(review.review_id, deleteReviewCallback);
-        }
+        client.deleteReview(review.review_id, deleteReviewCallback);
     }
+    setTimeout(client.getReview.bind(null, reviews[0].review_id, finalGetNonExistentReviewCallback), 3000);
 }
 
-function finalGetReviewCallback(error: string, response: Empty) {
-    console.log("**** Final Delete review output: ****");
+function deleteReviewCallback(error: string, response: Empty) {
+    console.log("**** Delete review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
-    client.getReview(reviewId, null);
+}
+
+
+function finalGetNonExistentReviewCallback(error: string, response: Review) {
+    console.log("\n**** Get non-existent review output: ****");
+    printErrorAndResponse(error, response);
+    console.log("\nEND EXAMPLE USAGE!")
 }
 
 function printErrorAndResponse(error: any, response: any) {
-    console.log(error);
-    console.log(response);
+    console.log("Error: ", error);
+    console.log("Response: ", response);
 }
 

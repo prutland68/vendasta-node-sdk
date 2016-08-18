@@ -27,7 +27,7 @@ var Client = (function () {
         this.getListing = function (listingId, callback) {
             var request = new protos_1.GetListingRequest();
             request.listing_id = listingId;
-            return _this.listingService.get(listingId, function (error, listing) {
+            return _this.listingService.get(request, function (error, listing) {
                 if (callback) {
                     if (error)
                         error = error.toString();
