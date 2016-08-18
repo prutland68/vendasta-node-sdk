@@ -1,8 +1,10 @@
 import {Client, Environment, Listing, Geo, Review, Timestamp, Empty} from "../src/index"
 const client = new Client(Environment.TEST, 'my-example-token');    // ask us for a token.
 
+let review = new Review();
+
 // Create a listing object to put.
-var listing = new Listing();
+let listing = new Listing();
 listing.external_id = "vendasta-technologies-12345";
 listing.company_name = "Vendasta Technologies Inc.";
 listing.business_categories[0] = "marketing";
@@ -24,7 +26,6 @@ listing.zip_code = "S7K 1M1";
 client.putListing(listing, putListingCallback);
 let listingId: string = null;
 let listingExternalId: string = null;
-let reviewId: string = null;
 // Create a review object to put.
 
 function putListingCallback(error: any, listing: Listing) {
@@ -35,14 +36,13 @@ function putListingCallback(error: any, listing: Listing) {
     listingId = listing.listing_id;
     listingExternalId = listing.external_id;
     console.log(listing);
-    var review = new Review();
     review.url = "www.example-source.com/vendasta-technologies-12345";
     review.star_rating = 5.0;
     review.reviewer_name = "John Jones";
     review.reviewer_email = "john12345@jones.com";
     review.reviewer_url = "jones.com/blog";
     review.content = "Such an amazing place!";
-    review.published_date = new Timestamp(Date.now() / 1000, Date.now() * 1000);
+    review.published_date = new Timestamp(Date.now() / 1000, 0); // Date.now() has millisecond precision
     review.title = "My review!";
     review.listing_id = listing.listing_id;
     client.putReview(review, null);
@@ -58,9 +58,14 @@ function putReviewCallback(error: string, response: Review) {
     printErrorAndResponse(error, response);
     if (error)
         return;
-    reviewId = response['review_id'];
+    review.review_id = response.review_id;
+    if(response.published_date.seconds != review.published_date.seconds) {
+        console.log("Published date seconds are: " + response.published_date.seconds);
+        console.log("Should be " + review.published_date.seconds);
+        throw new Error("!!! Review that was put does not match response from server");
+    }
     // Get the review we just added
-    client.getReview(reviewId, getReviewCallback)
+    client.getReview(review.review_id, getReviewCallback)
 }
 
 function getReviewCallback(error: string, response: Review) {
@@ -91,7 +96,7 @@ function listReviewsCallback(error: string, reviews: [Review]) {
     printErrorAndResponse(error, reviews);
     if (error)
         return;
-    for (var index=0; index < reviews.length; index++) {
+    for (let index=0; index < reviews.length; index++) {
         let review = reviews[index];
         console.log(review.review_id);
         client.deleteReview(review.review_id, deleteReviewCallback);
