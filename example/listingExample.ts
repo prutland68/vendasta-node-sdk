@@ -26,7 +26,6 @@ listing.zip_code = "S7K 1M1";
 client.putListing(listing, putListingCallback);
 let listingId: string = null;
 
-
 function putListingCallback(error: string, response: Listing) {
     console.log("**** Put listing output: ****");
     printErrorAndResponse(error, response);

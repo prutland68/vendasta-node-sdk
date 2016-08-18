@@ -140,7 +140,7 @@ var Client = (function () {
             throw new Error("Production not available yet.");
         }
         else {
-            this.address = "localhost:9090";
+            this.address = "directory-sandbox.vendasta.com:23000"; // assume test
         }
         this.metaData.add('token', token);
         var callCredentials = this.getCallCredentials(this.metaData);
@@ -148,14 +148,11 @@ var Client = (function () {
         this.reviewService = reviewService || new protos_1.ReviewService(this.address, callCredentials);
     }
     Client.prototype.getCallCredentials = function (metadata) {
-        return grpc.credentials.createInsecure();
-        //const creds = grpc.credentials.createSsl();
-        //const callCreds = grpc.credentials.createFromMetadataGenerator(
-        //    (serviceUrl:string, callback:any) => {
-        //        callback(null, metadata)
-        //    }
-        //);
-        //return grpc.credentials.combineChannelCredentials(creds, callCreds);
+        var creds = grpc.credentials.createSsl();
+        var callCreds = grpc.credentials.createFromMetadataGenerator(function (serviceUrl, callback) {
+            callback(null, metadata);
+        });
+        return grpc.credentials.combineChannelCredentials(creds, callCreds);
     };
     return Client;
 }());

@@ -1,6 +1,6 @@
 "use strict";
 var index_1 = require("../src/index");
-var client = new index_1.Client(index_1.Environment.TEST, 'thisistestingonly'); // ask us for a token.
+var client = new index_1.Client(index_1.Environment.TEST, 'my-example-token'); // ask us for a token.
 // Create a listing object to put.
 var listing = new index_1.Listing();
 listing.external_id = "vendasta-technologies-12345";
@@ -26,7 +26,7 @@ var listingExternalId = null;
 var reviewId = null;
 // Create a review object to put.
 function putListingCallback(error, listing) {
-    console.log("**** PUT LISTING FOR REVIEW ****");
+    console.log("\n**** PUT LISTING FOR REVIEW ****");
     printErrorAndResponse(error, listing);
     if (error)
         return;
@@ -51,7 +51,7 @@ function putListingCallback(error, listing) {
     client.putReview(review, putReviewCallback);
 }
 function putReviewCallback(error, response) {
-    console.log("**** Put review output: ****");
+    console.log("\n**** Put review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
@@ -60,7 +60,7 @@ function putReviewCallback(error, response) {
     client.getReview(reviewId, getReviewCallback);
 }
 function getReviewCallback(error, response) {
-    console.log("**** Get review output: ****");
+    console.log("\n**** Get review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
@@ -70,7 +70,7 @@ function getReviewCallback(error, response) {
     client.listReviews(null, listingExternalId, page_size, offset, listReviewsExternalIdCallback);
 }
 function listReviewsExternalIdCallback(error, response) {
-    console.log("**** List review by external id output: ****");
+    console.log("\n**** List review by external id output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
@@ -78,12 +78,6 @@ function listReviewsExternalIdCallback(error, response) {
     var offset = 0;
     // To show that the delete went through.
     client.listReviews(listingId, null, page_size, offset, listReviewsCallback);
-}
-function deleteReviewCallback(error, response) {
-    console.log("**** Delete reviews output: ****");
-    printErrorAndResponse(error, response);
-    if (error)
-        return;
 }
 function listReviewsCallback(error, reviews) {
     console.log("**** LIST REVIEWS by listing_id output: ****");
@@ -93,23 +87,23 @@ function listReviewsCallback(error, reviews) {
     for (var index = 0; index < reviews.length; index++) {
         var review = reviews[index];
         console.log(review.review_id);
-        if (index == (reviews.length - 1)) {
-            client.deleteReview(review.review_id, finalGetReviewCallback);
-        }
-        else {
-            client.deleteReview(review.review_id, deleteReviewCallback);
-        }
+        client.deleteReview(review.review_id, deleteReviewCallback);
     }
+    setTimeout(client.getReview.bind(null, reviews[0].review_id, finalGetNonExistentReviewCallback), 3000);
 }
-function finalGetReviewCallback(error, response) {
-    console.log("**** Final Delete review output: ****");
+function deleteReviewCallback(error, response) {
+    console.log("**** Delete review output: ****");
     printErrorAndResponse(error, response);
     if (error)
         return;
-    client.getReview(reviewId, null);
+}
+function finalGetNonExistentReviewCallback(error, response) {
+    console.log("\n**** Get non-existent review output: ****");
+    printErrorAndResponse(error, response);
+    console.log("\nEND EXAMPLE USAGE!");
 }
 function printErrorAndResponse(error, response) {
-    console.log(error);
-    console.log(response);
+    console.log("Error: ", error);
+    console.log("Response: ", response);
 }
 //# sourceMappingURL=reviewsExample.js.map
